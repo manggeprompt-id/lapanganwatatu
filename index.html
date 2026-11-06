@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
-  <title>PitchBook Pro — Sistem Sewa Lapangan & Virtual Account</title>
+  <title>PitchBook Pro — Sistem Sewa Lapangan & Rekening Panitia</title>
 
   <!-- PWA Manifest Data URI (1-File PWA) -->
   <link rel="manifest" href='data:application/manifest+json,{"name":"PitchBook Pro - Sewa Lapangan Sepak Bola","short_name":"PitchBook","start_url":".","display":"standalone","background_color":"#EBF3FF","theme_color":"#3B5BDB","icons":[{"src":"https://cdn-icons-png.flaticon.com/512/53/53283.png","sizes":"512x512","type":"image/png"}]}' />
@@ -58,7 +58,6 @@
       flex-direction: column;
     }
 
-    /* Custom Scrollbar Halus */
     ::-webkit-scrollbar { width: 6px; height: 6px; }
     ::-webkit-scrollbar-track { background: transparent; }
     ::-webkit-scrollbar-thumb { background: #CBD5E1; border-radius: 9999px; }
@@ -79,11 +78,6 @@
     }
     .bg-card-cyan {
       background: linear-gradient(135deg, #22B8CF 0%, #38BDF8 100%);
-    }
-    .glass-surface {
-      background: rgba(255, 255, 255, 0.88);
-      backdrop-filter: blur(14px);
-      -webkit-backdrop-filter: blur(14px);
     }
 
     /* Floating WhatsApp Consultation Button (Di Samping Layar) */
@@ -115,7 +109,6 @@
       }
     }
 
-    /* Animasi denyut halus pada WA & Status Live */
     @keyframes pulse-ring {
       0% { transform: scale(0.95); opacity: 0.8; }
       70% { transform: scale(1.35); opacity: 0; }
@@ -158,7 +151,7 @@
     </div>
   </div>
 
-  <!-- TOAST NOTIFICATION REAL-TIME VA -->
+  <!-- TOAST NOTIFICATION REAL-TIME -->
   <div id="toast-container" class="fixed top-5 right-5 z-[1000010] flex flex-col gap-2.5 max-w-sm w-full pointer-events-none px-4 sm:px-0"></div>
 
   <!-- TOMBOL FLOATING WHATSAPP KONSULTASI DI SAMPING -->
@@ -197,21 +190,20 @@
             Sewa Lapangan Sepak Bola & Pembayaran VA Instan
           </h2>
           <p class="text-xs text-blue-100 leading-relaxed">
-            Pilih jadwal lapangan secara real-time, bayar langsung via Nomor Virtual Account (BCA, BRI, Mandiri, BNI) dan E-Ticket aktif otomatis detik itu juga tanpa perlu kirim bukti transfer.
+            Pilih jadwal lapangan secara real-time, transfer langsung ke Rekening / Virtual Account Resmi Panitia, dan E-Ticket aktif otomatis detik itu juga tanpa perlu kirim bukti transfer.
           </p>
         </div>
 
-        <!-- Ilustrasi Kartu VA Mini -->
+        <!-- Ilustrasi Kartu Rekening / VA Panitia -->
         <div class="relative z-10 mt-8 bg-card-cyan rounded-2xl p-4 shadow-cyan border border-white/20">
           <div class="flex items-center justify-between text-xs text-white/90 mb-1">
-            <span>Auto-Callback Virtual Account</span>
+            <span>Rekening & VA Resmi Panitia</span>
             <span class="bg-white/25 px-2 py-0.5 rounded-full text-[10px] font-bold">REAL-TIME</span>
           </div>
           <div class="text-lg font-extrabold tracking-wider text-white">8801 •••• •••• 2026</div>
-          <div class="text-[11px] text-sky-50 mt-1">Verifikasi otomatis tanpa upload struk</div>
+          <div class="text-[11px] text-sky-50 mt-1">Dana masuk langsung ke Rekening Panitia</div>
         </div>
 
-        <!-- Dekorasi Lingkaran -->
         <div class="w-48 h-48 rounded-full bg-sky-400/20 absolute -bottom-16 -right-16 blur-xl"></div>
       </div>
 
@@ -227,22 +219,22 @@
 
         <!-- Tab Pilihan Role -->
         <div class="grid grid-cols-3 gap-2 bg-slate-100 p-1.5 rounded-2xl mb-6 text-xs font-semibold">
-          <button id="tab-role-member" onclick="window.switchAuthTab('member')" class="py-2.5 rounded-xl bg-royal-600 text-white shadow-royal transition">
+          <button type="button" id="tab-role-member" onclick="window.switchAuthTab('member')" class="py-2.5 rounded-xl bg-royal-600 text-white shadow-royal transition">
             Penyewa / Tim
           </button>
-          <button id="tab-role-register" onclick="window.switchAuthTab('register')" class="py-2.5 rounded-xl text-slate-500 hover:text-slate-800 transition">
+          <button type="button" id="tab-role-register" onclick="window.switchAuthTab('register')" class="py-2.5 rounded-xl text-slate-500 hover:text-slate-800 transition">
             Daftar Tim Baru
           </button>
-          <button id="tab-role-admin" onclick="window.switchAuthTab('admin')" class="py-2.5 rounded-xl text-slate-500 hover:text-slate-800 transition">
-            Admin Arena
+          <button type="button" id="tab-role-admin" onclick="window.switchAuthTab('admin')" class="py-2.5 rounded-xl text-slate-500 hover:text-slate-800 transition">
+            Admin Panitia
           </button>
         </div>
 
-        <!-- FORM 1: LOGIN PENYEWA / TIM (Tabel Database Supabase) -->
+        <!-- FORM 1: LOGIN PENYEWA / TIM -->
         <form id="form-login-member" onsubmit="window.handleMemberLogin(event)" class="space-y-4">
           <div>
-            <label class="block text-xs font-semibold text-slate-600 mb-1.5">Username / ID Tim</label>
-            <input type="text" id="member-username" required placeholder="Contoh: garudafc" class="w-full px-4 py-3 rounded-2xl bg-slate-50 border border-slate-200 text-sm focus:outline-none focus:border-royal-600 focus:bg-white transition" />
+            <label class="block text-xs font-semibold text-slate-600 mb-1.5">Username Login</label>
+            <input type="text" id="member-username" required placeholder="Contoh: rahman" class="w-full px-4 py-3 rounded-2xl bg-slate-50 border border-slate-200 text-sm focus:outline-none focus:border-royal-600 focus:bg-white transition" />
           </div>
           <div>
             <label class="block text-xs font-semibold text-slate-600 mb-1.5">Password</label>
@@ -258,28 +250,28 @@
           <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
             <div>
               <label class="block text-xs font-semibold text-slate-600 mb-1">Nama Kapten / Penyewa</label>
-              <input type="text" id="reg-fullname" required placeholder="Arya Wijaya" class="w-full px-3.5 py-2.5 rounded-2xl bg-slate-50 border border-slate-200 text-sm focus:outline-none focus:border-royal-600" />
+              <input type="text" id="reg-fullname" required placeholder="Arif Ramansyah" class="w-full px-3.5 py-2.5 rounded-2xl bg-slate-50 border border-slate-200 text-sm focus:outline-none focus:border-royal-600" />
             </div>
             <div>
               <label class="block text-xs font-semibold text-slate-600 mb-1">Nama Tim / Klub</label>
-              <input type="text" id="reg-team" required placeholder="Garuda Muda FC" class="w-full px-3.5 py-2.5 rounded-2xl bg-slate-50 border border-slate-200 text-sm focus:outline-none focus:border-royal-600" />
+              <input type="text" id="reg-team" required placeholder="Ular Sakti Lalombi" class="w-full px-3.5 py-2.5 rounded-2xl bg-slate-50 border border-slate-200 text-sm focus:outline-none focus:border-royal-600" />
             </div>
           </div>
           <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
             <div>
               <label class="block text-xs font-semibold text-slate-600 mb-1">Username Login</label>
-              <input type="text" id="reg-username" required placeholder="garudamuda" class="w-full px-3.5 py-2.5 rounded-2xl bg-slate-50 border border-slate-200 text-sm focus:outline-none focus:border-royal-600" />
+              <input type="text" id="reg-username" required placeholder="rahman" class="w-full px-3.5 py-2.5 rounded-2xl bg-slate-50 border border-slate-200 text-sm focus:outline-none focus:border-royal-600" />
             </div>
             <div>
               <label class="block text-xs font-semibold text-slate-600 mb-1">No. WhatsApp Aktif</label>
-              <input type="text" id="reg-phone" required placeholder="081234567890" class="w-full px-3.5 py-2.5 rounded-2xl bg-slate-50 border border-slate-200 text-sm focus:outline-none focus:border-royal-600" />
+              <input type="text" id="reg-phone" required placeholder="082293445661" class="w-full px-3.5 py-2.5 rounded-2xl bg-slate-50 border border-slate-200 text-sm focus:outline-none focus:border-royal-600" />
             </div>
           </div>
           <div>
             <label class="block text-xs font-semibold text-slate-600 mb-1">Password</label>
             <input type="password" id="reg-password" required placeholder="Minimal 4 karakter" class="w-full px-3.5 py-2.5 rounded-2xl bg-slate-50 border border-slate-200 text-sm focus:outline-none focus:border-royal-600" />
           </div>
-          <button type="submit" class="w-full py-3.5 rounded-2xl bg-skycyan-400 hover:bg-skycyan-500 text-white font-bold text-sm shadow-cyan transition">
+          <button type="submit" id="btn-submit-register" class="w-full py-3.5 rounded-2xl bg-skycyan-400 hover:bg-skycyan-500 text-white font-bold text-sm shadow-cyan transition">
             Daftar & Masuk Sekarang
           </button>
         </form>
@@ -287,7 +279,7 @@
         <!-- FORM 3: LOGIN ADMIN (Supabase Auth Email & Password) -->
         <form id="form-login-admin" onsubmit="window.handleAdminLogin(event)" class="space-y-4 hidden">
           <div>
-            <label class="block text-xs font-semibold text-slate-600 mb-1.5">Email Admin (Supabase Auth)</label>
+            <label class="block text-xs font-semibold text-slate-600 mb-1.5">Email Admin Panitia (Supabase Auth)</label>
             <input type="email" id="admin-email" required placeholder="admin@pitchbook.id" class="w-full px-4 py-3 rounded-2xl bg-slate-50 border border-slate-200 text-sm focus:outline-none focus:border-royal-600 focus:bg-white transition" />
           </div>
           <div>
@@ -295,7 +287,7 @@
             <input type="password" id="admin-password" required placeholder="••••••••" class="w-full px-4 py-3 rounded-2xl bg-slate-50 border border-slate-200 text-sm focus:outline-none focus:border-royal-600 focus:bg-white transition" />
           </div>
           <button type="submit" id="btn-submit-admin" class="w-full py-3.5 rounded-2xl bg-royal-600 hover:bg-royal-700 text-white font-bold text-sm shadow-royal transition">
-            Masuk Panel Admin
+            Masuk Panel Admin Panitia
           </button>
         </form>
 
@@ -307,7 +299,7 @@
               <span>⚡ Masuk Penyewa Demo</span>
             </button>
             <button onclick="window.appQuickLogin('admin')" class="py-2.5 px-3 rounded-xl bg-indigo-50 hover:bg-indigo-100 text-royal-600 font-semibold text-xs flex items-center justify-center gap-1.5 transition">
-              <span>🛡️ Masuk Admin Demo</span>
+              <span>🛡️ Masuk Admin Panitia</span>
             </button>
           </div>
         </div>
@@ -323,10 +315,10 @@
     <div class="flex-1 flex bg-white md:rounded-[32px] shadow-soft-card overflow-hidden border border-white">
 
       <!-- 1. KOLOM KIRI: FIXED SIDEBAR (Desktop) -->
-      <aside class="desktop-sidebar w-[235px] bg-white border-r border-slate-100 flex-col justify-between py-7 px-5 shrink-0 select-none">
+      <aside class="desktop-sidebar w-[240px] bg-white border-r border-slate-100 flex-col justify-between py-7 px-5 shrink-0 select-none">
         <div>
           <!-- Brand Logo ala Cryptowall -->
-          <div class="flex items-center gap-3 px-2 mb-9">
+          <div class="flex items-center gap-3 px-2 mb-8">
             <div class="w-10 h-10 rounded-2xl bg-royal-600 text-white flex items-center justify-center font-extrabold text-lg shadow-royal">
               ⚽
             </div>
@@ -337,21 +329,21 @@
           </div>
 
           <!-- Daftar Menu Navigasi Dinamis -->
-          <nav id="desktop-nav-list" class="space-y-2"></nav>
+          <nav id="desktop-nav-list" class="space-y-1.5"></nav>
         </div>
 
         <!-- Bottom Promo Card ala "Discover Pro" di Cryptowall -->
         <div class="bg-hero-royal rounded-3xl p-5 text-white shadow-royal relative overflow-hidden mt-6">
           <div class="relative z-10">
             <div class="w-10 h-10 rounded-2xl bg-white/20 backdrop-blur-sm flex items-center justify-center mb-3 text-lg">
-              💳
+              🏦
             </div>
-            <div class="text-xs font-bold leading-snug mb-1">Virtual Account Otomatis</div>
+            <div class="text-xs font-bold leading-snug mb-1">Rekening & VA Panitia</div>
             <p class="text-[10px] text-blue-100 leading-relaxed mb-3.5">
-              Bayar sewa lapangan instan tanpa kirim bukti transfer.
+              Dana transfer penyewa langsung masuk ke rekening bank resmi panitia.
             </p>
             <button onclick="window.openQuickActionFromPromo()" class="w-full py-2.5 rounded-2xl bg-skycyan-400 hover:bg-skycyan-500 text-white font-bold text-xs shadow-cyan transition">
-              Booking Cepat
+              Kelola / Booking
             </button>
           </div>
           <div class="w-24 h-24 rounded-full bg-sky-300/20 absolute -right-8 -top-8"></div>
@@ -364,7 +356,7 @@
         <!-- Top Header: Sapaan User + Judul Halaman & Search Input -->
         <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-6">
           <div>
-            <p id="header-greeting-name" class="text-xs font-semibold text-slate-400 mb-0.5">Arya Wijaya</p>
+            <p id="header-greeting-name" class="text-xs font-semibold text-slate-400 mb-0.5">Arif Ramansyah</p>
             <h1 id="header-page-title" class="text-2xl font-bold text-slate-800 tracking-tight">Dashboard</h1>
           </div>
 
@@ -373,7 +365,6 @@
               <i data-lucide="search" class="w-4 h-4 text-slate-400 absolute left-4 top-1/2 -translate-y-1/2"></i>
               <input id="global-search-input" oninput="window.handleGlobalSearch(this.value)" type="text" placeholder="Cari lapangan / kode VA..." class="w-full pl-10 pr-4 py-2.5 rounded-2xl bg-white shadow-soft-card border border-slate-100 text-xs font-medium text-slate-700 focus:outline-none focus:border-royal-500" />
             </div>
-            <!-- Tombol Logout Mobile -->
             <button onclick="window.handleLogout()" class="xl:hidden p-2.5 rounded-2xl bg-white text-red-500 shadow-soft-card border border-slate-100" title="Keluar">
               <i data-lucide="log-out" class="w-4 h-4"></i>
             </button>
@@ -385,23 +376,23 @@
 
       </main>
 
-      <!-- 3. KOLOM KANAN: MY VIRTUAL ACCOUNT CARD & LIVE TRANSACTION PANEL -->
-      <aside class="hidden xl:flex w-[335px] bg-white border-l border-slate-100 flex-col justify-between p-6 overflow-y-auto shrink-0">
+      <!-- 3. KOLOM KANAN: KARTU REKENING / VA PANITIA & LIVE TRANSACTION PANEL -->
+      <aside class="hidden xl:flex w-[345px] bg-white border-l border-slate-100 flex-col justify-between p-6 overflow-y-auto shrink-0">
         <div>
           <!-- Top Profile & Notification Bar -->
-          <div class="flex items-center justify-between mb-7">
-            <button onclick="window.triggerCheckLiveVA()" class="relative w-10 h-10 rounded-2xl bg-slate-50 hover:bg-slate-100 flex items-center justify-center text-slate-500 transition" title="Notifikasi Pembayaran VA Real-Time">
+          <div class="flex items-center justify-between mb-6">
+            <button onclick="window.triggerCheckLiveVA()" class="relative w-10 h-10 rounded-2xl bg-slate-50 hover:bg-slate-100 flex items-center justify-center text-slate-500 transition" title="Cek Mutasi Pembayaran">
               <i data-lucide="bell" class="w-5 h-5"></i>
               <span class="w-2.5 h-2.5 rounded-full bg-skycyan-400 border-2 border-white absolute top-2 right-2"></span>
             </button>
 
             <div class="flex items-center gap-2.5">
               <div id="right-profile-avatar" class="w-9 h-9 rounded-full bg-royal-100 text-royal-600 font-bold text-xs flex items-center justify-center">
-                AW
+                AR
               </div>
               <div class="text-left">
-                <div id="right-profile-name" class="text-xs font-bold text-slate-800 leading-none">Arya Wijaya</div>
-                <div id="right-profile-team" class="text-[10px] text-slate-400 font-medium mt-0.5">Garuda Muda FC</div>
+                <div id="right-profile-name" class="text-xs font-bold text-slate-800 leading-none">Arif Ramansyah</div>
+                <div id="right-profile-team" class="text-[10px] text-slate-400 font-medium mt-0.5">Ular Sakti Lalombi</div>
               </div>
               <button onclick="window.handleLogout()" class="ml-1 p-1.5 rounded-xl text-slate-400 hover:text-red-500 hover:bg-red-50 transition" title="Keluar Akun">
                 <i data-lucide="log-out" class="w-4 h-4"></i>
@@ -409,71 +400,68 @@
             </div>
           </div>
 
-          <!-- MY CARDS: KARTU VIRTUAL ACCOUNT AKTIF (Gaya Cryptowall Cyan Card) -->
-          <div class="flex items-center justify-between mb-3">
-            <h3 class="text-base font-bold text-slate-800">My Virtual Account</h3>
-            <span id="va-card-bank-pill" class="text-[10px] font-extrabold uppercase tracking-wider px-2.5 py-0.5 rounded-full bg-sky-50 text-skycyan-500">BCA VA</span>
+          <!-- MY CARDS: KARTU REKENING PANITIA & VIRTUAL ACCOUNT AKTIF -->
+          <div class="flex items-center justify-between mb-2.5">
+            <h3 class="text-sm font-bold text-slate-800">Tujuan Transfer Panitia</h3>
+            <span id="va-card-bank-pill" class="text-[10px] font-extrabold uppercase tracking-wider px-2.5 py-0.5 rounded-full bg-sky-50 text-skycyan-500">BRI VA</span>
           </div>
 
           <div id="active-va-card-box" class="bg-card-cyan rounded-[24px] p-5 text-white shadow-cyan relative overflow-hidden mb-3">
             <div class="relative z-10">
-              <div class="flex items-center justify-between text-xs text-sky-100 mb-1">
-                <span id="va-card-label">Tagihan VA Aktif</span>
+              <div class="flex items-center justify-between text-[11px] text-sky-100 mb-0.5">
+                <span id="va-card-label">Nominal Transfer (+Kode Unik)</span>
                 <span id="va-card-code" class="font-mono text-[11px] font-bold">#PB-001</span>
               </div>
-              <div id="va-card-amount" class="text-2xl font-extrabold tracking-tight mb-4">Rp 0</div>
+              <div id="va-card-amount" class="text-2xl font-extrabold tracking-tight mb-3">Rp 0</div>
 
-              <div class="text-[11px] text-sky-100 mb-0.5">Nomor Virtual Account</div>
+              <!-- Info Rekening Panitia Penerima Dana -->
+              <div class="bg-slate-900/20 backdrop-blur-sm rounded-xl p-2.5 mb-2.5 border border-white/15">
+                <div class="text-[10px] text-sky-100">Dana Masuk ke Rekening Panitia:</div>
+                <div id="va-card-holder" class="text-xs font-bold text-white truncate">Panitia Pengelola Arena</div>
+                <div id="va-card-real-acc" class="text-[11px] font-mono text-sky-100">No. Rek: -</div>
+              </div>
+
+              <div class="text-[10px] text-sky-100 mb-0.5">Nomor Virtual Account / Kode Bayar</div>
               <div class="flex items-center justify-between gap-2">
-                <div id="va-card-number" class="font-mono text-sm font-bold tracking-wider">Belum Ada Tagihan</div>
-                <span id="va-card-status-badge" class="bg-white/25 backdrop-blur-sm px-2.5 py-1 rounded-full text-[10px] font-bold">
+                <div id="va-card-number" class="font-mono text-xs font-bold tracking-wider truncate">Belum Ada Tagihan</div>
+                <span id="va-card-status-badge" class="bg-white/25 backdrop-blur-sm px-2.5 py-0.5 rounded-full text-[10px] font-bold shrink-0">
                   READY
                 </span>
               </div>
             </div>
-            <!-- Dekorasi Gelombang Lingkaran -->
             <div class="w-36 h-36 rounded-full bg-white/15 absolute -right-10 -bottom-12"></div>
-            <div class="w-24 h-24 rounded-full bg-white/10 absolute right-10 -top-10"></div>
           </div>
 
-          <!-- Indikator Dots ala Cryptowall -->
-          <div class="flex items-center justify-center gap-1.5 mb-5">
-            <span class="w-2 h-2 rounded-full bg-royal-600"></span>
-            <span class="w-1.5 h-1.5 rounded-full bg-slate-200"></span>
-            <span class="w-1.5 h-1.5 rounded-full bg-slate-200"></span>
-          </div>
-
-          <!-- DUAL SPLIT ACTION BUTTONS (Request / Transfer Style -> Copy VA & Auto-Pay VA) -->
-          <div class="grid grid-cols-2 gap-3 mb-7">
+          <!-- DUAL SPLIT ACTION BUTTONS -->
+          <div class="grid grid-cols-2 gap-3 mb-6">
             <button onclick="window.copyActiveVANumber()" class="bg-royal-600 hover:bg-royal-700 text-white rounded-2xl p-2.5 flex items-center gap-2.5 shadow-royal transition">
               <div class="w-8 h-8 rounded-full bg-white text-royal-600 flex items-center justify-center shrink-0">
                 <i data-lucide="copy" class="w-4 h-4"></i>
               </div>
-              <span class="text-xs font-bold">Salin VA</span>
+              <span class="text-xs font-bold">Salin Rek/VA</span>
             </button>
 
             <button onclick="window.simulateInstantVAPayment()" class="bg-skycyan-400 hover:bg-skycyan-500 text-white rounded-2xl p-2.5 flex items-center gap-2.5 shadow-cyan transition">
               <div class="w-8 h-8 rounded-full bg-white text-skycyan-500 flex items-center justify-center shrink-0">
                 <i data-lucide="zap" class="w-4 h-4"></i>
               </div>
-              <span class="text-xs font-bold">Bayar VA</span>
+              <span class="text-xs font-bold">Konfirmasi VA</span>
             </button>
           </div>
 
-          <!-- RECENT TRANSACTION (Live Feed Pembayaran VA Tanpa Bukti Transfer) -->
-          <div class="flex items-center justify-between mb-3.5">
-            <h3 class="text-base font-bold text-slate-800">Notifikasi VA Live</h3>
+          <!-- RECENT TRANSACTION -->
+          <div class="flex items-center justify-between mb-3">
+            <h3 class="text-sm font-bold text-slate-800">Mutasi Dana Masuk</h3>
             <span class="inline-flex items-center gap-1 text-[10px] font-bold text-emerald-600 bg-emerald-50 px-2 py-0.5 rounded-full">
               <span class="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-ping"></span> Auto-Verify
             </span>
           </div>
 
-          <div id="right-recent-transactions" class="space-y-3"></div>
+          <div id="right-recent-transactions" class="space-y-2.5"></div>
         </div>
 
-        <!-- Info Footer Kanan -->
         <div class="pt-4 border-t border-slate-100 text-[11px] text-slate-400 flex items-center justify-between">
-          <span>Webhook VA Active</span>
+          <span>Rekening Panitia Aktif</span>
           <span class="font-bold text-royal-600">Tanpa Upload Bukti</span>
         </div>
       </aside>
@@ -482,20 +470,20 @@
   </div>
 
   <!-- NAVIGASI BAWAH MELAYANG (KHUSUS HP / MOBILE) -->
-  <nav id="mobile-bottom-nav" class="mobile-bottom-nav hidden fixed bottom-0 inset-x-0 bg-white/95 backdrop-blur-md border-t border-slate-200 px-3 py-2 justify-around items-center z-[1000000] shadow-lg"></nav>
+  <nav id="mobile-bottom-nav" class="mobile-bottom-nav hidden fixed bottom-0 inset-x-0 bg-white/95 backdrop-blur-md border-t border-slate-200 px-2 py-2 justify-around items-center z-[1000000] shadow-lg"></nav>
 
   <!-- ==========================================
        MODAL KONSULTASI WHATSAPP CEPAT
        ========================================== -->
   <div id="wa-consult-modal" class="hidden fixed inset-0 z-[1000008] bg-slate-900/50 backdrop-blur-sm flex items-center justify-center p-4">
-    <div class="bg-white rounded-[28px] max-w-md w-full p-6 shadow-2xl border border-slate-100 animate-fadeIn">
+    <div class="bg-white rounded-[28px] max-w-md w-full p-6 shadow-2xl border border-slate-100">
       <div class="flex items-center justify-between mb-4">
         <div class="flex items-center gap-3">
           <div class="w-11 h-11 rounded-2xl bg-emerald-500 text-white flex items-center justify-center font-bold text-xl shadow-md">
             💬
           </div>
           <div>
-            <h3 class="font-bold text-base text-slate-800">Konsultasi Admin Lapangan</h3>
+            <h3 class="font-bold text-base text-slate-800">Konsultasi Panitia Lapangan</h3>
             <p class="text-xs text-emerald-600 font-semibold">Respon Cepat via WhatsApp</p>
           </div>
         </div>
@@ -504,30 +492,30 @@
 
       <form onsubmit="window.sendWhatsAppConsult(event)" class="space-y-3.5">
         <div>
-          <label class="block text-xs font-semibold text-slate-600 mb-1">Nomor WhatsApp Admin Tujuan</label>
-          <input type="text" id="wa-admin-number" value="6281234567890" required class="w-full px-3.5 py-2.5 rounded-2xl bg-slate-50 border border-slate-200 text-xs font-mono text-slate-700" />
+          <label class="block text-xs font-semibold text-slate-600 mb-1">Nomor WhatsApp Panitia</label>
+          <input type="text" id="wa-admin-number" value="6282293445661" required class="w-full px-3.5 py-2.5 rounded-2xl bg-slate-50 border border-slate-200 text-xs font-mono text-slate-700" />
         </div>
         <div>
           <label class="block text-xs font-semibold text-slate-600 mb-1">Topik Konsultasi</label>
           <select id="wa-consult-topic" class="w-full px-3.5 py-2.5 rounded-2xl bg-slate-50 border border-slate-200 text-xs font-medium text-slate-700">
             <option value="Tanya Ketersediaan Jadwal & Turnamen">Tanya Ketersediaan Jadwal & Turnamen</option>
             <option value="Konsultasi Sewa Rutin Member Bulanan">Konsultasi Sewa Rutin Member Bulanan</option>
-            <option value="Bantuan Pembayaran Virtual Account (VA)">Bantuan Pembayaran Virtual Account (VA)</option>
-            <option value="Request Wasit / Fotografer Pertandingan">Request Wasit / Fotografer Pertandingan</option>
+            <option value="Konfirmasi Transfer Rekening / VA Panitia">Konfirmasi Transfer Rekening / VA Panitia</option>
+            <option value="Request Wasit / Peralatan Pertandingan">Request Wasit / Peralatan Pertandingan</option>
           </select>
         </div>
         <div>
           <label class="block text-xs font-semibold text-slate-600 mb-1">Pesan Tambahan</label>
-          <textarea id="wa-consult-message" rows="3" placeholder="Halo Admin, tim kami ingin berkonsultasi mengenai jadwal sewa lapangan..." class="w-full px-3.5 py-2.5 rounded-2xl bg-slate-50 border border-slate-200 text-xs text-slate-700"></textarea>
+          <textarea id="wa-consult-message" rows="3" placeholder="Halo Panitia, tim kami ingin berkonsultasi mengenai jadwal sewa lapangan..." class="w-full px-3.5 py-2.5 rounded-2xl bg-slate-50 border border-slate-200 text-xs text-slate-700"></textarea>
         </div>
-        <button type="submit" class="w-full py-3.5 rounded-2xl bg-emerald-500 hover:bg-emerald-600 text-white font-bold text-xs shadow-lg transition flex items-center justify-center gap-2">
-          <span>Kirim Chat ke WhatsApp Sekarang</span>
+        <button type="submit" class="w-full py-3.5 rounded-2xl bg-emerald-500 hover:bg-emerald-600 text-white font-bold text-xs shadow-lg transition">
+          Kirim Chat ke WhatsApp Sekarang
         </button>
       </form>
     </div>
   </div>
 
-  <!-- MODAL FORM TAMBAH / EDIT LAPANGAN (KHUSUS ADMIN) -->
+  <!-- MODAL FORM TAMBAH / EDIT LAPANGAN (ADMIN) -->
   <div id="field-modal" class="hidden fixed inset-0 z-[1000008] bg-slate-900/50 backdrop-blur-sm flex items-center justify-center p-4">
     <div class="bg-white rounded-[28px] max-w-md w-full p-6 shadow-2xl border border-slate-100">
       <div class="flex items-center justify-between mb-4">
@@ -577,10 +565,51 @@
       </form>
     </div>
   </div>
+
+  <!-- MODAL FORM TAMBAH / EDIT REKENING PANITIA (ADMIN) -->
+  <div id="bank-modal" class="hidden fixed inset-0 z-[1000008] bg-slate-900/50 backdrop-blur-sm flex items-center justify-center p-4">
+    <div class="bg-white rounded-[28px] max-w-md w-full p-6 shadow-2xl border border-slate-100">
+      <div class="flex items-center justify-between mb-4">
+        <h3 id="bank-modal-title" class="font-bold text-base text-slate-800">Tambah Rekening Panitia</h3>
+        <button onclick="window.closeBankModal()" class="w-8 h-8 rounded-full bg-slate-100 text-slate-500 flex items-center justify-center">✕</button>
+      </div>
+      <form id="form-bank-crud" onsubmit="window.saveBankData(event)" class="space-y-3.5">
+        <input type="hidden" id="bank-id-input" />
+        <div class="grid grid-cols-2 gap-3">
+          <div>
+            <label class="block text-xs font-semibold text-slate-600 mb-1">Nama Bank / Channel</label>
+            <input type="text" id="bank-name-input" required placeholder="Contoh: BRI / BCA / Bank Sulteng" class="w-full px-3.5 py-2.5 rounded-2xl bg-slate-50 border border-slate-200 text-xs" />
+          </div>
+          <div>
+            <label class="block text-xs font-semibold text-slate-600 mb-1">Kode Prefix VA</label>
+            <input type="text" id="bank-prefix-input" required placeholder="Contoh: 8801" class="w-full px-3.5 py-2.5 rounded-2xl bg-slate-50 border border-slate-200 text-xs font-mono" />
+          </div>
+        </div>
+        <div>
+          <label class="block text-xs font-semibold text-slate-600 mb-1">Nomor Rekening Resmi Panitia (Tujuan Dana Masuk)</label>
+          <input type="text" id="bank-accnum-input" required placeholder="Contoh: 108201004599502" class="w-full px-3.5 py-2.5 rounded-2xl bg-slate-50 border border-slate-200 text-xs font-mono" />
+        </div>
+        <div>
+          <label class="block text-xs font-semibold text-slate-600 mb-1">Atas Nama Pemilik Rekening (Panitia / Bendahara)</label>
+          <input type="text" id="bank-holder-input" required placeholder="Contoh: PANITIA STADION LALOMBI / ARIF" class="w-full px-3.5 py-2.5 rounded-2xl bg-slate-50 border border-slate-200 text-xs" />
+        </div>
+        <div>
+          <label class="block text-xs font-semibold text-slate-600 mb-1">Status Rekening</label>
+          <select id="bank-status-input" class="w-full px-3.5 py-2.5 rounded-2xl bg-slate-50 border border-slate-200 text-xs">
+            <option value="Active">Active (Tampil saat Booking)</option>
+            <option value="Inactive">Inactive (Sembunyikan)</option>
+          </select>
+        </div>
+        <button type="submit" class="w-full py-3 rounded-2xl bg-royal-600 hover:bg-royal-700 text-white font-bold text-xs shadow-royal transition">
+          Simpan Rekening Panitia
+        </button>
+      </form>
+    </div>
+  </div>
 </div>
 
 <!-- ==========================================
-     SCRIPT UTAMA (SUPABASE MODULE + LOGIKA VA)
+     SCRIPT UTAMA (SUPABASE MODULE + LOGIKA VA & REKENING PANITIA)
      ========================================== -->
 <script type="module">
   import { createClient } from 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js/+esm';
@@ -591,6 +620,8 @@
   const SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Indtcmp3c2NyZHNsbHlkbWlxY2VwIiwicm9sZSI6ImFub24iLCJpYXQiOjE3OTMwMzgxNTQsImV4cCI6MjEwODYxNDE1NH0.xyrXXcM272fTkzFRQ2qHBPPSOOKO1PaakIqAuiw-ekw";
 
   let supabase = null;
+  let realtimeChannel = null; // Mencegah error "cannot add postgres_changes callbacks after subscribe()"
+
   if (!IS_PREVIEW) {
     supabase = createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
   }
@@ -608,12 +639,13 @@
 
   // State Aplikasi
   const state = {
-    currentUser: null, // { id, role: 'admin'|'member', full_name, team_name, username, phone }
+    currentUser: null,
     activeMenu: 'dashboard',
     searchQuery: '',
     selectedFieldId: '',
     selectedDate: new Date().toISOString().split('T')[0],
     fields: [],
+    paymentAccounts: [], // Daftar Rekening Bank Panitia
     members: [],
     bookings: [],
     activeTagihanVA: null
@@ -624,7 +656,7 @@
     fields: [
       {
         id: 'fld-1',
-        name: 'Garuda Main Stadium (Full Pitch)',
+        name: 'Stadion Utama Lalombi (Full Pitch)',
         type: 'Full Pitch 11v11',
         grass_type: 'FIFA Quality Pro Synthetic',
         price_per_hour: 450000,
@@ -641,22 +673,32 @@
         status: 'Available'
       }
     ],
+    paymentAccounts: [
+      {
+        id: 'acc-1',
+        bank_name: 'BRI VA / Transfer',
+        va_prefix: '7702',
+        account_number: '1082-01-004599-50-2',
+        account_holder: 'PANITIA SEWA LAPANGAN (BENDAHARA)',
+        status: 'Active'
+      },
+      {
+        id: 'acc-2',
+        bank_name: 'BCA VA / Transfer',
+        va_prefix: '8801',
+        account_number: '7890-456-123',
+        account_holder: 'PANITIA SEWA LAPANGAN (BENDAHARA)',
+        status: 'Active'
+      }
+    ],
     members: [
       {
         id: 'mem-1',
-        username: 'garudafc',
+        username: 'rahman',
         password: '123',
-        full_name: 'Arya Wijaya',
-        team_name: 'Garuda Muda FC',
-        phone: '081234567890'
-      },
-      {
-        id: 'mem-2',
-        username: 'elangkota',
-        password: '123',
-        full_name: 'Dimas Pratama',
-        team_name: 'Elang Kota United',
-        phone: '081398765432'
+        full_name: 'Arif Ramansyah',
+        team_name: 'Ular Sakti Lalombi',
+        phone: '082293445661'
       }
     ],
     bookings: [
@@ -668,39 +710,26 @@
         play_date: new Date().toISOString().split('T')[0],
         start_time: '16:00',
         duration_hours: 2,
-        va_bank: 'BCA VA',
-        va_number: '8801081234567890',
-        total_price: 900000,
+        va_bank: 'BRI VA / Transfer',
+        va_number: '7702082293445661',
+        committee_account_number: '1082-01-004599-50-2',
+        committee_account_holder: 'PANITIA SEWA LAPANGAN (BENDAHARA)',
+        unique_code: 142,
+        total_price: 900142,
         payment_status: 'Waiting VA',
         paid_at: null,
-        notes: 'Pertandingan Persahabatan Sore'
-      },
-      {
-        id: 'bkg-2',
-        booking_code: 'PB-8819',
-        field_id: 'fld-2',
-        member_id: 'mem-2',
-        play_date: new Date().toISOString().split('T')[0],
-        start_time: '19:00',
-        duration_hours: 2,
-        va_bank: 'MANDIRI VA',
-        va_number: '8902081398765432',
-        total_price: 600000,
-        payment_status: 'Lunas',
-        paid_at: new Date().toISOString(),
-        notes: 'Sparring Malam Mingguan'
+        notes: 'Sparring Sore Ular Sakti Lalombi'
       }
     ]
   };
 
-  // Format Rupiah
   function formatRp(num) {
     return 'Rp ' + Number(num || 0).toLocaleString('id-ID');
   }
 
-  // Toast Notification Real-Time (Dengan Bunyi Beep Halus Web Audio API)
   function showToast(title, message, type = 'info') {
     const container = document.getElementById('toast-container');
+    if (!container) return;
     const toast = document.createElement('div');
     const bgClass = type === 'success' ? 'border-emerald-500 bg-white' : type === 'warning' ? 'border-amber-500 bg-white' : 'border-royal-600 bg-white';
     const iconBadge = type === 'success' ? '✅' : type === 'warning' ? '⚡' : '🔔';
@@ -734,20 +763,6 @@
     }, 4500);
   }
 
-  // Generator Nomor Virtual Account Otomatis Berdasarkan Bank
-  function generateVANumber(bankName, phone) {
-    const prefixes = {
-      'BCA VA': '8801',
-      'BRI VA': '7702',
-      'MANDIRI VA': '8903',
-      'BNI VA': '9804'
-    };
-    const prefix = prefixes[bankName] || '8801';
-    const cleanPhone = (phone || '081234567890').replace(/\D/g, '').slice(-10).padStart(10, '0');
-    const randSuffix = Math.floor(10 + Math.random() * 89);
-    return `${prefix}${cleanPhone}${randSuffix}`;
-  }
-
   // ==========================================
   // INISIALISASI & KONEKSI DATA (PREVIEW vs PROD)
   // ==========================================
@@ -756,11 +771,9 @@
       document.getElementById('preview-banner').classList.remove('hidden');
       document.getElementById('preview-auth-helper').classList.remove('hidden');
     } else {
-      // Pastikan seluruh elemen preview disembunyikan 100%
-      document.getElementById('preview-banner').remove();
-      document.getElementById('preview-auth-helper').remove();
+      document.getElementById('preview-banner')?.remove();
+      document.getElementById('preview-auth-helper')?.remove();
 
-      // Cek Session Admin Supabase Auth
       try {
         const { data: { session } } = await supabase.auth.getSession();
         if (session?.user) {
@@ -768,9 +781,9 @@
             id: session.user.id,
             role: 'admin',
             full_name: session.user.email.split('@')[0],
-            team_name: 'Administrator Arena',
+            team_name: 'Panitia Pengelola Arena',
             username: session.user.email,
-            phone: '6281234567890'
+            phone: '082293445661'
           };
           await loadAllDatabaseData();
           subscribeRealtimeVAChannel();
@@ -781,7 +794,6 @@
         console.error('Session check error:', err);
       }
 
-      // Cek Session Member di sessionStorage
       const savedMember = sessionStorage.getItem('pitchbook_member_session');
       if (savedMember) {
         state.currentUser = JSON.parse(savedMember);
@@ -796,24 +808,24 @@
   async function loadAllDatabaseData() {
     if (IS_PREVIEW) {
       state.fields = [...previewMemory.fields];
+      state.paymentAccounts = [...previewMemory.paymentAccounts];
       state.members = [...previewMemory.members];
       state.bookings = [...previewMemory.bookings];
     } else {
       try {
-        const [resFields, resMembers, resBookings] = await Promise.all([
+        const [resFields, resAccounts, resMembers, resBookings] = await Promise.all([
           supabase.from('fields').select('*').order('created_at', { ascending: true }),
+          supabase.from('payment_accounts').select('*').order('created_at', { ascending: true }),
           supabase.from('members').select('*').order('created_at', { ascending: false }),
           supabase.from('bookings').select('*').order('created_at', { ascending: false })
         ]);
-        if (resFields.error) throw resFields.error;
-        if (resMembers.error) throw resMembers.error;
-        if (resBookings.error) throw resBookings.error;
 
         state.fields = resFields.data || [];
+        state.paymentAccounts = resAccounts.data || [];
         state.members = resMembers.data || [];
         state.bookings = resBookings.data || [];
       } catch (err) {
-        showToast('Gagal Memuat Database', err.message || 'Pastikan tabel SQL sudah dibuat di Supabase.', 'warning');
+        showToast('Peringatan Database', err.message || 'Pastikan query SQL terbaru sudah dijalankan.', 'warning');
       }
     }
 
@@ -823,33 +835,42 @@
     refreshActiveVACardState();
   }
 
-  // Listener Realtime Supabase untuk Pembayaran VA Otomatis Tanpa Upload Bukti
-  function subscribeRealtimeVAChannel() {
+  // PERBAIKAN BUG REALTIME CHANNEL: Hapus channel lama sebelum membuat channel baru agar tidak bentrok
+  async function subscribeRealtimeVAChannel() {
     if (IS_PREVIEW || !supabase) return;
-    supabase
-      .channel('public:bookings:va-live')
-      .on('postgres_changes', { event: '*', schema: 'public', table: 'bookings' }, async (payload) => {
-        await loadAllDatabaseData();
-        renderAllViews();
-        if (payload.eventType === 'UPDATE' && payload.new?.payment_status === 'Lunas') {
-          showToast(
-            'Pembayaran VA Diterima Otomatis!',
-            `Booking #${payload.new.booking_code} (${payload.new.va_bank}) sebesar ${formatRp(payload.new.total_price)} telah LUNAS tanpa bukti transfer.`,
-            'success'
-          );
-        } else if (payload.eventType === 'INSERT') {
-          showToast(
-            'Booking & Nomor VA Baru Terbit',
-            `Pesanan baru #${payload.new.booking_code} menunggu pembayaran ${payload.new.va_bank}.`,
-            'info'
-          );
-        }
-      })
-      .subscribe();
+    try {
+      if (realtimeChannel) {
+        await supabase.removeChannel(realtimeChannel);
+        realtimeChannel = null;
+      }
+      const uniqueChannelName = 'va-live-channel-' + Date.now();
+      realtimeChannel = supabase
+        .channel(uniqueChannelName)
+        .on('postgres_changes', { event: '*', schema: 'public', table: 'bookings' }, async (payload) => {
+          await loadAllDatabaseData();
+          renderAllViews();
+          if (payload.eventType === 'UPDATE' && payload.new?.payment_status === 'Lunas') {
+            showToast(
+              'Dana Masuk ke Rekening Panitia!',
+              `Booking #${payload.new.booking_code} (${payload.new.va_bank}) sebesar ${formatRp(payload.new.total_price)} telah LUNAS otomatis.`,
+              'success'
+            );
+          } else if (payload.eventType === 'INSERT') {
+            showToast(
+              'Tagihan Booking Baru Terbit',
+              `Pesanan baru #${payload.new.booking_code} menunggu transfer ke Rekening Panitia (${payload.new.va_bank}).`,
+              'info'
+            );
+          }
+        })
+        .subscribe();
+    } catch (err) {
+      console.warn('Realtime subscription warning:', err);
+    }
   }
 
   // ==========================================
-  // SISTEM LOGIN & REGISTRASI HYBRID
+  // SISTEM LOGIN & REGISTRASI HYBRID (BEBAS ERROR)
   // ==========================================
   window.switchAuthTab = function(tab) {
     const btnMember = document.getElementById('tab-role-member');
@@ -884,43 +905,35 @@
       state.currentUser = {
         id: 'admin-preview',
         role: 'admin',
-        full_name: 'Admin Pengelola',
-        team_name: 'PitchBook Official',
+        full_name: 'Bendahara Panitia',
+        team_name: 'Panitia Pengelola Arena',
         username: 'admin@pitchbook.id',
-        phone: '081234567890'
+        phone: '082293445661'
       };
     } else {
       const m = previewMemory.members[0];
-      state.currentUser = {
-        id: m.id,
-        role: 'member',
-        full_name: m.full_name,
-        team_name: m.team_name,
-        username: m.username,
-        phone: m.phone
-      };
+      state.currentUser = { ...m, role: 'member' };
     }
     state.activeMenu = 'dashboard';
     enterDashboardView();
     showToast('Login berhasil (Mode Preview)', `Selamat datang, ${state.currentUser.full_name}!`, 'success');
   };
 
-  // Login Penyewa via Tabel `members`
   window.handleMemberLogin = async function(e) {
     e.preventDefault();
-    const uname = document.getElementById('member-username').value.trim();
+    const uname = document.getElementById('member-username').value.trim().toLowerCase();
     const pass = document.getElementById('member-password').value.trim();
 
     try {
       if (IS_PREVIEW) {
-        const found = previewMemory.members.find(m => m.username.toLowerCase() === uname.toLowerCase() && m.password === pass);
-        if (!found) throw new Error('Username atau password penyewa tidak cocok (Coba: garudafc / 123).');
+        const found = previewMemory.members.find(m => m.username.toLowerCase() === uname && m.password === pass);
+        if (!found) throw new Error('Username atau password penyewa tidak cocok (Coba: rahman / 123).');
         state.currentUser = { ...found, role: 'member' };
       } else {
         const { data, error } = await supabase
           .from('members')
           .select('*')
-          .eq('username', uname)
+          .ilike('username', uname)
           .eq('password', pass)
           .maybeSingle();
 
@@ -931,7 +944,7 @@
       }
 
       await loadAllDatabaseData();
-      subscribeRealtimeVAChannel();
+      await subscribeRealtimeVAChannel();
       state.activeMenu = 'dashboard';
       enterDashboardView();
       showToast('Berhasil Masuk', `Selamat datang kembali, ${state.currentUser.team_name}!`, 'success');
@@ -940,7 +953,6 @@
     }
   };
 
-  // Registrasi Penyewa Baru ke Tabel `members`
   window.handleMemberRegister = async function(e) {
     e.preventDefault();
     const full_name = document.getElementById('reg-fullname').value.trim();
@@ -951,6 +963,8 @@
 
     try {
       if (IS_PREVIEW) {
+        const exists = previewMemory.members.some(m => m.username.toLowerCase() === username);
+        if (exists) throw new Error('Username sudah terdaftar, silakan gunakan username lain.');
         const newMember = {
           id: 'mem-' + Date.now(),
           username,
@@ -962,6 +976,17 @@
         previewMemory.members.unshift(newMember);
         state.currentUser = { ...newMember, role: 'member' };
       } else {
+        // Cek apakah username sudah ada
+        const { data: existingUser } = await supabase
+          .from('members')
+          .select('id')
+          .ilike('username', username)
+          .maybeSingle();
+
+        if (existingUser) {
+          throw new Error(`Username "${username}" sudah terdaftar. Silakan langsung login di tab Penyewa / Tim atau gunakan username lain.`);
+        }
+
         const { data, error } = await supabase
           .from('members')
           .insert([{ username, password, full_name, team_name, phone }])
@@ -973,16 +998,15 @@
       }
 
       await loadAllDatabaseData();
-      subscribeRealtimeVAChannel();
+      await subscribeRealtimeVAChannel();
       state.activeMenu = 'dashboard';
       enterDashboardView();
-      showToast('Pendaftaran Tim Berhasil!', `Akun tim ${team_name} siap memesan lapangan.`, 'success');
+      showToast('Pendaftaran Tim Berhasil!', `Selamat datang ${full_name} (${team_name})!`, 'success');
     } catch (err) {
       showToast('Gagal Mendaftar', err.message, 'warning');
     }
   };
 
-  // Login Admin via Supabase Auth (`signInWithPassword`)
   window.handleAdminLogin = async function(e) {
     e.preventDefault();
     const email = document.getElementById('admin-email').value.trim();
@@ -994,9 +1018,9 @@
           id: 'admin-preview',
           role: 'admin',
           full_name: email.split('@')[0],
-          team_name: 'Administrator Arena',
+          team_name: 'Panitia Pengelola Arena',
           username: email,
-          phone: '081234567890'
+          phone: '082293445661'
         };
       } else {
         const { data, error } = await supabase.auth.signInWithPassword({ email, password });
@@ -1005,25 +1029,31 @@
           id: data.user.id,
           role: 'admin',
           full_name: data.user.email.split('@')[0],
-          team_name: 'Administrator Arena',
+          team_name: 'Panitia Pengelola Arena',
           username: data.user.email,
-          phone: '081234567890'
+          phone: '082293445661'
         };
       }
 
       await loadAllDatabaseData();
-      subscribeRealtimeVAChannel();
+      await subscribeRealtimeVAChannel();
       state.activeMenu = 'dashboard';
       enterDashboardView();
-      showToast('Login Admin Berhasil', 'Sistem pemantauan Virtual Account aktif.', 'success');
+      showToast('Login Admin Panitia Berhasil', 'Anda dapat mengelola jadwal dan Nomor Rekening Panitia.', 'success');
     } catch (err) {
       showToast('Gagal Login Admin', err.message, 'warning');
     }
   };
 
   window.handleLogout = async function() {
-    if (!IS_PREVIEW && state.currentUser?.role === 'admin' && supabase) {
-      await supabase.auth.signOut();
+    if (!IS_PREVIEW && supabase) {
+      if (realtimeChannel) {
+        await supabase.removeChannel(realtimeChannel);
+        realtimeChannel = null;
+      }
+      if (state.currentUser?.role === 'admin') {
+        await supabase.auth.signOut();
+      }
     }
     sessionStorage.removeItem('pitchbook_member_session');
     state.currentUser = null;
@@ -1041,7 +1071,8 @@
       return [
         { id: 'dashboard', label: 'Dashboard', icon: 'home' },
         { id: 'fields', label: 'Kelola Lapangan', icon: 'map-pin' },
-        { id: 'bookings', label: 'Jadwal & VA', icon: 'credit-card' },
+        { id: 'bank_accounts', label: 'Rekening Panitia', icon: 'landmark' },
+        { id: 'bookings', label: 'Jadwal & Mutasi', icon: 'credit-card' },
         { id: 'members', label: 'Data Member', icon: 'users' }
       ];
     }
@@ -1067,7 +1098,7 @@
 
   window.openQuickActionFromPromo = function() {
     if (state.currentUser?.role === 'admin') {
-      window.switchMenu('bookings');
+      window.switchMenu('bank_accounts');
     } else {
       window.switchMenu('booking_new');
     }
@@ -1092,11 +1123,10 @@
     if (!state.currentUser) return;
     refreshActiveVACardState();
 
-    // Update Header & Profil Kanan
     document.getElementById('header-greeting-name').textContent = `${state.currentUser.full_name} • ${state.currentUser.team_name}`;
-    document.getElementById('sidebar-role-badge').textContent = state.currentUser.role === 'admin' ? 'Admin Panel' : 'Member Area';
+    document.getElementById('sidebar-role-badge').textContent = state.currentUser.role === 'admin' ? 'Admin Panitia' : 'Member Area';
 
-    const initials = state.currentUser.full_name.split(' ').map(n => n[0]).join('').slice(0, 2).toUpperCase();
+    const initials = (state.currentUser.full_name || 'PB').split(' ').map(n => n[0]).join('').slice(0, 2).toUpperCase();
     document.getElementById('right-profile-avatar').textContent = initials;
     document.getElementById('right-profile-name').textContent = state.currentUser.full_name;
     document.getElementById('right-profile-team').textContent = state.currentUser.team_name;
@@ -1112,14 +1142,13 @@
     const currentMenuObj = menus.find(m => m.id === state.activeMenu) || menus[0];
     document.getElementById('header-page-title').textContent = currentMenuObj.label;
 
-    // 1. Desktop Sidebar (Gaya Cryptowall dengan bar indikator kiri + kapsul biru)
     const desktopNav = document.getElementById('desktop-nav-list');
     desktopNav.innerHTML = menus.map(m => {
       const active = m.id === state.activeMenu;
       return `
         <div class="relative flex items-center">
           ${active ? '<span class="w-1.5 h-8 bg-royal-600 rounded-r-full absolute -left-5"></span>' : ''}
-          <button onclick="window.switchMenu('${m.id}')" class="w-full flex items-center gap-3.5 px-4 py-3 rounded-2xl text-xs font-semibold transition ${
+          <button onclick="window.switchMenu('${m.id}')" class="w-full flex items-center gap-3 px-4 py-2.5 rounded-2xl text-xs font-semibold transition ${
             active
               ? 'bg-royal-600 text-white shadow-royal'
               : 'text-slate-400 hover:text-slate-700 hover:bg-slate-50'
@@ -1133,59 +1162,65 @@
       `;
     }).join('');
 
-    // 2. Mobile Bottom Navigation Bar
     const mobileNav = document.getElementById('mobile-bottom-nav');
     mobileNav.innerHTML = menus.map(m => {
       const active = m.id === state.activeMenu;
       return `
-        <button onclick="window.switchMenu('${m.id}')" class="flex flex-col items-center justify-center py-1 px-3 rounded-2xl transition ${
+        <button onclick="window.switchMenu('${m.id}')" class="flex flex-col items-center justify-center py-1 px-2 rounded-2xl transition ${
           active ? 'text-royal-600 font-bold' : 'text-slate-400 font-medium'
         }">
-          <div class="w-9 h-9 rounded-2xl flex items-center justify-center ${active ? 'bg-royal-600 text-white shadow-royal' : ''}">
+          <div class="w-8 h-8 rounded-2xl flex items-center justify-center ${active ? 'bg-royal-600 text-white shadow-royal' : ''}">
             <i data-lucide="${m.icon}" class="w-4 h-4"></i>
           </div>
-          <span class="text-[10px] mt-1">${m.label}</span>
+          <span class="text-[9px] mt-1">${m.label}</span>
         </button>
       `;
     }).join('');
   }
 
   // ==========================================
-  // RENDER PANEL KANAN (VIRTUAL ACCOUNT & LIVE FEED)
+  // RENDER PANEL KANAN (REKENING PANITIA & MUTASI LIVE)
   // ==========================================
   function renderRightVAPanel() {
     const va = state.activeTagihanVA;
+    const defaultAcc = state.paymentAccounts.find(a => a.status === 'Active') || state.paymentAccounts[0];
+
     const bankPill = document.getElementById('va-card-bank-pill');
     const labelEl = document.getElementById('va-card-label');
     const codeEl = document.getElementById('va-card-code');
     const amountEl = document.getElementById('va-card-amount');
+    const holderEl = document.getElementById('va-card-holder');
+    const realAccEl = document.getElementById('va-card-real-acc');
     const numberEl = document.getElementById('va-card-number');
     const statusBadge = document.getElementById('va-card-status-badge');
 
     if (va) {
-      bankPill.textContent = va.va_bank || 'BCA VA';
-      labelEl.textContent = va.payment_status === 'Waiting VA' ? 'Menunggu Transfer VA' : 'Pembayaran VA Terverifikasi';
+      bankPill.textContent = va.va_bank || 'BANK PANITIA';
+      labelEl.textContent = va.payment_status === 'Waiting VA' ? 'Transfer Tepat Nominal Berikut:' : 'Dana Masuk ke Rekening Panitia';
       codeEl.textContent = `#${va.booking_code}`;
       amountEl.textContent = formatRp(va.total_price);
+      holderEl.textContent = va.committee_account_holder || (defaultAcc ? defaultAcc.account_holder : 'BENDAHARA PANITIA');
+      realAccEl.textContent = `No. Rek Panitia: ${va.committee_account_number || (defaultAcc ? defaultAcc.account_number : '-')}`;
       numberEl.textContent = va.va_number;
       statusBadge.textContent = va.payment_status.toUpperCase();
     } else {
-      bankPill.textContent = 'VIRTUAL ACCOUNT';
-      labelEl.textContent = 'Belum Ada Tagihan Aktif';
-      codeEl.textContent = '#PB-READY';
+      bankPill.textContent = defaultAcc ? defaultAcc.bank_name : 'REKENING PANITIA';
+      labelEl.textContent = 'Rekening Resmi Penerima Dana';
+      codeEl.textContent = '#READY';
       amountEl.textContent = 'Rp 0';
+      holderEl.textContent = defaultAcc ? defaultAcc.account_holder : 'Atur di Menu Rekening Panitia';
+      realAccEl.textContent = `No. Rek: ${defaultAcc ? defaultAcc.account_number : 'Belum diatur'}`;
       numberEl.textContent = 'Buat Booking Baru';
-      statusBadge.textContent = 'IDLE';
+      statusBadge.textContent = 'ACTIVE';
     }
 
-    // Daftar Notifikasi Transaksi VA Real-Time (Gaya "Recent Transaction" Cryptowall)
     const txContainer = document.getElementById('right-recent-transactions');
     const recentList = state.bookings.slice(0, 4);
 
     if (recentList.length === 0) {
       txContainer.innerHTML = `
         <div class="text-center py-6 bg-slate-50 rounded-2xl text-xs text-slate-400">
-          Belum ada transaksi VA
+          Belum ada transaksi masuk
         </div>
       `;
       return;
@@ -1197,7 +1232,7 @@
       return `
         <div onclick="window.selectBookingForVACard('${b.id}')" class="cursor-pointer p-3 rounded-2xl bg-slate-50/70 hover:bg-sky-50/60 border border-slate-100 flex items-center justify-between gap-2.5 transition">
           <div class="flex items-center gap-3 min-w-0">
-            <div class="w-10 h-10 rounded-xl ${isLunas ? 'bg-royal-600 text-white' : 'bg-skycyan-400 text-white'} flex items-center justify-center font-bold text-xs shrink-0 shadow-sm">
+            <div class="w-9 h-9 rounded-xl ${isLunas ? 'bg-royal-600 text-white' : 'bg-skycyan-400 text-white'} flex items-center justify-center font-bold text-[10px] shrink-0 shadow-sm">
               ${(b.va_bank || 'VA').split(' ')[0].slice(0, 3)}
             </div>
             <div class="min-w-0">
@@ -1222,35 +1257,42 @@
       state.activeTagihanVA = found;
       renderRightVAPanel();
       lucide.createIcons();
-      showToast('Kartu VA Dipilih', `Menampilkan Nomor ${found.va_bank}: ${found.va_number}`, 'info');
+      showToast('Tagihan Dipilih', `Rekening Panitia (${found.va_bank}): ${found.committee_account_number || found.va_number}`, 'info');
     }
   };
 
   window.copyActiveVANumber = function() {
     if (!state.activeTagihanVA) {
-      showToast('Tidak Ada Nomor VA', 'Silakan buat jadwal booking terlebih dahulu.', 'warning');
+      const defaultAcc = state.paymentAccounts[0];
+      if (defaultAcc) {
+        navigator.clipboard?.writeText(defaultAcc.account_number.replace(/\D/g, ''));
+        showToast('No. Rekening Panitia Disalin!', `${defaultAcc.bank_name}: ${defaultAcc.account_number} (a.n ${defaultAcc.account_holder})`, 'success');
+        return;
+      }
+      showToast('Belum Ada Nomor Rekening', 'Silakan buat jadwal booking terlebih dahulu.', 'warning');
       return;
     }
-    navigator.clipboard?.writeText(state.activeTagihanVA.va_number);
+    const copyText = (state.activeTagihanVA.committee_account_number || state.activeTagihanVA.va_number).replace(/\s+/g, '');
+    navigator.clipboard?.writeText(copyText);
     showToast(
-      'Nomor VA Disalin!',
-      `${state.activeTagihanVA.va_bank}: ${state.activeTagihanVA.va_number} siap ditempel di m-Banking.`,
+      'Nomor Rekening / VA Panitia Disalin!',
+      `Silakan transfer tepat ${formatRp(state.activeTagihanVA.total_price)} ke ${state.activeTagihanVA.va_bank} (${copyText}) a.n ${state.activeTagihanVA.committee_account_holder || 'Panitia'}.`,
       'success'
     );
   };
 
-  // SIMULASI CALLBACK / WEBHOOK PEMBAYARAN VA OTOMATIS (TANPA KIRIM BUKTI TRANSFER)
+  // KONFIRMASI OTOMATIS / CALLBACK DANA MASUK KE REKENING PANITIA
   window.simulateInstantVAPayment = async function(specificBookingId = null) {
     const target = specificBookingId
       ? state.bookings.find(b => b.id === specificBookingId)
       : state.activeTagihanVA;
 
     if (!target) {
-      showToast('Belum Ada Tagihan VA', 'Buat pesanan lapangan terlebih dahulu untuk mendapatkan Nomor VA.', 'warning');
+      showToast('Belum Ada Tagihan Aktif', 'Buat pesanan lapangan terlebih dahulu.', 'warning');
       return;
     }
     if (target.payment_status === 'Lunas') {
-      showToast('Tagihan Sudah Lunas', `Booking #${target.booking_code} sudah terverifikasi lunas.`, 'info');
+      showToast('Sudah Lunas', `Booking #${target.booking_code} sudah tercatat lunas di Rekening Panitia.`, 'info');
       return;
     }
 
@@ -1273,12 +1315,12 @@
       await loadAllDatabaseData();
       renderAllViews();
       showToast(
-        'Callback VA Berhasil! (Auto-Verified)',
-        `Pembayaran ${target.va_bank} (${target.va_number}) sejumlah ${formatRp(target.total_price)} langsung LUNAS otomatis tanpa unggah bukti transfer!`,
+        'Dana Masuk ke Rekening Panitia!',
+        `Transfer ${formatRp(target.total_price)} ke ${target.va_bank} (${target.committee_account_number || target.va_number}) a.n ${target.committee_account_holder || 'Panitia'} telah LUNAS otomatis!`,
         'success'
       );
     } catch (err) {
-      showToast('Gagal Memproses Callback VA', err.message, 'warning');
+      showToast('Gagal Memproses Pembayaran', err.message, 'warning');
     }
   };
 
@@ -1287,8 +1329,8 @@
     renderAllViews();
     const waitingCount = state.bookings.filter(b => b.payment_status === 'Waiting VA').length;
     showToast(
-      'Status Gateway Virtual Account',
-      `Sinkronisasi real-time aktif. Terdapat ${waitingCount} tagihan VA menunggu pembayaran.`,
+      'Cek Mutasi Rekening Panitia',
+      `Sinkronisasi real-time aktif. Terdapat ${waitingCount} booking menunggu dana masuk.`,
       'info'
     );
   };
@@ -1304,6 +1346,8 @@
       container.innerHTML = buildDashboardHTML();
     } else if (menu === 'fields') {
       container.innerHTML = buildAdminFieldsHTML();
+    } else if (menu === 'bank_accounts') {
+      container.innerHTML = buildAdminBankAccountsHTML();
     } else if (menu === 'bookings') {
       container.innerHTML = buildAdminBookingsHTML();
     } else if (menu === 'members') {
@@ -1318,12 +1362,13 @@
     lucide.createIcons();
   }
 
-  // 1. MENU DASHBOARD (Gaya Cryptowall: Royal Blue Banner + Horizontal Cards + Spline Area Chart)
+  // 1. MENU DASHBOARD
   function buildDashboardHTML() {
     const isAdmin = state.currentUser.role === 'admin';
     const paidBookings = state.bookings.filter(b => b.payment_status === 'Lunas');
     const totalRevenue = paidBookings.reduce((acc, b) => acc + Number(b.total_price || 0), 0);
     const waitingCount = state.bookings.filter(b => b.payment_status === 'Waiting VA').length;
+    const activeAccounts = state.paymentAccounts.filter(a => a.status === 'Active');
 
     const filteredFields = state.fields.filter(f =>
       !state.searchQuery ||
@@ -1336,39 +1381,39 @@
       <div class="bg-hero-royal rounded-[28px] p-6 sm:p-8 text-white shadow-royal relative overflow-hidden mb-7 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-6">
         <div class="relative z-10 max-w-md">
           <span class="inline-block bg-white/20 backdrop-blur-sm text-[11px] font-bold px-3 py-1 rounded-full mb-3">
-            ⚡ VIRTUAL ACCOUNT AUTO-CALLBACK
+            🏦 TERHUBUNG KE REKENING RESMI PANITIA
           </span>
           <h2 class="text-xl sm:text-2xl font-bold leading-snug mb-2">
-            Kelola Sewa Lapangan & Transaksi VA Otomatis
+            Sewa Lapangan & Transfer Langsung ke Rekening Panitia
           </h2>
           <p class="text-xs text-blue-100 leading-relaxed mb-5">
-            Transfer langsung ke Nomor Virtual Account (BCA, BRI, Mandiri, BNI). Status booking otomatis LUNAS detik itu juga tanpa perlu kirim bukti transfer.
+            Setiap pesanan menghasilkan Nominal Kode Unik & Nomor VA yang langsung mengarah ke Nomor Rekening Bank Panitia. Otomatis terverifikasi tanpa kirim bukti struk.
           </p>
           <div class="flex flex-wrap items-center gap-3">
-            <button onclick="window.switchMenu('${isAdmin ? 'bookings' : 'booking_new'}')" class="px-5 py-3 rounded-2xl bg-skycyan-400 hover:bg-skycyan-500 text-white font-bold text-xs shadow-cyan transition">
-              ${isAdmin ? 'Pantau Transaksi VA' : 'Booking Lapangan Sekarang'}
+            <button onclick="window.switchMenu('${isAdmin ? 'bank_accounts' : 'booking_new'}')" class="px-5 py-3 rounded-2xl bg-skycyan-400 hover:bg-skycyan-500 text-white font-bold text-xs shadow-cyan transition">
+              ${isAdmin ? 'Atur Rekening Panitia' : 'Booking Lapangan Sekarang'}
             </button>
             <button onclick="window.openWhatsAppModal()" class="px-4 py-3 rounded-2xl bg-white/15 hover:bg-white/25 text-white font-semibold text-xs backdrop-blur-sm transition">
-              Konsultasi WhatsApp
+              Hubungi Panitia
             </button>
           </div>
         </div>
 
-        <!-- Ilustrasi 3D Smartphone & VA Card di Kanan Banner -->
-        <div class="relative z-10 bg-white/15 backdrop-blur-md border border-white/25 rounded-3xl p-4 w-full sm:w-60 shrink-0">
-          <div class="flex items-center justify-between text-[11px] text-sky-100 mb-2">
-            <span>Total Pendapatan VA</span>
-            <span class="bg-emerald-400 text-slate-900 font-extrabold px-2 py-0.5 rounded-full text-[10px]">LIVE</span>
+        <!-- Ringkasan Dana Masuk Panitia -->
+        <div class="relative z-10 bg-white/15 backdrop-blur-md border border-white/25 rounded-3xl p-4 w-full sm:w-64 shrink-0">
+          <div class="flex items-center justify-between text-[11px] text-sky-100 mb-1">
+            <span>Total Kas Masuk Panitia</span>
+            <span class="bg-emerald-400 text-slate-900 font-extrabold px-2 py-0.5 rounded-full text-[10px]">REAL-TIME</span>
           </div>
           <div class="text-xl font-extrabold mb-3">${formatRp(totalRevenue)}</div>
           <div class="grid grid-cols-2 gap-2 text-[11px] bg-slate-900/25 rounded-2xl p-2.5">
             <div>
-              <div class="text-blue-200 text-[10px]">Lunas Otomatis</div>
-              <div class="font-bold">${paidBookings.length} Jadwal</div>
+              <div class="text-blue-200 text-[10px]">Lunas Masuk</div>
+              <div class="font-bold">${paidBookings.length} Transaksi</div>
             </div>
             <div>
-              <div class="text-blue-200 text-[10px]">Waiting VA</div>
-              <div class="font-bold text-amber-300">${waitingCount} Tagihan</div>
+              <div class="text-blue-200 text-[10px]">Rekening Aktif</div>
+              <div class="font-bold text-sky-200">${activeAccounts.length} Bank</div>
             </div>
           </div>
         </div>
@@ -1376,14 +1421,43 @@
         <div class="w-56 h-56 rounded-full bg-skycyan-400/20 absolute -right-12 -bottom-16 blur-xl"></div>
       </div>
 
-      <!-- KATALOG LAPANGAN HORIZONTAL (Gaya "My Portofolio" Cryptowall) -->
+      <!-- DAFTAR REKENING RESMI PANITIA (Agar Penyewa & Admin Tahu Persis Uang Masuk Kemana) -->
+      <div class="bg-white rounded-[24px] p-5 shadow-soft-card border border-slate-100 mb-7">
+        <div class="flex items-center justify-between mb-3.5">
+          <div>
+            <h3 class="text-sm font-bold text-slate-800">🏦 Daftar Rekening Resmi Panitia (Tujuan Dana Masuk)</h3>
+            <p class="text-[11px] text-slate-400">Seluruh pembayaran penyewa disalurkan langsung ke rekening bendahara panitia di bawah ini</p>
+          </div>
+          ${isAdmin ? `<button onclick="window.switchMenu('bank_accounts')" class="text-xs font-bold text-royal-600 hover:underline">+ Edit Rekening</button>` : ''}
+        </div>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
+          ${
+            activeAccounts.length === 0
+              ? `<div class="col-span-2 text-xs text-slate-400 py-3">Admin belum menambahkan nomor rekening panitia.</div>`
+              : activeAccounts.map(acc => `
+                <div class="p-3.5 rounded-2xl bg-slate-50 border border-slate-100 flex items-center justify-between gap-3">
+                  <div class="flex items-center gap-3 min-w-0">
+                    <div class="w-10 h-10 rounded-xl bg-royal-600 text-white font-extrabold text-xs flex items-center justify-center shrink-0">
+                      ${acc.bank_name.split(' ')[0].slice(0, 4)}
+                    </div>
+                    <div class="min-w-0">
+                      <div class="text-xs font-bold text-slate-800 truncate">${acc.bank_name} — <span class="font-mono text-royal-600">${acc.account_number}</span></div>
+                      <div class="text-[10px] text-slate-500 font-semibold truncate">a.n ${acc.account_holder}</div>
+                    </div>
+                  </div>
+                  <span class="text-[10px] font-mono font-bold bg-sky-100 text-skycyan-500 px-2.5 py-1 rounded-lg shrink-0">Prefix: ${acc.va_prefix}</span>
+                </div>
+              `).join('')
+          }
+        </div>
+      </div>
+
+      <!-- KATALOG LAPANGAN HORIZONTAL -->
       <div class="flex items-center justify-between mb-4">
         <h3 class="text-base font-bold text-slate-800">Daftar Arena & Tarif Sewa</h3>
-        <div class="flex items-center gap-2">
-          <button onclick="window.switchMenu('${isAdmin ? 'fields' : 'booking_new'}')" class="px-3 py-1.5 rounded-xl bg-sky-100 text-skycyan-500 text-xs font-bold hover:bg-sky-200 transition">
-            ${isAdmin ? '+ Kelola Arena' : 'Pilih Jadwal →'}
-          </button>
-        </div>
+        <button onclick="window.switchMenu('${isAdmin ? 'fields' : 'booking_new'}')" class="px-3 py-1.5 rounded-xl bg-sky-100 text-skycyan-500 text-xs font-bold hover:bg-sky-200 transition">
+          ${isAdmin ? '+ Kelola Arena' : 'Pilih Jadwal →'}
+        </button>
       </div>
 
       <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-7">
@@ -1407,60 +1481,12 @@
                   <button onclick="window.quickBookField('${f.id}')" class="mt-1.5 inline-flex items-center gap-1 text-[10px] font-bold px-2.5 py-1 rounded-full ${
                     f.status === 'Available' ? 'bg-sky-50 text-skycyan-500 hover:bg-sky-100' : 'bg-red-50 text-red-500'
                   }">
-                    <span>• ${f.status === 'Available' ? 'Booking VA' : 'Maintenance'}</span>
+                    <span>• ${f.status === 'Available' ? 'Booking Sekarang' : 'Maintenance'}</span>
                   </button>
                 </div>
               </div>
             `).join('')
         }
-      </div>
-
-      <!-- GRAFIK KURVA SPLINE AREA & ANTREAN JADWAL HARI INI (Gaya "Total Portofolio" Cryptowall) -->
-      <div class="bg-white rounded-[28px] p-6 shadow-soft-card border border-slate-100">
-        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 mb-4">
-          <div class="flex items-center gap-2.5">
-            <div class="w-8 h-8 rounded-xl bg-royal-600 text-white flex items-center justify-center">
-              <i data-lucide="activity" class="w-4 h-4"></i>
-            </div>
-            <div>
-              <h3 class="text-sm font-bold text-slate-800">Statistik Transaksi Virtual Account & Okupansi</h3>
-              <p class="text-[11px] text-slate-400">Grafik aktivitas pembayaran VA otomatis mingguan</p>
-            </div>
-          </div>
-          <span class="bg-skycyan-400 text-white text-xs font-extrabold px-3.5 py-1.5 rounded-xl shadow-cyan self-start sm:self-auto">
-            Total: ${formatRp(totalRevenue)}
-          </span>
-        </div>
-
-        <!-- Smooth SVG Spline Chart ala Cryptowall -->
-        <div class="relative pt-4 pb-2">
-          <svg viewBox="0 0 700 170" class="w-full h-40 overflow-visible">
-            <defs>
-              <linearGradient id="cryptoAreaGrad" x1="0" y1="0" x2="0" y2="1">
-                <stop offset="0%" stop-color="#38BDF8" stop-opacity="0.42" />
-                <stop offset="100%" stop-color="#38BDF8" stop-opacity="0.0" />
-              </linearGradient>
-            </defs>
-            <!-- Garis Grid Horizontal Tipis -->
-            <line x1="0" y1="35" x2="700" y2="35" stroke="#F1F5F9" stroke-width="1" />
-            <line x1="0" y1="85" x2="700" y2="85" stroke="#F1F5F9" stroke-width="1" />
-            <line x1="0" y1="135" x2="700" y2="135" stroke="#F1F5F9" stroke-width="1" />
-
-            <!-- Area Fill -->
-            <path d="M 20 110 C 90 110, 120 55, 180 65 C 240 75, 270 130, 330 105 C 390 80, 420 35, 480 42 C 540 50, 580 115, 640 85 L 680 70 L 680 155 L 20 155 Z" fill="url(#cryptoAreaGrad)" />
-            <!-- Smooth Line -->
-            <path d="M 20 110 C 90 110, 120 55, 180 65 C 240 75, 270 130, 330 105 C 390 80, 420 35, 480 42 C 540 50, 580 115, 640 85 L 680 70" fill="none" stroke="#3B5BDB" stroke-width="3" stroke-linecap="round" />
-
-            <!-- Titik Puncak Aktif + Garis Putus-putus Vertikal -->
-            <line x1="480" y1="42" x2="480" y2="155" stroke="#38BDF8" stroke-width="1.5" stroke-dasharray="4 4" />
-            <circle cx="480" cy="42" r="6" fill="#38BDF8" stroke="#FFFFFF" stroke-width="3" />
-            <rect x="435" y="4" width="90" height="26" rx="8" fill="#38BDF8" />
-            <text x="480" y="21" text-anchor="middle" fill="#FFFFFF" font-size="11" font-weight="700">VA Peak</text>
-          </svg>
-          <div class="grid grid-cols-7 text-center text-[11px] font-medium text-slate-400 mt-1">
-            <span>Sen</span><span>Sel</span><span>Rab</span><span>Kam</span><span class="text-royal-600 font-bold">Jum</span><span>Sab</span><span>Min</span>
-          </div>
-        </div>
       </div>
     `;
   }
@@ -1475,13 +1501,138 @@
   };
 
   // ==========================================
-  // 2. MENU PENYEWA: BOOKING BARU & GENERATE VA OTOMATIS
+  // 2. MENU BARU ADMIN: KELOLA REKENING BANK PANITIA
+  // ==========================================
+  function buildAdminBankAccountsHTML() {
+    return `
+      <div class="bg-royal-50 border border-royal-100 rounded-[24px] p-5 mb-6 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+        <div>
+          <h3 class="text-sm font-bold text-royal-700">💡 Bagaimana Uang Transfer Penyewa Masuk ke Panitia?</h3>
+          <p class="text-xs text-slate-600 mt-1 leading-relaxed">
+            Tambahkan <b>Nomor Rekening Asli Panitia / Bendahara</b> di bawah ini. Saat penyewa melakukan booking, sistem akan menampilkan Nomor Rekening Panitia tersebut beserta <b>3 Digit Kode Unik Otomatis</b> & Nomor VA agar uang langsung masuk ke rekening bank panitia dan teridentifikasi otomatis tanpa perlu kirim foto bukti transfer.
+          </p>
+        </div>
+        <button onclick="window.openBankModal()" class="px-4 py-3 rounded-2xl bg-royal-600 hover:bg-royal-700 text-white font-bold text-xs shadow-royal shrink-0 transition">
+          + Tambah Rekening Panitia
+        </button>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+        ${
+          state.paymentAccounts.length === 0
+            ? `<div class="col-span-2 bg-white rounded-2xl p-8 text-center text-xs text-slate-400">Belum ada nomor rekening panitia. Klik "+ Tambah Rekening Panitia" di atas.</div>`
+            : state.paymentAccounts.map(acc => `
+              <div class="bg-white rounded-[24px] p-5 shadow-soft-card border border-slate-100 flex flex-col justify-between gap-4">
+                <div>
+                  <div class="flex items-center justify-between gap-2 mb-2">
+                    <span class="text-xs font-extrabold px-3 py-1 rounded-full bg-royal-50 text-royal-600">${acc.bank_name}</span>
+                    <span class="text-[10px] font-bold px-2.5 py-1 rounded-full ${acc.status === 'Active' ? 'bg-emerald-50 text-emerald-600' : 'bg-slate-100 text-slate-500'}">
+                      • ${acc.status}
+                    </span>
+                  </div>
+                  <div class="text-[11px] text-slate-400 mt-2">Nomor Rekening Resmi Panitia:</div>
+                  <div class="text-lg font-mono font-extrabold text-slate-800 tracking-wide">${acc.account_number}</div>
+                  <div class="text-xs font-semibold text-slate-600 mt-0.5">a.n ${acc.account_holder}</div>
+                  <div class="text-[11px] text-skycyan-500 font-mono mt-1">Kode Prefix VA: ${acc.va_prefix}</div>
+                </div>
+
+                <div class="pt-3 border-t border-slate-100 flex items-center justify-end gap-2">
+                  <button onclick="window.openBankModal('${acc.id}')" class="px-3.5 py-1.5 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-700 text-xs font-semibold">Edit Rekening</button>
+                  <button onclick="window.deleteBankData('${acc.id}')" class="px-3.5 py-1.5 rounded-xl bg-red-50 hover:bg-red-100 text-red-600 text-xs font-semibold">Hapus</button>
+                </div>
+              </div>
+            `).join('')
+        }
+      </div>
+    `;
+  }
+
+  window.openBankModal = function(bankId = null) {
+    const modal = document.getElementById('bank-modal');
+    const title = document.getElementById('bank-modal-title');
+    if (bankId) {
+      const b = state.paymentAccounts.find(x => x.id === bankId);
+      if (!b) return;
+      title.textContent = 'Edit Rekening Panitia';
+      document.getElementById('bank-id-input').value = b.id;
+      document.getElementById('bank-name-input').value = b.bank_name;
+      document.getElementById('bank-prefix-input').value = b.va_prefix;
+      document.getElementById('bank-accnum-input').value = b.account_number;
+      document.getElementById('bank-holder-input').value = b.account_holder;
+      document.getElementById('bank-status-input').value = b.status;
+    } else {
+      title.textContent = 'Tambah Rekening Panitia';
+      document.getElementById('form-bank-crud').reset();
+      document.getElementById('bank-id-input').value = '';
+    }
+    modal.classList.remove('hidden');
+  };
+
+  window.closeBankModal = function() {
+    document.getElementById('bank-modal').classList.add('hidden');
+  };
+
+  window.saveBankData = async function(e) {
+    e.preventDefault();
+    const id = document.getElementById('bank-id-input').value;
+    const payload = {
+      bank_name: document.getElementById('bank-name-input').value.trim(),
+      va_prefix: document.getElementById('bank-prefix-input').value.trim(),
+      account_number: document.getElementById('bank-accnum-input').value.trim(),
+      account_holder: document.getElementById('bank-holder-input').value.trim().toUpperCase(),
+      status: document.getElementById('bank-status-input').value
+    };
+
+    try {
+      if (IS_PREVIEW) {
+        if (id) {
+          const idx = previewMemory.paymentAccounts.findIndex(x => x.id === id);
+          if (idx !== -1) previewMemory.paymentAccounts[idx] = { ...previewMemory.paymentAccounts[idx], ...payload };
+        } else {
+          previewMemory.paymentAccounts.push({ id: 'acc-' + Date.now(), ...payload });
+        }
+      } else {
+        if (id) {
+          const { error } = await supabase.from('payment_accounts').update(payload).eq('id', id);
+          if (error) throw error;
+        } else {
+          const { error } = await supabase.from('payment_accounts').insert([payload]);
+          if (error) throw error;
+        }
+      }
+      window.closeBankModal();
+      await loadAllDatabaseData();
+      renderAllViews();
+      showToast('Rekening Panitia Tersimpan', `Rekening ${payload.bank_name} (${payload.account_number}) siap menerima pembayaran.`, 'success');
+    } catch (err) {
+      showToast('Gagal Menyimpan Rekening', err.message, 'warning');
+    }
+  };
+
+  window.deleteBankData = async function(bankId) {
+    try {
+      if (IS_PREVIEW) {
+        previewMemory.paymentAccounts = previewMemory.paymentAccounts.filter(x => x.id !== bankId);
+      } else {
+        const { error } = await supabase.from('payment_accounts').delete().eq('id', bankId);
+        if (error) throw error;
+      }
+      await loadAllDatabaseData();
+      renderAllViews();
+      showToast('Rekening Dihapus', 'Data rekening panitia telah dihapus.', 'info');
+    } catch (err) {
+      showToast('Gagal Menghapus', err.message, 'warning');
+    }
+  };
+
+  // ==========================================
+  // 3. MENU PENYEWA: BOOKING BARU & PILIH REKENING PANITIA
   // ==========================================
   function buildMemberNewBookingHTML() {
     const activeField = state.fields.find(f => f.id === state.selectedFieldId) || state.fields[0];
     const pricePerHour = activeField ? Number(activeField.price_per_hour) : 0;
+    const activeBanks = state.paymentAccounts.filter(a => a.status === 'Active');
 
-    // Cek slot jam yang sudah dibooking pada tanggal & lapangan terpilih
     const bookedSlots = state.bookings
       .filter(b => b.field_id === (activeField?.id) && b.play_date === state.selectedDate && b.payment_status !== 'Batal')
       .map(b => b.start_time);
@@ -1490,12 +1641,11 @@
 
     return `
       <div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
-        <!-- Form Booking & Pilihan Bank VA -->
         <div class="lg:col-span-7 bg-white rounded-[28px] p-6 shadow-soft-card border border-slate-100">
           <div class="flex items-center justify-between mb-5">
             <div>
-              <h3 class="text-base font-bold text-slate-800">Form Sewa Lapangan & Virtual Account</h3>
-              <p class="text-xs text-slate-400">Nomor VA diterbitkan instan & otomatis lunas saat ditransfer</p>
+              <h3 class="text-base font-bold text-slate-800">Form Sewa Lapangan & Rekening Panitia</h3>
+              <p class="text-xs text-slate-400">Pilih jadwal dan rekening bank panitia tujuan transfer</p>
             </div>
             <span class="bg-sky-50 text-skycyan-500 text-xs font-bold px-3 py-1 rounded-xl">Auto-Verify</span>
           </div>
@@ -1537,40 +1687,44 @@
               </div>
             </div>
 
-            <!-- Pilihan Bank Virtual Account -->
+            <!-- Pilihan Bank Rekening Panitia -->
             <div>
-              <label class="block text-xs font-semibold text-slate-600 mb-2">Pilih Bank Virtual Account (Otomatis Cek Mutasi)</label>
-              <div class="grid grid-cols-2 sm:grid-cols-4 gap-2.5">
-                ${['BCA VA', 'BRI VA', 'MANDIRI VA', 'BNI VA'].map((bank, i) => `
-                  <label class="cursor-pointer">
-                    <input type="radio" name="va_bank_choice" value="${bank}" ${i === 0 ? 'checked' : ''} class="peer hidden" />
-                    <div class="p-3 rounded-2xl border border-slate-200 peer-checked:border-royal-600 peer-checked:bg-royal-50/70 text-center transition">
-                      <div class="text-xs font-extrabold text-slate-800">${bank}</div>
-                      <div class="text-[10px] text-slate-400">Instan 24 Jam</div>
-                    </div>
-                  </label>
-                `).join('')}
+              <label class="block text-xs font-semibold text-slate-600 mb-2">Pilih Rekening Bank / Virtual Account Panitia</label>
+              <div class="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
+                ${
+                  activeBanks.length === 0
+                    ? `<div class="col-span-2 text-xs text-amber-600 bg-amber-50 p-3 rounded-xl">Admin belum mengatur rekening panitia. Menggunakan VA Default.</div>`
+                    : activeBanks.map((acc, i) => `
+                      <label class="cursor-pointer">
+                        <input type="radio" name="va_bank_account_id" value="${acc.id}" ${i === 0 ? 'checked' : ''} class="peer hidden" />
+                        <div class="p-3.5 rounded-2xl border border-slate-200 peer-checked:border-royal-600 peer-checked:bg-royal-50/70 transition">
+                          <div class="text-xs font-extrabold text-slate-800">${acc.bank_name}</div>
+                          <div class="text-[11px] font-mono text-royal-600 font-bold mt-0.5">Rek: ${acc.account_number}</div>
+                          <div class="text-[10px] text-slate-500 truncate">a.n ${acc.account_holder}</div>
+                        </div>
+                      </label>
+                    `).join('')
+                }
               </div>
             </div>
 
             <div>
               <label class="block text-xs font-semibold text-slate-600 mb-1.5">Catatan Tim / Pertandingan</label>
-              <input type="text" id="book-notes" placeholder="Contoh: Sparring Persahabatan / Sewa Rompi" class="w-full px-4 py-2.5 rounded-2xl bg-slate-50 border border-slate-200 text-xs" />
+              <input type="text" id="book-notes" placeholder="Contoh: Sparring Sore Ular Sakti Lalombi" class="w-full px-4 py-2.5 rounded-2xl bg-slate-50 border border-slate-200 text-xs" />
             </div>
 
             <div class="bg-slate-50 rounded-2xl p-4 flex items-center justify-between border border-slate-100">
               <div>
-                <div class="text-[11px] text-slate-400 font-medium">Total Tagihan Virtual Account</div>
+                <div class="text-[11px] text-slate-400 font-medium">Estimasi Sewa (+Kode Unik 3 Digit saat Checkout)</div>
                 <div id="book-estimated-total" class="text-xl font-extrabold text-royal-600">${formatRp(pricePerHour * 2)}</div>
               </div>
               <button type="submit" class="px-6 py-3.5 rounded-2xl bg-royal-600 hover:bg-royal-700 text-white font-bold text-xs shadow-royal transition">
-                Terbitkan Nomor VA →
+                Buat Tagihan & VA →
               </button>
             </div>
           </form>
         </div>
 
-        <!-- Informasi Ketersediaan Slot Jam Real-Time -->
         <div class="lg:col-span-5 bg-white rounded-[28px] p-6 shadow-soft-card border border-slate-100 flex flex-col justify-between">
           <div>
             <h3 class="text-base font-bold text-slate-800 mb-1">Status Slot Jam (${state.selectedDate})</h3>
@@ -1594,10 +1748,8 @@
           </div>
 
           <div class="bg-sky-50 border border-sky-100 rounded-2xl p-4 text-xs text-slate-600 leading-relaxed">
-            <div class="font-bold text-slate-800 mb-1">💡 Cara Kerja Pembayaran VA Tanpa Bukti:</div>
-            1. Klik <b>Terbitkan Nomor VA</b>.<br/>
-            2. Salin Nomor VA yang muncul di kartu kanan.<br/>
-            3. Klik tombol <b>Bayar VA</b> (Simulasi Callback M-Banking) dan tiket langsung <b>LUNAS</b> otomatis!
+            <div class="font-bold text-slate-800 mb-1">🏦 Ke Mana Uang Transfer Masuk?</div>
+            Dana yang Anda transfer langsung masuk ke <b>Nomor Rekening Bank Panitia</b> yang tertera. Sistem menambahkan 3 digit kode unik (misal <b>Rp 900.142</b>) agar mutasi rekening panitia mengenali pembayaran tim Anda secara otomatis tanpa perlu kirim foto struk!
           </div>
         </div>
       </div>
@@ -1626,48 +1778,50 @@
     const play_date = document.getElementById('book-play-date').value;
     const start_time = document.getElementById('book-start-time').value;
     const duration_hours = Number(document.getElementById('book-duration').value || 1);
-    const va_bank = document.querySelector('input[name="va_bank_choice"]:checked')?.value || 'BCA VA';
+    const selectedAccId = document.querySelector('input[name="va_bank_account_id"]:checked')?.value;
     const notes = document.getElementById('book-notes').value.trim();
 
     const field = state.fields.find(f => f.id === field_id);
     if (!field) return;
 
-    const total_price = Number(field.price_per_hour) * duration_hours;
+    const chosenAcc = state.paymentAccounts.find(a => a.id === selectedAccId) || state.paymentAccounts[0] || {
+      bank_name: 'BRI VA / Transfer',
+      va_prefix: '7702',
+      account_number: '1082-01-004599-50-2',
+      account_holder: 'BENDAHARA PANITIA'
+    };
+
+    // Tambahkan 3 digit kode unik (101 - 899) agar transfer ke Rekening Panitia mudah dikenali otomatis
+    const unique_code = Math.floor(101 + Math.random() * 798);
+    const base_price = Number(field.price_per_hour) * duration_hours;
+    const total_price = base_price + unique_code;
     const booking_code = 'PB-' + Math.floor(1000 + Math.random() * 9000);
-    const va_number = generateVANumber(va_bank, state.currentUser.phone);
+
+    const cleanPhone = (state.currentUser.phone || '082293445661').replace(/\D/g, '').slice(-10).padStart(10, '0');
+    const va_number = `${chosenAcc.va_prefix || '8801'}${cleanPhone}`;
+
+    const newBookingPayload = {
+      booking_code,
+      field_id,
+      member_id: state.currentUser.id,
+      play_date,
+      start_time,
+      duration_hours,
+      va_bank: chosenAcc.bank_name,
+      va_number,
+      committee_account_number: chosenAcc.account_number,
+      committee_account_holder: chosenAcc.account_holder,
+      unique_code,
+      total_price,
+      payment_status: 'Waiting VA',
+      notes
+    };
 
     try {
       if (IS_PREVIEW) {
-        const newBkg = {
-          id: 'bkg-' + Date.now(),
-          booking_code,
-          field_id,
-          member_id: state.currentUser.id,
-          play_date,
-          start_time,
-          duration_hours,
-          va_bank,
-          va_number,
-          total_price,
-          payment_status: 'Waiting VA',
-          paid_at: null,
-          notes
-        };
-        previewMemory.bookings.unshift(newBkg);
+        previewMemory.bookings.unshift({ id: 'bkg-' + Date.now(), paid_at: null, ...newBookingPayload });
       } else {
-        const { error } = await supabase.from('bookings').insert([{
-          booking_code,
-          field_id,
-          member_id: state.currentUser.id,
-          play_date,
-          start_time,
-          duration_hours,
-          va_bank,
-          va_number,
-          total_price,
-          payment_status: 'Waiting VA',
-          notes
-        }]);
+        const { error } = await supabase.from('bookings').insert([newBookingPayload]);
         if (error) throw error;
       }
 
@@ -1675,8 +1829,8 @@
       state.activeMenu = 'my_tickets';
       renderAllViews();
       showToast(
-        'Nomor Virtual Account Terbit!',
-        `${va_bank}: ${va_number} sebesar ${formatRp(total_price)}. Silakan lakukan pembayaran.`,
+        'Tagihan Rekening Panitia Terbit!',
+        `Silakan transfer tepat ${formatRp(total_price)} ke ${chosenAcc.bank_name} (${chosenAcc.account_number}) a.n ${chosenAcc.account_holder}.`,
         'success'
       );
     } catch (err) {
@@ -1685,7 +1839,7 @@
   };
 
   // ==========================================
-  // 3. MENU PENYEWA: TAGIHAN VA & E-TICKET SAYA
+  // 4. MENU PENYEWA: TAGIHAN & E-TICKET SAYA
   // ==========================================
   function buildMemberTicketsHTML() {
     const myBookings = state.bookings.filter(b => b.member_id === state.currentUser.id);
@@ -1694,8 +1848,8 @@
       return `
         <div class="bg-white rounded-[28px] p-10 text-center shadow-soft-card">
           <div class="text-4xl mb-3">🎟️</div>
-          <h3 class="text-base font-bold text-slate-800 mb-1">Belum Ada Tagihan VA / Tiket Sewa</h3>
-          <p class="text-xs text-slate-400 mb-5">Silakan pilih jadwal lapangan terlebih dahulu untuk mendapatkan Nomor Virtual Account.</p>
+          <h3 class="text-base font-bold text-slate-800 mb-1">Belum Ada Tagihan / Tiket Sewa</h3>
+          <p class="text-xs text-slate-400 mb-5">Silakan pilih jadwal lapangan terlebih dahulu untuk mendapatkan Nomor Rekening / VA Panitia.</p>
           <button onclick="window.switchMenu('booking_new')" class="px-5 py-3 rounded-2xl bg-royal-600 text-white font-bold text-xs shadow-royal">
             Buat Booking Baru
           </button>
@@ -1710,36 +1864,42 @@
           const isLunas = b.payment_status === 'Lunas';
           return `
             <div class="bg-white rounded-[26px] p-5 shadow-soft-card border ${isLunas ? 'border-emerald-200' : 'border-sky-200'} flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
-              <div class="space-y-1">
+              <div class="space-y-1.5">
                 <div class="flex items-center gap-2">
                   <span class="font-mono text-xs font-extrabold text-royal-600 bg-royal-50 px-2.5 py-1 rounded-lg">#${b.booking_code}</span>
                   <span class="text-xs font-bold px-3 py-1 rounded-full ${
                     isLunas ? 'bg-emerald-50 text-emerald-600' : 'bg-amber-50 text-amber-600'
                   }">
-                    • ${isLunas ? 'LUNAS (E-TICKET AKTIF)' : 'MENUNGGU TRANSFER VA'}
+                    • ${isLunas ? 'LUNAS (E-TICKET AKTIF)' : 'MENUNGGU TRANSFER KE PANITIA'}
                   </span>
                 </div>
                 <h4 class="text-base font-bold text-slate-800 pt-1">${field ? field.name : 'Lapangan Sepak Bola'}</h4>
                 <p class="text-xs text-slate-500">📅 Tanggal: <b>${b.play_date}</b> | 🕒 Jam: <b>${b.start_time} WITA (${b.duration_hours} Jam)</b></p>
-                <div class="text-xs text-slate-600 pt-1">
-                  💳 <b>${b.va_bank}:</b> <span class="font-mono font-bold text-slate-800 bg-slate-100 px-2 py-0.5 rounded">${b.va_number}</span>
+                
+                <!-- Detail Rekening Panitia Penerima -->
+                <div class="bg-slate-50 p-3 rounded-2xl border border-slate-100 text-xs space-y-1 mt-2">
+                  <div class="font-bold text-slate-700">🏦 Tujuan Transfer Rekening Panitia:</div>
+                  <div>Bank: <b>${b.va_bank}</b></div>
+                  <div>No. Rekening Panitia: <span class="font-mono font-extrabold text-royal-600 bg-royal-50 px-2 py-0.5 rounded">${b.committee_account_number || b.va_number}</span></div>
+                  <div>Atas Nama: <b>${b.committee_account_holder || 'BENDAHARA PANITIA'}</b></div>
+                  <div class="text-[11px] text-slate-400">No. VA / Referensi: <span class="font-mono">${b.va_number}</span></div>
                 </div>
               </div>
 
-              <div class="flex flex-col sm:flex-row md:flex-col items-start sm:items-end justify-between gap-2 w-full md:w-auto border-t md:border-t-0 pt-3 md:pt-0 border-slate-100">
+              <div class="flex flex-col sm:flex-row md:flex-col items-start sm:items-end justify-between gap-3 w-full md:w-auto border-t md:border-t-0 pt-3 md:pt-0 border-slate-100">
                 <div class="text-left sm:text-right">
-                  <div class="text-[10px] text-slate-400">Total Nominal VA</div>
-                  <div class="text-lg font-extrabold text-slate-800">${formatRp(b.total_price)}</div>
+                  <div class="text-[10px] text-slate-400">Nominal Transfer (+Kode Unik ${b.unique_code || 0})</div>
+                  <div class="text-xl font-extrabold text-royal-600">${formatRp(b.total_price)}</div>
                 </div>
 
                 <div class="flex items-center gap-2">
                   ${
                     !isLunas
                       ? `<button onclick="window.simulateInstantVAPayment('${b.id}')" class="px-4 py-2.5 rounded-2xl bg-skycyan-400 hover:bg-skycyan-500 text-white font-bold text-xs shadow-cyan transition">
-                           ⚡ Simulasi Bayar VA (Auto-Lunas)
+                           ⚡ KonfirmasiSudah Transfer (Auto-Verify)
                          </button>`
                       : `<span class="text-[11px] font-bold text-emerald-600 bg-emerald-50 px-3 py-2 rounded-xl">
-                           ✅ Terverifikasi Otomatis
+                           ✅ Dana Diterima Panitia
                          </span>`
                   }
                 </div>
@@ -1752,14 +1912,14 @@
   }
 
   // ==========================================
-  // 4. MENU PENYEWA: PROFIL TIM SAYA
+  // 5. MENU PENYEWA: PROFIL TIM SAYA
   // ==========================================
   function buildMemberProfileHTML() {
     const u = state.currentUser;
     return `
       <div class="bg-white rounded-[28px] p-6 sm:p-8 shadow-soft-card border border-slate-100 max-w-xl">
-        <h3 class="text-base font-bold text-slate-800 mb-1">Profil Tim & Kontak Virtual Account</h3>
-        <p class="text-xs text-slate-400 mb-5">Nomor WhatsApp digunakan sebagai basis pembuatan Nomor Virtual Account tim Anda.</p>
+        <h3 class="text-base font-bold text-slate-800 mb-1">Profil Tim & Kontak Penyewa</h3>
+        <p class="text-xs text-slate-400 mb-5">Perbarui identitas kapten dan nomor WhatsApp aktif tim Anda.</p>
 
         <form onsubmit="window.handleUpdateMemberProfile(event)" class="space-y-4">
           <div>
@@ -1815,7 +1975,7 @@
   };
 
   // ==========================================
-  // 5. MENU ADMIN: KELOLA LAPANGAN (CRUD)
+  // 6. MENU ADMIN: KELOLA LAPANGAN (CRUD)
   // ==========================================
   function buildAdminFieldsHTML() {
     return `
@@ -1942,24 +2102,24 @@
   };
 
   // ==========================================
-  // 6. MENU ADMIN: JADWAL & TRANSAKSI VIRTUAL ACCOUNT
+  // 7. MENU ADMIN: JADWAL & MUTASI REKENING PANITIA
   // ==========================================
   function buildAdminBookingsHTML() {
     const list = state.bookings.filter(b =>
       !state.searchQuery ||
       b.booking_code.toLowerCase().includes(state.searchQuery) ||
-      b.va_number.toLowerCase().includes(state.searchQuery)
+      (b.va_number || '').toLowerCase().includes(state.searchQuery)
     );
 
     return `
       <div class="bg-white rounded-[28px] p-6 shadow-soft-card border border-slate-100">
         <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 mb-5">
           <div>
-            <h3 class="text-base font-bold text-slate-800">Daftar Transaksi Sewa & Nomor Virtual Account</h3>
-            <p class="text-xs text-slate-400">Notifikasi dan status pembayaran VA ter-update otomatis secara real-time</p>
+            <h3 class="text-base font-bold text-slate-800">Daftar Transaksi Sewa & Mutasi Rekening Panitia</h3>
+            <p class="text-xs text-slate-400">Pantau dana masuk ke rekening panitia berdasarkan kode unik & VA</p>
           </div>
           <span class="bg-emerald-50 text-emerald-600 text-xs font-bold px-3.5 py-1.5 rounded-xl">
-            ⚡ Webhook VA Aktif
+            ⚡ Live Mutasi Aktif
           </span>
         </div>
 
@@ -1969,9 +2129,9 @@
               <tr class="border-b border-slate-100 text-[11px] font-bold text-slate-400 uppercase tracking-wider">
                 <th class="py-3 px-3">Kode & Tim</th>
                 <th class="py-3 px-3">Lapangan & Jadwal</th>
-                <th class="py-3 px-3">Nomor Virtual Account</th>
-                <th class="py-3 px-3">Total Tagihan</th>
-                <th class="py-3 px-3">Status VA</th>
+                <th class="py-3 px-3">Rekening Panitia Tujuan</th>
+                <th class="py-3 px-3">Nominal (+Kode Unik)</th>
+                <th class="py-3 px-3">Status</th>
                 <th class="py-3 px-3 text-right">Aksi</th>
               </tr>
             </thead>
@@ -1995,9 +2155,10 @@
                           </td>
                           <td class="py-3.5 px-3">
                             <span class="text-[10px] font-extrabold bg-sky-50 text-skycyan-500 px-2 py-0.5 rounded">${b.va_bank}</span>
-                            <div class="font-mono font-bold text-slate-700 mt-0.5">${b.va_number}</div>
+                            <div class="font-mono font-bold text-slate-700 mt-0.5">${b.committee_account_number || b.va_number}</div>
+                            <div class="text-[10px] text-slate-400">a.n ${b.committee_account_holder || 'Panitia'}</div>
                           </td>
-                          <td class="py-3.5 px-3 font-extrabold text-slate-800">${formatRp(b.total_price)}</td>
+                          <td class="py-3.5 px-3 font-extrabold text-royal-600">${formatRp(b.total_price)}</td>
                           <td class="py-3.5 px-3">
                             <span class="px-2.5 py-1 rounded-full text-[10px] font-bold ${
                               isLunas ? 'bg-emerald-50 text-emerald-600' : 'bg-amber-50 text-amber-600'
@@ -2009,7 +2170,7 @@
                             ${
                               !isLunas
                                 ? `<button onclick="window.simulateInstantVAPayment('${b.id}')" class="px-2.5 py-1.5 rounded-xl bg-skycyan-400 text-white font-bold text-[10px] shadow-sm">
-                                     Trigger Callback VA
+                                     Tandai Dana Masuk
                                    </button>`
                                 : ''
                             }
@@ -2045,7 +2206,7 @@
   };
 
   // ==========================================
-  // 7. MENU ADMIN: DATA MEMBER / TIM PENYEWA
+  // 8. MENU ADMIN: DATA MEMBER / TIM PENYEWA
   // ==========================================
   function buildAdminMembersHTML() {
     return `
@@ -2053,7 +2214,7 @@
         <div class="flex items-center justify-between mb-5">
           <div>
             <h3 class="text-base font-bold text-slate-800">Data Akun Tim & Penyewa Terdaftar</h3>
-            <p class="text-xs text-slate-400">Daftar member yang login menggunakan sistem Hybrid Tabel Supabase</p>
+            <p class="text-xs text-slate-400">Daftar member yang mendaftar pada sistem</p>
           </div>
           <span class="bg-royal-50 text-royal-600 text-xs font-bold px-3 py-1.5 rounded-xl">${state.members.length} Tim</span>
         </div>
@@ -2110,9 +2271,6 @@
     }
   };
 
-  // ==========================================
-  // MODAL KONSULTASI WHATSAPP MELAYANG
-  // ==========================================
   window.openWhatsAppModal = function() {
     document.getElementById('wa-consult-modal').classList.remove('hidden');
   };
@@ -2128,12 +2286,11 @@
     const msg = document.getElementById('wa-consult-message').value.trim();
     const sender = state.currentUser ? `${state.currentUser.full_name} (${state.currentUser.team_name})` : 'Calon Penyewa Lapangan';
 
-    const text = `Halo Admin *PitchBook Arena* ⚽,%0A%0ASaya *${sender}* ingin berkonsultasi:%0A📌 *Topik:* ${topic}%0A💬 *Pesan:* ${msg || 'Mohon info jadwal lapangan yang tersedia.'}`;
+    const text = `Halo Panitia *PitchBook Arena* ⚽,%0A%0ASaya *${sender}* ingin berkonsultasi:%0A📌 *Topik:* ${topic}%0A💬 *Pesan:* ${msg || 'Mohon info jadwal lapangan yang tersedia.'}`;
     window.open(`https://wa.me/${adminPhone}?text=${text}`, '_blank');
     window.closeWhatsAppModal();
   };
 
-  // Jalankan Aplikasi saat DOM siap
   initApplication();
 </script>
 </body>
