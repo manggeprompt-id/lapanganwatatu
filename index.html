@@ -1,0 +1,2140 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <title>PitchBook Pro — Sistem Sewa Lapangan & Virtual Account</title>
+
+  <!-- PWA Manifest Data URI (1-File PWA) -->
+  <link rel="manifest" href='data:application/manifest+json,{"name":"PitchBook Pro - Sewa Lapangan Sepak Bola","short_name":"PitchBook","start_url":".","display":"standalone","background_color":"#EBF3FF","theme_color":"#3B5BDB","icons":[{"src":"https://cdn-icons-png.flaticon.com/512/53/53283.png","sizes":"512x512","type":"image/png"}]}' />
+  <meta name="theme-color" content="#3B5BDB" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+
+  <!-- Google Fonts: Poppins -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: { sans: ['Poppins', 'sans-serif'] },
+          colors: {
+            royal: {
+              50: '#EEF2FF',
+              100: '#E0E7FF',
+              500: '#4263EB',
+              600: '#3B5BDB',
+              700: '#364FC7'
+            },
+            skycyan: {
+              50: '#E0F2FE',
+              400: '#38BDF8',
+              500: '#22B8CF'
+            }
+          }
+        }
+      }
+    }
+  </script>
+
+  <!-- Lucide Icons -->
+  <script src="https://unpkg.com/lucide@latest"></script>
+
+  <style>
+    /* Fullscreen Wrapper untuk menutup seluruh halaman bawaan Blogger/Host */
+    #pitchbook-app-root {
+      position: fixed;
+      inset: 0;
+      z-index: 999999;
+      background-color: #EBF3FF;
+      font-family: 'Poppins', sans-serif;
+      color: #1E293B;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* Custom Scrollbar Halus */
+    ::-webkit-scrollbar { width: 6px; height: 6px; }
+    ::-webkit-scrollbar-track { background: transparent; }
+    ::-webkit-scrollbar-thumb { background: #CBD5E1; border-radius: 9999px; }
+    ::-webkit-scrollbar-thumb:hover { background: #94A3B8; }
+
+    /* Cryptowall Signature Shadows & Gradients */
+    .shadow-royal {
+      box-shadow: 0 12px 24px -6px rgba(59, 91, 219, 0.35);
+    }
+    .shadow-cyan {
+      box-shadow: 0 12px 24px -6px rgba(56, 189, 248, 0.38);
+    }
+    .shadow-soft-card {
+      box-shadow: 0 8px 25px -4px rgba(148, 163, 184, 0.12);
+    }
+    .bg-hero-royal {
+      background: linear-gradient(135deg, #3B5BDB 0%, #4C6EF5 100%);
+    }
+    .bg-card-cyan {
+      background: linear-gradient(135deg, #22B8CF 0%, #38BDF8 100%);
+    }
+    .glass-surface {
+      background: rgba(255, 255, 255, 0.88);
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
+    }
+
+    /* Floating WhatsApp Consultation Button (Di Samping Layar) */
+    .floating-wa-side {
+      position: fixed;
+      right: 20px;
+      bottom: 92px;
+      z-index: 1000005;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      background: linear-gradient(135deg, #25D366 0%, #128C7E 100%);
+      color: #ffffff;
+      padding: 12px 18px;
+      border-radius: 9999px;
+      box-shadow: 0 12px 28px -4px rgba(37, 211, 102, 0.55);
+      transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+      cursor: pointer;
+      border: 2px solid rgba(255, 255, 255, 0.85);
+    }
+    .floating-wa-side:hover {
+      transform: translateY(-4px) scale(1.03);
+      box-shadow: 0 16px 32px -4px rgba(37, 211, 102, 0.7);
+    }
+    @media (min-width: 1024px) {
+      .floating-wa-side {
+        bottom: 28px;
+        right: 28px;
+      }
+    }
+
+    /* Animasi denyut halus pada WA & Status Live */
+    @keyframes pulse-ring {
+      0% { transform: scale(0.95); opacity: 0.8; }
+      70% { transform: scale(1.35); opacity: 0; }
+      100% { transform: scale(1.35); opacity: 0; }
+    }
+    .wa-pulse::before {
+      content: '';
+      position: absolute;
+      inset: -4px;
+      border-radius: 9999px;
+      background: rgba(37, 211, 102, 0.45);
+      z-index: -1;
+      animation: pulse-ring 2s infinite;
+    }
+
+    /* Tata Letak Responsif Desktop vs Mobile */
+    @media (max-width: 767px) {
+      .desktop-sidebar { display: none !important; }
+      .mobile-bottom-nav { display: flex !important; }
+      .workspace-scroll { padding-bottom: 96px !important; }
+    }
+    @media (min-width: 768px) {
+      .desktop-sidebar { display: flex !important; }
+      .mobile-bottom-nav { display: none !important; }
+    }
+  </style>
+</head>
+<body>
+
+<div id="pitchbook-app-root">
+  <!-- BANNER MODE PREVIEW (Otomatis Hilang 100% saat IS_PREVIEW = false) -->
+  <div id="preview-banner" class="hidden bg-amber-500 text-white text-xs font-semibold px-4 py-1.5 flex items-center justify-between shadow-sm z-50">
+    <div class="flex items-center gap-2">
+      <span class="inline-block w-2 h-2 rounded-full bg-white animate-ping"></span>
+      <span>MODE PREVIEW AKTIF — Berjalan dengan memori lokal (Ubah <code class="bg-amber-600 px-1.5 py-0.5 rounded">IS_PREVIEW = false</code> untuk koneksi real-time Supabase)</span>
+    </div>
+    <div class="flex items-center gap-2">
+      <button onclick="window.appQuickLogin('admin')" class="bg-white text-amber-600 px-2.5 py-0.5 rounded-full text-[11px] font-bold hover:bg-amber-50 transition">Quick Admin</button>
+      <button onclick="window.appQuickLogin('member')" class="bg-slate-900 text-white px-2.5 py-0.5 rounded-full text-[11px] font-bold hover:bg-slate-800 transition">Quick Penyewa</button>
+    </div>
+  </div>
+
+  <!-- TOAST NOTIFICATION REAL-TIME VA -->
+  <div id="toast-container" class="fixed top-5 right-5 z-[1000010] flex flex-col gap-2.5 max-w-sm w-full pointer-events-none px-4 sm:px-0"></div>
+
+  <!-- TOMBOL FLOATING WHATSAPP KONSULTASI DI SAMPING -->
+  <button onclick="window.openWhatsAppModal()" class="floating-wa-side wa-pulse" title="Konsultasi & Bantuan Sewa Lapangan via WhatsApp">
+    <div class="w-8 h-8 rounded-full bg-white/20 flex items-center justify-center">
+      <svg class="w-5 h-5 fill-current text-white" viewBox="0 0 24 24">
+        <path d="M12.031 6.172c-3.181 0-5.767 2.586-5.768 5.766-.001 1.298.38 2.27 1.019 3.287l-.582 2.128 2.182-.573c.978.58 1.911.928 3.145.929 3.178 0 5.767-2.587 5.768-5.766.001-3.187-2.575-5.77-5.764-5.771zm3.392 8.244c-.144.405-.837.774-1.17.824-.299.045-.677.063-1.092-.069-.252-.08-.575-.187-.988-.365-1.739-.751-2.874-2.502-2.961-2.617-.087-.116-.708-.94-.708-1.793s.448-1.273.607-1.446c.159-.173.346-.217.462-.217l.332.006c.106.005.249-.04.39.298.144.347.491 1.2.534 1.287.043.087.072.188.014.304-.058.116-.087.188-.173.289l-.26.304c-.087.086-.177.18-.076.354.101.174.449.741.964 1.201.662.591 1.221.774 1.394.86s.274.072.376-.043c.101-.116.433-.506.549-.68.116-.173.231-.145.39-.087s1.011.477 1.184.564.289.13.332.202c.045.072.045.419-.1.824zm-3.423-14.416c-6.627 0-12 5.373-12 12 0 2.625.846 5.059 2.284 7.033l-1.492 5.451 5.601-1.469c1.907 1.258 4.188 1.985 6.607 1.985 6.627 0 12-5.373 12-12s-5.373-12-12-12z"/>
+      </svg>
+    </div>
+    <div class="text-left leading-tight pr-1">
+      <div class="text-[10px] uppercase tracking-wider font-semibold text-emerald-100">Butuh Bantuan?</div>
+      <div class="text-xs font-bold">Konsultasi WA</div>
+    </div>
+  </button>
+
+  <!-- ==========================================
+       HALAMAN LOGIN & REGISTRASI (HYBRID AUTH)
+       ========================================== -->
+  <div id="auth-view" class="flex-1 flex items-center justify-center p-4 overflow-y-auto">
+    <div class="bg-white rounded-[28px] shadow-soft-card border border-white/80 max-w-4xl w-full grid grid-cols-1 md:grid-cols-12 overflow-hidden">
+      
+      <!-- Sisi Kiri: Branding Cryptowall Blue -->
+      <div class="md:col-span-5 bg-hero-royal p-8 text-white flex flex-col justify-between relative overflow-hidden">
+        <div class="relative z-10">
+          <div class="flex items-center gap-3 mb-8">
+            <div class="w-11 h-11 rounded-2xl bg-white text-royal-600 flex items-center justify-center font-extrabold text-xl shadow-md">
+              ⚽
+            </div>
+            <div>
+              <h1 class="font-bold text-xl tracking-tight leading-none">PitchBook</h1>
+              <span class="text-[11px] text-sky-200 font-medium">Smart Arena & Virtual Account</span>
+            </div>
+          </div>
+
+          <h2 class="text-2xl font-bold leading-snug mb-3">
+            Sewa Lapangan Sepak Bola & Pembayaran VA Instan
+          </h2>
+          <p class="text-xs text-blue-100 leading-relaxed">
+            Pilih jadwal lapangan secara real-time, bayar langsung via Nomor Virtual Account (BCA, BRI, Mandiri, BNI) dan E-Ticket aktif otomatis detik itu juga tanpa perlu kirim bukti transfer.
+          </p>
+        </div>
+
+        <!-- Ilustrasi Kartu VA Mini -->
+        <div class="relative z-10 mt-8 bg-card-cyan rounded-2xl p-4 shadow-cyan border border-white/20">
+          <div class="flex items-center justify-between text-xs text-white/90 mb-1">
+            <span>Auto-Callback Virtual Account</span>
+            <span class="bg-white/25 px-2 py-0.5 rounded-full text-[10px] font-bold">REAL-TIME</span>
+          </div>
+          <div class="text-lg font-extrabold tracking-wider text-white">8801 •••• •••• 2026</div>
+          <div class="text-[11px] text-sky-50 mt-1">Verifikasi otomatis tanpa upload struk</div>
+        </div>
+
+        <!-- Dekorasi Lingkaran -->
+        <div class="w-48 h-48 rounded-full bg-sky-400/20 absolute -bottom-16 -right-16 blur-xl"></div>
+      </div>
+
+      <!-- Sisi Kanan: Form Hybrid Login -->
+      <div class="md:col-span-7 p-7 sm:p-9 flex flex-col justify-center bg-white">
+        <div class="flex items-center justify-between mb-6">
+          <div>
+            <p class="text-xs text-slate-400 font-medium">Selamat Datang di PitchBook</p>
+            <h3 class="text-2xl font-bold text-slate-800">Masuk ke Akun Anda</h3>
+          </div>
+          <span class="bg-royal-50 text-royal-600 text-xs font-bold px-3 py-1.5 rounded-xl">Hybrid Auth</span>
+        </div>
+
+        <!-- Tab Pilihan Role -->
+        <div class="grid grid-cols-3 gap-2 bg-slate-100 p-1.5 rounded-2xl mb-6 text-xs font-semibold">
+          <button id="tab-role-member" onclick="window.switchAuthTab('member')" class="py-2.5 rounded-xl bg-royal-600 text-white shadow-royal transition">
+            Penyewa / Tim
+          </button>
+          <button id="tab-role-register" onclick="window.switchAuthTab('register')" class="py-2.5 rounded-xl text-slate-500 hover:text-slate-800 transition">
+            Daftar Tim Baru
+          </button>
+          <button id="tab-role-admin" onclick="window.switchAuthTab('admin')" class="py-2.5 rounded-xl text-slate-500 hover:text-slate-800 transition">
+            Admin Arena
+          </button>
+        </div>
+
+        <!-- FORM 1: LOGIN PENYEWA / TIM (Tabel Database Supabase) -->
+        <form id="form-login-member" onsubmit="window.handleMemberLogin(event)" class="space-y-4">
+          <div>
+            <label class="block text-xs font-semibold text-slate-600 mb-1.5">Username / ID Tim</label>
+            <input type="text" id="member-username" required placeholder="Contoh: garudafc" class="w-full px-4 py-3 rounded-2xl bg-slate-50 border border-slate-200 text-sm focus:outline-none focus:border-royal-600 focus:bg-white transition" />
+          </div>
+          <div>
+            <label class="block text-xs font-semibold text-slate-600 mb-1.5">Password</label>
+            <input type="password" id="member-password" required placeholder="Masukkan password tim" class="w-full px-4 py-3 rounded-2xl bg-slate-50 border border-slate-200 text-sm focus:outline-none focus:border-royal-600 focus:bg-white transition" />
+          </div>
+          <button type="submit" id="btn-submit-member" class="w-full py-3.5 rounded-2xl bg-royal-600 hover:bg-royal-700 text-white font-bold text-sm shadow-royal transition flex items-center justify-center gap-2">
+            <span>Masuk Sebagai Penyewa</span>
+          </button>
+        </form>
+
+        <!-- FORM 2: REGISTRASI PENYEWA BARU -->
+        <form id="form-register-member" onsubmit="window.handleMemberRegister(event)" class="space-y-3.5 hidden">
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+            <div>
+              <label class="block text-xs font-semibold text-slate-600 mb-1">Nama Kapten / Penyewa</label>
+              <input type="text" id="reg-fullname" required placeholder="Arya Wijaya" class="w-full px-3.5 py-2.5 rounded-2xl bg-slate-50 border border-slate-200 text-sm focus:outline-none focus:border-royal-600" />
+            </div>
+            <div>
+              <label class="block text-xs font-semibold text-slate-600 mb-1">Nama Tim / Klub</label>
+              <input type="text" id="reg-team" required placeholder="Garuda Muda FC" class="w-full px-3.5 py-2.5 rounded-2xl bg-slate-50 border border-slate-200 text-sm focus:outline-none focus:border-royal-600" />
+            </div>
+          </div>
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+            <div>
+              <label class="block text-xs font-semibold text-slate-600 mb-1">Username Login</label>
+              <input type="text" id="reg-username" required placeholder="garudamuda" class="w-full px-3.5 py-2.5 rounded-2xl bg-slate-50 border border-slate-200 text-sm focus:outline-none focus:border-royal-600" />
+            </div>
+            <div>
+              <label class="block text-xs font-semibold text-slate-600 mb-1">No. WhatsApp Aktif</label>
+              <input type="text" id="reg-phone" required placeholder="081234567890" class="w-full px-3.5 py-2.5 rounded-2xl bg-slate-50 border border-slate-200 text-sm focus:outline-none focus:border-royal-600" />
+            </div>
+          </div>
+          <div>
+            <label class="block text-xs font-semibold text-slate-600 mb-1">Password</label>
+            <input type="password" id="reg-password" required placeholder="Minimal 4 karakter" class="w-full px-3.5 py-2.5 rounded-2xl bg-slate-50 border border-slate-200 text-sm focus:outline-none focus:border-royal-600" />
+          </div>
+          <button type="submit" class="w-full py-3.5 rounded-2xl bg-skycyan-400 hover:bg-skycyan-500 text-white font-bold text-sm shadow-cyan transition">
+            Daftar & Masuk Sekarang
+          </button>
+        </form>
+
+        <!-- FORM 3: LOGIN ADMIN (Supabase Auth Email & Password) -->
+        <form id="form-login-admin" onsubmit="window.handleAdminLogin(event)" class="space-y-4 hidden">
+          <div>
+            <label class="block text-xs font-semibold text-slate-600 mb-1.5">Email Admin (Supabase Auth)</label>
+            <input type="email" id="admin-email" required placeholder="admin@pitchbook.id" class="w-full px-4 py-3 rounded-2xl bg-slate-50 border border-slate-200 text-sm focus:outline-none focus:border-royal-600 focus:bg-white transition" />
+          </div>
+          <div>
+            <label class="block text-xs font-semibold text-slate-600 mb-1.5">Password Admin</label>
+            <input type="password" id="admin-password" required placeholder="••••••••" class="w-full px-4 py-3 rounded-2xl bg-slate-50 border border-slate-200 text-sm focus:outline-none focus:border-royal-600 focus:bg-white transition" />
+          </div>
+          <button type="submit" id="btn-submit-admin" class="w-full py-3.5 rounded-2xl bg-royal-600 hover:bg-royal-700 text-white font-bold text-sm shadow-royal transition">
+            Masuk Panel Admin
+          </button>
+        </form>
+
+        <!-- Box Pintasan Login khusus Mode Preview -->
+        <div id="preview-auth-helper" class="hidden mt-6 pt-5 border-t border-slate-100">
+          <div class="text-[11px] font-semibold text-slate-400 uppercase tracking-wider mb-2.5">Pintasan Uji Coba (Mode Preview)</div>
+          <div class="grid grid-cols-2 gap-2.5">
+            <button onclick="window.appQuickLogin('member')" class="py-2.5 px-3 rounded-xl bg-sky-50 hover:bg-sky-100 text-sky-700 font-semibold text-xs flex items-center justify-center gap-1.5 transition">
+              <span>⚡ Masuk Penyewa Demo</span>
+            </button>
+            <button onclick="window.appQuickLogin('admin')" class="py-2.5 px-3 rounded-xl bg-indigo-50 hover:bg-indigo-100 text-royal-600 font-semibold text-xs flex items-center justify-center gap-1.5 transition">
+              <span>🛡️ Masuk Admin Demo</span>
+            </button>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ==========================================
+       DASHBOARD UTAMA 3-KOLOM (CRYPTOWALL LAYOUT)
+       ========================================== -->
+  <div id="main-app-view" class="hidden flex-1 flex overflow-hidden p-0 md:p-4 lg:p-6 gap-0 lg:gap-5 max-w-[1600px] w-full mx-auto">
+    <div class="flex-1 flex bg-white md:rounded-[32px] shadow-soft-card overflow-hidden border border-white">
+
+      <!-- 1. KOLOM KIRI: FIXED SIDEBAR (Desktop) -->
+      <aside class="desktop-sidebar w-[235px] bg-white border-r border-slate-100 flex-col justify-between py-7 px-5 shrink-0 select-none">
+        <div>
+          <!-- Brand Logo ala Cryptowall -->
+          <div class="flex items-center gap-3 px-2 mb-9">
+            <div class="w-10 h-10 rounded-2xl bg-royal-600 text-white flex items-center justify-center font-extrabold text-lg shadow-royal">
+              ⚽
+            </div>
+            <div>
+              <div class="font-bold text-lg text-slate-800 tracking-tight leading-none">PitchWall</div>
+              <span id="sidebar-role-badge" class="text-[10px] font-bold text-skycyan-500 uppercase tracking-wider">Arena System</span>
+            </div>
+          </div>
+
+          <!-- Daftar Menu Navigasi Dinamis -->
+          <nav id="desktop-nav-list" class="space-y-2"></nav>
+        </div>
+
+        <!-- Bottom Promo Card ala "Discover Pro" di Cryptowall -->
+        <div class="bg-hero-royal rounded-3xl p-5 text-white shadow-royal relative overflow-hidden mt-6">
+          <div class="relative z-10">
+            <div class="w-10 h-10 rounded-2xl bg-white/20 backdrop-blur-sm flex items-center justify-center mb-3 text-lg">
+              💳
+            </div>
+            <div class="text-xs font-bold leading-snug mb-1">Virtual Account Otomatis</div>
+            <p class="text-[10px] text-blue-100 leading-relaxed mb-3.5">
+              Bayar sewa lapangan instan tanpa kirim bukti transfer.
+            </p>
+            <button onclick="window.openQuickActionFromPromo()" class="w-full py-2.5 rounded-2xl bg-skycyan-400 hover:bg-skycyan-500 text-white font-bold text-xs shadow-cyan transition">
+              Booking Cepat
+            </button>
+          </div>
+          <div class="w-24 h-24 rounded-full bg-sky-300/20 absolute -right-8 -top-8"></div>
+        </div>
+      </aside>
+
+      <!-- 2. KOLOM TENGAH: MAIN WORKSPACE (#FAFCFF) -->
+      <main class="flex-1 bg-[#FAFCFF] overflow-y-auto workspace-scroll p-5 sm:p-7">
+        
+        <!-- Top Header: Sapaan User + Judul Halaman & Search Input -->
+        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-6">
+          <div>
+            <p id="header-greeting-name" class="text-xs font-semibold text-slate-400 mb-0.5">Arya Wijaya</p>
+            <h1 id="header-page-title" class="text-2xl font-bold text-slate-800 tracking-tight">Dashboard</h1>
+          </div>
+
+          <div class="flex items-center gap-3">
+            <div class="relative flex-1 sm:w-64">
+              <i data-lucide="search" class="w-4 h-4 text-slate-400 absolute left-4 top-1/2 -translate-y-1/2"></i>
+              <input id="global-search-input" oninput="window.handleGlobalSearch(this.value)" type="text" placeholder="Cari lapangan / kode VA..." class="w-full pl-10 pr-4 py-2.5 rounded-2xl bg-white shadow-soft-card border border-slate-100 text-xs font-medium text-slate-700 focus:outline-none focus:border-royal-500" />
+            </div>
+            <!-- Tombol Logout Mobile -->
+            <button onclick="window.handleLogout()" class="xl:hidden p-2.5 rounded-2xl bg-white text-red-500 shadow-soft-card border border-slate-100" title="Keluar">
+              <i data-lucide="log-out" class="w-4 h-4"></i>
+            </button>
+          </div>
+        </div>
+
+        <!-- Kontainer Dinamis untuk setiap Menu -->
+        <div id="center-workspace-content"></div>
+
+      </main>
+
+      <!-- 3. KOLOM KANAN: MY VIRTUAL ACCOUNT CARD & LIVE TRANSACTION PANEL -->
+      <aside class="hidden xl:flex w-[335px] bg-white border-l border-slate-100 flex-col justify-between p-6 overflow-y-auto shrink-0">
+        <div>
+          <!-- Top Profile & Notification Bar -->
+          <div class="flex items-center justify-between mb-7">
+            <button onclick="window.triggerCheckLiveVA()" class="relative w-10 h-10 rounded-2xl bg-slate-50 hover:bg-slate-100 flex items-center justify-center text-slate-500 transition" title="Notifikasi Pembayaran VA Real-Time">
+              <i data-lucide="bell" class="w-5 h-5"></i>
+              <span class="w-2.5 h-2.5 rounded-full bg-skycyan-400 border-2 border-white absolute top-2 right-2"></span>
+            </button>
+
+            <div class="flex items-center gap-2.5">
+              <div id="right-profile-avatar" class="w-9 h-9 rounded-full bg-royal-100 text-royal-600 font-bold text-xs flex items-center justify-center">
+                AW
+              </div>
+              <div class="text-left">
+                <div id="right-profile-name" class="text-xs font-bold text-slate-800 leading-none">Arya Wijaya</div>
+                <div id="right-profile-team" class="text-[10px] text-slate-400 font-medium mt-0.5">Garuda Muda FC</div>
+              </div>
+              <button onclick="window.handleLogout()" class="ml-1 p-1.5 rounded-xl text-slate-400 hover:text-red-500 hover:bg-red-50 transition" title="Keluar Akun">
+                <i data-lucide="log-out" class="w-4 h-4"></i>
+              </button>
+            </div>
+          </div>
+
+          <!-- MY CARDS: KARTU VIRTUAL ACCOUNT AKTIF (Gaya Cryptowall Cyan Card) -->
+          <div class="flex items-center justify-between mb-3">
+            <h3 class="text-base font-bold text-slate-800">My Virtual Account</h3>
+            <span id="va-card-bank-pill" class="text-[10px] font-extrabold uppercase tracking-wider px-2.5 py-0.5 rounded-full bg-sky-50 text-skycyan-500">BCA VA</span>
+          </div>
+
+          <div id="active-va-card-box" class="bg-card-cyan rounded-[24px] p-5 text-white shadow-cyan relative overflow-hidden mb-3">
+            <div class="relative z-10">
+              <div class="flex items-center justify-between text-xs text-sky-100 mb-1">
+                <span id="va-card-label">Tagihan VA Aktif</span>
+                <span id="va-card-code" class="font-mono text-[11px] font-bold">#PB-001</span>
+              </div>
+              <div id="va-card-amount" class="text-2xl font-extrabold tracking-tight mb-4">Rp 0</div>
+
+              <div class="text-[11px] text-sky-100 mb-0.5">Nomor Virtual Account</div>
+              <div class="flex items-center justify-between gap-2">
+                <div id="va-card-number" class="font-mono text-sm font-bold tracking-wider">Belum Ada Tagihan</div>
+                <span id="va-card-status-badge" class="bg-white/25 backdrop-blur-sm px-2.5 py-1 rounded-full text-[10px] font-bold">
+                  READY
+                </span>
+              </div>
+            </div>
+            <!-- Dekorasi Gelombang Lingkaran -->
+            <div class="w-36 h-36 rounded-full bg-white/15 absolute -right-10 -bottom-12"></div>
+            <div class="w-24 h-24 rounded-full bg-white/10 absolute right-10 -top-10"></div>
+          </div>
+
+          <!-- Indikator Dots ala Cryptowall -->
+          <div class="flex items-center justify-center gap-1.5 mb-5">
+            <span class="w-2 h-2 rounded-full bg-royal-600"></span>
+            <span class="w-1.5 h-1.5 rounded-full bg-slate-200"></span>
+            <span class="w-1.5 h-1.5 rounded-full bg-slate-200"></span>
+          </div>
+
+          <!-- DUAL SPLIT ACTION BUTTONS (Request / Transfer Style -> Copy VA & Auto-Pay VA) -->
+          <div class="grid grid-cols-2 gap-3 mb-7">
+            <button onclick="window.copyActiveVANumber()" class="bg-royal-600 hover:bg-royal-700 text-white rounded-2xl p-2.5 flex items-center gap-2.5 shadow-royal transition">
+              <div class="w-8 h-8 rounded-full bg-white text-royal-600 flex items-center justify-center shrink-0">
+                <i data-lucide="copy" class="w-4 h-4"></i>
+              </div>
+              <span class="text-xs font-bold">Salin VA</span>
+            </button>
+
+            <button onclick="window.simulateInstantVAPayment()" class="bg-skycyan-400 hover:bg-skycyan-500 text-white rounded-2xl p-2.5 flex items-center gap-2.5 shadow-cyan transition">
+              <div class="w-8 h-8 rounded-full bg-white text-skycyan-500 flex items-center justify-center shrink-0">
+                <i data-lucide="zap" class="w-4 h-4"></i>
+              </div>
+              <span class="text-xs font-bold">Bayar VA</span>
+            </button>
+          </div>
+
+          <!-- RECENT TRANSACTION (Live Feed Pembayaran VA Tanpa Bukti Transfer) -->
+          <div class="flex items-center justify-between mb-3.5">
+            <h3 class="text-base font-bold text-slate-800">Notifikasi VA Live</h3>
+            <span class="inline-flex items-center gap-1 text-[10px] font-bold text-emerald-600 bg-emerald-50 px-2 py-0.5 rounded-full">
+              <span class="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-ping"></span> Auto-Verify
+            </span>
+          </div>
+
+          <div id="right-recent-transactions" class="space-y-3"></div>
+        </div>
+
+        <!-- Info Footer Kanan -->
+        <div class="pt-4 border-t border-slate-100 text-[11px] text-slate-400 flex items-center justify-between">
+          <span>Webhook VA Active</span>
+          <span class="font-bold text-royal-600">Tanpa Upload Bukti</span>
+        </div>
+      </aside>
+
+    </div>
+  </div>
+
+  <!-- NAVIGASI BAWAH MELAYANG (KHUSUS HP / MOBILE) -->
+  <nav id="mobile-bottom-nav" class="mobile-bottom-nav hidden fixed bottom-0 inset-x-0 bg-white/95 backdrop-blur-md border-t border-slate-200 px-3 py-2 justify-around items-center z-[1000000] shadow-lg"></nav>
+
+  <!-- ==========================================
+       MODAL KONSULTASI WHATSAPP CEPAT
+       ========================================== -->
+  <div id="wa-consult-modal" class="hidden fixed inset-0 z-[1000008] bg-slate-900/50 backdrop-blur-sm flex items-center justify-center p-4">
+    <div class="bg-white rounded-[28px] max-w-md w-full p-6 shadow-2xl border border-slate-100 animate-fadeIn">
+      <div class="flex items-center justify-between mb-4">
+        <div class="flex items-center gap-3">
+          <div class="w-11 h-11 rounded-2xl bg-emerald-500 text-white flex items-center justify-center font-bold text-xl shadow-md">
+            💬
+          </div>
+          <div>
+            <h3 class="font-bold text-base text-slate-800">Konsultasi Admin Lapangan</h3>
+            <p class="text-xs text-emerald-600 font-semibold">Respon Cepat via WhatsApp</p>
+          </div>
+        </div>
+        <button onclick="window.closeWhatsAppModal()" class="w-8 h-8 rounded-full bg-slate-100 text-slate-500 flex items-center justify-center hover:bg-slate-200">✕</button>
+      </div>
+
+      <form onsubmit="window.sendWhatsAppConsult(event)" class="space-y-3.5">
+        <div>
+          <label class="block text-xs font-semibold text-slate-600 mb-1">Nomor WhatsApp Admin Tujuan</label>
+          <input type="text" id="wa-admin-number" value="6281234567890" required class="w-full px-3.5 py-2.5 rounded-2xl bg-slate-50 border border-slate-200 text-xs font-mono text-slate-700" />
+        </div>
+        <div>
+          <label class="block text-xs font-semibold text-slate-600 mb-1">Topik Konsultasi</label>
+          <select id="wa-consult-topic" class="w-full px-3.5 py-2.5 rounded-2xl bg-slate-50 border border-slate-200 text-xs font-medium text-slate-700">
+            <option value="Tanya Ketersediaan Jadwal & Turnamen">Tanya Ketersediaan Jadwal & Turnamen</option>
+            <option value="Konsultasi Sewa Rutin Member Bulanan">Konsultasi Sewa Rutin Member Bulanan</option>
+            <option value="Bantuan Pembayaran Virtual Account (VA)">Bantuan Pembayaran Virtual Account (VA)</option>
+            <option value="Request Wasit / Fotografer Pertandingan">Request Wasit / Fotografer Pertandingan</option>
+          </select>
+        </div>
+        <div>
+          <label class="block text-xs font-semibold text-slate-600 mb-1">Pesan Tambahan</label>
+          <textarea id="wa-consult-message" rows="3" placeholder="Halo Admin, tim kami ingin berkonsultasi mengenai jadwal sewa lapangan..." class="w-full px-3.5 py-2.5 rounded-2xl bg-slate-50 border border-slate-200 text-xs text-slate-700"></textarea>
+        </div>
+        <button type="submit" class="w-full py-3.5 rounded-2xl bg-emerald-500 hover:bg-emerald-600 text-white font-bold text-xs shadow-lg transition flex items-center justify-center gap-2">
+          <span>Kirim Chat ke WhatsApp Sekarang</span>
+        </button>
+      </form>
+    </div>
+  </div>
+
+  <!-- MODAL FORM TAMBAH / EDIT LAPANGAN (KHUSUS ADMIN) -->
+  <div id="field-modal" class="hidden fixed inset-0 z-[1000008] bg-slate-900/50 backdrop-blur-sm flex items-center justify-center p-4">
+    <div class="bg-white rounded-[28px] max-w-md w-full p-6 shadow-2xl border border-slate-100">
+      <div class="flex items-center justify-between mb-4">
+        <h3 id="field-modal-title" class="font-bold text-base text-slate-800">Tambah Lapangan Baru</h3>
+        <button onclick="window.closeFieldModal()" class="w-8 h-8 rounded-full bg-slate-100 text-slate-500 flex items-center justify-center">✕</button>
+      </div>
+      <form id="form-field-crud" onsubmit="window.saveFieldData(event)" class="space-y-3.5">
+        <input type="hidden" id="field-id-input" />
+        <div>
+          <label class="block text-xs font-semibold text-slate-600 mb-1">Nama Lapangan</label>
+          <input type="text" id="field-name-input" required placeholder="Contoh: Arena Utama A (Full Pitch)" class="w-full px-3.5 py-2.5 rounded-2xl bg-slate-50 border border-slate-200 text-xs" />
+        </div>
+        <div class="grid grid-cols-2 gap-3">
+          <div>
+            <label class="block text-xs font-semibold text-slate-600 mb-1">Tipe Lapangan</label>
+            <select id="field-type-input" class="w-full px-3.5 py-2.5 rounded-2xl bg-slate-50 border border-slate-200 text-xs">
+              <option value="Full Pitch 11v11">Full Pitch 11v11</option>
+              <option value="Mini Soccer 7v7">Mini Soccer 7v7</option>
+              <option value="Training Ground">Training Ground</option>
+            </select>
+          </div>
+          <div>
+            <label class="block text-xs font-semibold text-slate-600 mb-1">Jenis Rumput</label>
+            <input type="text" id="field-grass-input" required placeholder="FIFA Pro Synthetic" class="w-full px-3.5 py-2.5 rounded-2xl bg-slate-50 border border-slate-200 text-xs" />
+          </div>
+        </div>
+        <div class="grid grid-cols-2 gap-3">
+          <div>
+            <label class="block text-xs font-semibold text-slate-600 mb-1">Tarif Sewa / Jam (Rp)</label>
+            <input type="number" id="field-price-input" required placeholder="350000" class="w-full px-3.5 py-2.5 rounded-2xl bg-slate-50 border border-slate-200 text-xs" />
+          </div>
+          <div>
+            <label class="block text-xs font-semibold text-slate-600 mb-1">Status Lapangan</label>
+            <select id="field-status-input" class="w-full px-3.5 py-2.5 rounded-2xl bg-slate-50 border border-slate-200 text-xs">
+              <option value="Available">Available</option>
+              <option value="Maintenance">Maintenance</option>
+            </select>
+          </div>
+        </div>
+        <div>
+          <label class="block text-xs font-semibold text-slate-600 mb-1">Fasilitas Utama</label>
+          <input type="text" id="field-facilities-input" required placeholder="Lampu LED Stadion, Ruang Ganti AC, Bench Pemain" class="w-full px-3.5 py-2.5 rounded-2xl bg-slate-50 border border-slate-200 text-xs" />
+        </div>
+        <button type="submit" class="w-full py-3 rounded-2xl bg-royal-600 hover:bg-royal-700 text-white font-bold text-xs shadow-royal transition">
+          Simpan Data Lapangan
+        </button>
+      </form>
+    </div>
+  </div>
+</div>
+
+<!-- ==========================================
+     SCRIPT UTAMA (SUPABASE MODULE + LOGIKA VA)
+     ========================================== -->
+<script type="module">
+  import { createClient } from 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js/+esm';
+
+  // KONFIGURASI APLIKASI
+  const IS_PREVIEW = false; // Ubah menjadi false SAAT DEPLOY agar mode preview & data dummy hilang dan terhubung 100% ke Supabase
+  const SUPABASE_URL = "https://wmrjwscrdsllydmiqcep.supabase.co";
+  const SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Indtcmp3c2NyZHNsbHlkbWlxY2VwIiwicm9sZSI6ImFub24iLCJpYXQiOjE3OTMwMzgxNTQsImV4cCI6MjEwODYxNDE1NH0.xyrXXcM272fTkzFRQ2qHBPPSOOKO1PaakIqAuiw-ekw";
+
+  let supabase = null;
+  if (!IS_PREVIEW) {
+    supabase = createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+  }
+
+  // Registrasi Service Worker PWA 1-File menggunakan Blob
+  if ('serviceWorker' in navigator) {
+    const swCode = `
+      self.addEventListener('install', (e) => self.skipWaiting());
+      self.addEventListener('activate', (e) => e.waitUntil(self.clients.claim()));
+      self.addEventListener('fetch', () => {});
+    `;
+    const blob = new Blob([swCode], { type: 'application/javascript' });
+    navigator.serviceWorker.register(URL.createObjectURL(blob)).catch(() => {});
+  }
+
+  // State Aplikasi
+  const state = {
+    currentUser: null, // { id, role: 'admin'|'member', full_name, team_name, username, phone }
+    activeMenu: 'dashboard',
+    searchQuery: '',
+    selectedFieldId: '',
+    selectedDate: new Date().toISOString().split('T')[0],
+    fields: [],
+    members: [],
+    bookings: [],
+    activeTagihanVA: null
+  };
+
+  // Data Dummy Minimalis (Hanya aktif saat IS_PREVIEW = true, maksimal 2 baris per tabel)
+  const previewMemory = {
+    fields: [
+      {
+        id: 'fld-1',
+        name: 'Garuda Main Stadium (Full Pitch)',
+        type: 'Full Pitch 11v11',
+        grass_type: 'FIFA Quality Pro Synthetic',
+        price_per_hour: 450000,
+        facilities: 'Lampu Stadion 1200 Lux, Ruang Ganti AC, Bench Pemain',
+        status: 'Available'
+      },
+      {
+        id: 'fld-2',
+        name: 'Sky Blue Arena (Mini Soccer)',
+        type: 'Mini Soccer 7v7',
+        grass_type: 'Monofilament Turf',
+        price_per_hour: 300000,
+        facilities: 'Lampu LED, Tribun Penonton, Shower Air Hangat',
+        status: 'Available'
+      }
+    ],
+    members: [
+      {
+        id: 'mem-1',
+        username: 'garudafc',
+        password: '123',
+        full_name: 'Arya Wijaya',
+        team_name: 'Garuda Muda FC',
+        phone: '081234567890'
+      },
+      {
+        id: 'mem-2',
+        username: 'elangkota',
+        password: '123',
+        full_name: 'Dimas Pratama',
+        team_name: 'Elang Kota United',
+        phone: '081398765432'
+      }
+    ],
+    bookings: [
+      {
+        id: 'bkg-1',
+        booking_code: 'PB-8821',
+        field_id: 'fld-1',
+        member_id: 'mem-1',
+        play_date: new Date().toISOString().split('T')[0],
+        start_time: '16:00',
+        duration_hours: 2,
+        va_bank: 'BCA VA',
+        va_number: '8801081234567890',
+        total_price: 900000,
+        payment_status: 'Waiting VA',
+        paid_at: null,
+        notes: 'Pertandingan Persahabatan Sore'
+      },
+      {
+        id: 'bkg-2',
+        booking_code: 'PB-8819',
+        field_id: 'fld-2',
+        member_id: 'mem-2',
+        play_date: new Date().toISOString().split('T')[0],
+        start_time: '19:00',
+        duration_hours: 2,
+        va_bank: 'MANDIRI VA',
+        va_number: '8902081398765432',
+        total_price: 600000,
+        payment_status: 'Lunas',
+        paid_at: new Date().toISOString(),
+        notes: 'Sparring Malam Mingguan'
+      }
+    ]
+  };
+
+  // Format Rupiah
+  function formatRp(num) {
+    return 'Rp ' + Number(num || 0).toLocaleString('id-ID');
+  }
+
+  // Toast Notification Real-Time (Dengan Bunyi Beep Halus Web Audio API)
+  function showToast(title, message, type = 'info') {
+    const container = document.getElementById('toast-container');
+    const toast = document.createElement('div');
+    const bgClass = type === 'success' ? 'border-emerald-500 bg-white' : type === 'warning' ? 'border-amber-500 bg-white' : 'border-royal-600 bg-white';
+    const iconBadge = type === 'success' ? '✅' : type === 'warning' ? '⚡' : '🔔';
+
+    toast.className = `pointer-events-auto ${bgClass} border-l-4 rounded-2xl p-4 shadow-2xl flex items-start gap-3 transition-all duration-300`;
+    toast.innerHTML = `
+      <div class="text-lg leading-none mt-0.5">${iconBadge}</div>
+      <div class="flex-1">
+        <div class="text-xs font-bold text-slate-800">${title}</div>
+        <div class="text-[11px] text-slate-500 mt-0.5 leading-relaxed">${message}</div>
+      </div>
+    `;
+    container.appendChild(toast);
+
+    try {
+      const ctx = new (window.AudioContext || window.webkitAudioContext)();
+      const osc = ctx.createOscillator();
+      const gain = ctx.createGain();
+      osc.type = 'sine';
+      osc.frequency.setValueAtTime(type === 'success' ? 880 : 587, ctx.currentTime);
+      gain.gain.setValueAtTime(0.08, ctx.currentTime);
+      osc.connect(gain);
+      gain.connect(ctx.destination);
+      osc.start();
+      osc.stop(ctx.currentTime + 0.18);
+    } catch (_) {}
+
+    setTimeout(() => {
+      toast.style.opacity = '0';
+      setTimeout(() => toast.remove(), 300);
+    }, 4500);
+  }
+
+  // Generator Nomor Virtual Account Otomatis Berdasarkan Bank
+  function generateVANumber(bankName, phone) {
+    const prefixes = {
+      'BCA VA': '8801',
+      'BRI VA': '7702',
+      'MANDIRI VA': '8903',
+      'BNI VA': '9804'
+    };
+    const prefix = prefixes[bankName] || '8801';
+    const cleanPhone = (phone || '081234567890').replace(/\D/g, '').slice(-10).padStart(10, '0');
+    const randSuffix = Math.floor(10 + Math.random() * 89);
+    return `${prefix}${cleanPhone}${randSuffix}`;
+  }
+
+  // ==========================================
+  // INISIALISASI & KONEKSI DATA (PREVIEW vs PROD)
+  // ==========================================
+  async function initApplication() {
+    if (IS_PREVIEW) {
+      document.getElementById('preview-banner').classList.remove('hidden');
+      document.getElementById('preview-auth-helper').classList.remove('hidden');
+    } else {
+      // Pastikan seluruh elemen preview disembunyikan 100%
+      document.getElementById('preview-banner').remove();
+      document.getElementById('preview-auth-helper').remove();
+
+      // Cek Session Admin Supabase Auth
+      try {
+        const { data: { session } } = await supabase.auth.getSession();
+        if (session?.user) {
+          state.currentUser = {
+            id: session.user.id,
+            role: 'admin',
+            full_name: session.user.email.split('@')[0],
+            team_name: 'Administrator Arena',
+            username: session.user.email,
+            phone: '6281234567890'
+          };
+          await loadAllDatabaseData();
+          subscribeRealtimeVAChannel();
+          enterDashboardView();
+          return;
+        }
+      } catch (err) {
+        console.error('Session check error:', err);
+      }
+
+      // Cek Session Member di sessionStorage
+      const savedMember = sessionStorage.getItem('pitchbook_member_session');
+      if (savedMember) {
+        state.currentUser = JSON.parse(savedMember);
+        await loadAllDatabaseData();
+        subscribeRealtimeVAChannel();
+        enterDashboardView();
+      }
+    }
+    lucide.createIcons();
+  }
+
+  async function loadAllDatabaseData() {
+    if (IS_PREVIEW) {
+      state.fields = [...previewMemory.fields];
+      state.members = [...previewMemory.members];
+      state.bookings = [...previewMemory.bookings];
+    } else {
+      try {
+        const [resFields, resMembers, resBookings] = await Promise.all([
+          supabase.from('fields').select('*').order('created_at', { ascending: true }),
+          supabase.from('members').select('*').order('created_at', { ascending: false }),
+          supabase.from('bookings').select('*').order('created_at', { ascending: false })
+        ]);
+        if (resFields.error) throw resFields.error;
+        if (resMembers.error) throw resMembers.error;
+        if (resBookings.error) throw resBookings.error;
+
+        state.fields = resFields.data || [];
+        state.members = resMembers.data || [];
+        state.bookings = resBookings.data || [];
+      } catch (err) {
+        showToast('Gagal Memuat Database', err.message || 'Pastikan tabel SQL sudah dibuat di Supabase.', 'warning');
+      }
+    }
+
+    if (!state.selectedFieldId && state.fields.length > 0) {
+      state.selectedFieldId = state.fields[0].id;
+    }
+    refreshActiveVACardState();
+  }
+
+  // Listener Realtime Supabase untuk Pembayaran VA Otomatis Tanpa Upload Bukti
+  function subscribeRealtimeVAChannel() {
+    if (IS_PREVIEW || !supabase) return;
+    supabase
+      .channel('public:bookings:va-live')
+      .on('postgres_changes', { event: '*', schema: 'public', table: 'bookings' }, async (payload) => {
+        await loadAllDatabaseData();
+        renderAllViews();
+        if (payload.eventType === 'UPDATE' && payload.new?.payment_status === 'Lunas') {
+          showToast(
+            'Pembayaran VA Diterima Otomatis!',
+            `Booking #${payload.new.booking_code} (${payload.new.va_bank}) sebesar ${formatRp(payload.new.total_price)} telah LUNAS tanpa bukti transfer.`,
+            'success'
+          );
+        } else if (payload.eventType === 'INSERT') {
+          showToast(
+            'Booking & Nomor VA Baru Terbit',
+            `Pesanan baru #${payload.new.booking_code} menunggu pembayaran ${payload.new.va_bank}.`,
+            'info'
+          );
+        }
+      })
+      .subscribe();
+  }
+
+  // ==========================================
+  // SISTEM LOGIN & REGISTRASI HYBRID
+  // ==========================================
+  window.switchAuthTab = function(tab) {
+    const btnMember = document.getElementById('tab-role-member');
+    const btnReg = document.getElementById('tab-role-register');
+    const btnAdmin = document.getElementById('tab-role-admin');
+
+    const formMember = document.getElementById('form-login-member');
+    const formReg = document.getElementById('form-register-member');
+    const formAdmin = document.getElementById('form-login-admin');
+
+    [btnMember, btnReg, btnAdmin].forEach(b => {
+      b.className = 'py-2.5 rounded-xl text-slate-500 hover:text-slate-800 transition';
+    });
+    [formMember, formReg, formAdmin].forEach(f => f.classList.add('hidden'));
+
+    if (tab === 'member') {
+      btnMember.className = 'py-2.5 rounded-xl bg-royal-600 text-white shadow-royal transition';
+      formMember.classList.remove('hidden');
+    } else if (tab === 'register') {
+      btnReg.className = 'py-2.5 rounded-xl bg-royal-600 text-white shadow-royal transition';
+      formReg.classList.remove('hidden');
+    } else {
+      btnAdmin.className = 'py-2.5 rounded-xl bg-royal-600 text-white shadow-royal transition';
+      formAdmin.classList.remove('hidden');
+    }
+  };
+
+  window.appQuickLogin = async function(role) {
+    if (!IS_PREVIEW) return;
+    await loadAllDatabaseData();
+    if (role === 'admin') {
+      state.currentUser = {
+        id: 'admin-preview',
+        role: 'admin',
+        full_name: 'Admin Pengelola',
+        team_name: 'PitchBook Official',
+        username: 'admin@pitchbook.id',
+        phone: '081234567890'
+      };
+    } else {
+      const m = previewMemory.members[0];
+      state.currentUser = {
+        id: m.id,
+        role: 'member',
+        full_name: m.full_name,
+        team_name: m.team_name,
+        username: m.username,
+        phone: m.phone
+      };
+    }
+    state.activeMenu = 'dashboard';
+    enterDashboardView();
+    showToast('Login berhasil (Mode Preview)', `Selamat datang, ${state.currentUser.full_name}!`, 'success');
+  };
+
+  // Login Penyewa via Tabel `members`
+  window.handleMemberLogin = async function(e) {
+    e.preventDefault();
+    const uname = document.getElementById('member-username').value.trim();
+    const pass = document.getElementById('member-password').value.trim();
+
+    try {
+      if (IS_PREVIEW) {
+        const found = previewMemory.members.find(m => m.username.toLowerCase() === uname.toLowerCase() && m.password === pass);
+        if (!found) throw new Error('Username atau password penyewa tidak cocok (Coba: garudafc / 123).');
+        state.currentUser = { ...found, role: 'member' };
+      } else {
+        const { data, error } = await supabase
+          .from('members')
+          .select('*')
+          .eq('username', uname)
+          .eq('password', pass)
+          .maybeSingle();
+
+        if (error) throw error;
+        if (!data) throw new Error('Username atau Password tim tidak ditemukan.');
+        state.currentUser = { ...data, role: 'member' };
+        sessionStorage.setItem('pitchbook_member_session', JSON.stringify(state.currentUser));
+      }
+
+      await loadAllDatabaseData();
+      subscribeRealtimeVAChannel();
+      state.activeMenu = 'dashboard';
+      enterDashboardView();
+      showToast('Berhasil Masuk', `Selamat datang kembali, ${state.currentUser.team_name}!`, 'success');
+    } catch (err) {
+      showToast('Gagal Masuk', err.message, 'warning');
+    }
+  };
+
+  // Registrasi Penyewa Baru ke Tabel `members`
+  window.handleMemberRegister = async function(e) {
+    e.preventDefault();
+    const full_name = document.getElementById('reg-fullname').value.trim();
+    const team_name = document.getElementById('reg-team').value.trim();
+    const username = document.getElementById('reg-username').value.trim().toLowerCase();
+    const phone = document.getElementById('reg-phone').value.trim();
+    const password = document.getElementById('reg-password').value.trim();
+
+    try {
+      if (IS_PREVIEW) {
+        const newMember = {
+          id: 'mem-' + Date.now(),
+          username,
+          password,
+          full_name,
+          team_name,
+          phone
+        };
+        previewMemory.members.unshift(newMember);
+        state.currentUser = { ...newMember, role: 'member' };
+      } else {
+        const { data, error } = await supabase
+          .from('members')
+          .insert([{ username, password, full_name, team_name, phone }])
+          .select()
+          .single();
+        if (error) throw error;
+        state.currentUser = { ...data, role: 'member' };
+        sessionStorage.setItem('pitchbook_member_session', JSON.stringify(state.currentUser));
+      }
+
+      await loadAllDatabaseData();
+      subscribeRealtimeVAChannel();
+      state.activeMenu = 'dashboard';
+      enterDashboardView();
+      showToast('Pendaftaran Tim Berhasil!', `Akun tim ${team_name} siap memesan lapangan.`, 'success');
+    } catch (err) {
+      showToast('Gagal Mendaftar', err.message, 'warning');
+    }
+  };
+
+  // Login Admin via Supabase Auth (`signInWithPassword`)
+  window.handleAdminLogin = async function(e) {
+    e.preventDefault();
+    const email = document.getElementById('admin-email').value.trim();
+    const password = document.getElementById('admin-password').value.trim();
+
+    try {
+      if (IS_PREVIEW) {
+        state.currentUser = {
+          id: 'admin-preview',
+          role: 'admin',
+          full_name: email.split('@')[0],
+          team_name: 'Administrator Arena',
+          username: email,
+          phone: '081234567890'
+        };
+      } else {
+        const { data, error } = await supabase.auth.signInWithPassword({ email, password });
+        if (error) throw error;
+        state.currentUser = {
+          id: data.user.id,
+          role: 'admin',
+          full_name: data.user.email.split('@')[0],
+          team_name: 'Administrator Arena',
+          username: data.user.email,
+          phone: '081234567890'
+        };
+      }
+
+      await loadAllDatabaseData();
+      subscribeRealtimeVAChannel();
+      state.activeMenu = 'dashboard';
+      enterDashboardView();
+      showToast('Login Admin Berhasil', 'Sistem pemantauan Virtual Account aktif.', 'success');
+    } catch (err) {
+      showToast('Gagal Login Admin', err.message, 'warning');
+    }
+  };
+
+  window.handleLogout = async function() {
+    if (!IS_PREVIEW && state.currentUser?.role === 'admin' && supabase) {
+      await supabase.auth.signOut();
+    }
+    sessionStorage.removeItem('pitchbook_member_session');
+    state.currentUser = null;
+    document.getElementById('main-app-view').classList.add('hidden');
+    document.getElementById('mobile-bottom-nav').classList.add('hidden');
+    document.getElementById('auth-view').classList.remove('hidden');
+    showToast('Sesi Berakhir', 'Anda telah keluar dari aplikasi.', 'info');
+  };
+
+  // ==========================================
+  // NAVIGASI & RENDER LAYOUT CRYPTOWALL UI
+  // ==========================================
+  function getMenusByRole() {
+    if (state.currentUser?.role === 'admin') {
+      return [
+        { id: 'dashboard', label: 'Dashboard', icon: 'home' },
+        { id: 'fields', label: 'Kelola Lapangan', icon: 'map-pin' },
+        { id: 'bookings', label: 'Jadwal & VA', icon: 'credit-card' },
+        { id: 'members', label: 'Data Member', icon: 'users' }
+      ];
+    }
+    return [
+      { id: 'dashboard', label: 'Dashboard', icon: 'home' },
+      { id: 'booking_new', label: 'Booking & VA', icon: 'calendar-plus' },
+      { id: 'my_tickets', label: 'Tagihan & Tiket', icon: 'wallet' },
+      { id: 'profile', label: 'Profil Tim', icon: 'user' }
+    ];
+  }
+
+  function enterDashboardView() {
+    document.getElementById('auth-view').classList.add('hidden');
+    document.getElementById('main-app-view').classList.remove('hidden');
+    document.getElementById('mobile-bottom-nav').classList.remove('hidden');
+    renderAllViews();
+  }
+
+  window.switchMenu = function(menuId) {
+    state.activeMenu = menuId;
+    renderAllViews();
+  };
+
+  window.openQuickActionFromPromo = function() {
+    if (state.currentUser?.role === 'admin') {
+      window.switchMenu('bookings');
+    } else {
+      window.switchMenu('booking_new');
+    }
+  };
+
+  window.handleGlobalSearch = function(val) {
+    state.searchQuery = val.trim().toLowerCase();
+    renderCenterWorkspace();
+  };
+
+  function refreshActiveVACardState() {
+    if (!state.currentUser) return;
+    const relevantBookings = state.currentUser.role === 'admin'
+      ? state.bookings
+      : state.bookings.filter(b => b.member_id === state.currentUser.id);
+
+    const waitingVA = relevantBookings.find(b => b.payment_status === 'Waiting VA');
+    state.activeTagihanVA = waitingVA || relevantBookings[0] || null;
+  }
+
+  function renderAllViews() {
+    if (!state.currentUser) return;
+    refreshActiveVACardState();
+
+    // Update Header & Profil Kanan
+    document.getElementById('header-greeting-name').textContent = `${state.currentUser.full_name} • ${state.currentUser.team_name}`;
+    document.getElementById('sidebar-role-badge').textContent = state.currentUser.role === 'admin' ? 'Admin Panel' : 'Member Area';
+
+    const initials = state.currentUser.full_name.split(' ').map(n => n[0]).join('').slice(0, 2).toUpperCase();
+    document.getElementById('right-profile-avatar').textContent = initials;
+    document.getElementById('right-profile-name').textContent = state.currentUser.full_name;
+    document.getElementById('right-profile-team').textContent = state.currentUser.team_name;
+
+    renderNavigationBars();
+    renderCenterWorkspace();
+    renderRightVAPanel();
+    lucide.createIcons();
+  }
+
+  function renderNavigationBars() {
+    const menus = getMenusByRole();
+    const currentMenuObj = menus.find(m => m.id === state.activeMenu) || menus[0];
+    document.getElementById('header-page-title').textContent = currentMenuObj.label;
+
+    // 1. Desktop Sidebar (Gaya Cryptowall dengan bar indikator kiri + kapsul biru)
+    const desktopNav = document.getElementById('desktop-nav-list');
+    desktopNav.innerHTML = menus.map(m => {
+      const active = m.id === state.activeMenu;
+      return `
+        <div class="relative flex items-center">
+          ${active ? '<span class="w-1.5 h-8 bg-royal-600 rounded-r-full absolute -left-5"></span>' : ''}
+          <button onclick="window.switchMenu('${m.id}')" class="w-full flex items-center gap-3.5 px-4 py-3 rounded-2xl text-xs font-semibold transition ${
+            active
+              ? 'bg-royal-600 text-white shadow-royal'
+              : 'text-slate-400 hover:text-slate-700 hover:bg-slate-50'
+          }">
+            <div class="w-7 h-7 rounded-xl ${active ? 'bg-white/20 text-white' : 'bg-sky-50 text-skycyan-500'} flex items-center justify-center">
+              <i data-lucide="${m.icon}" class="w-4 h-4"></i>
+            </div>
+            <span>${m.label}</span>
+          </button>
+        </div>
+      `;
+    }).join('');
+
+    // 2. Mobile Bottom Navigation Bar
+    const mobileNav = document.getElementById('mobile-bottom-nav');
+    mobileNav.innerHTML = menus.map(m => {
+      const active = m.id === state.activeMenu;
+      return `
+        <button onclick="window.switchMenu('${m.id}')" class="flex flex-col items-center justify-center py-1 px-3 rounded-2xl transition ${
+          active ? 'text-royal-600 font-bold' : 'text-slate-400 font-medium'
+        }">
+          <div class="w-9 h-9 rounded-2xl flex items-center justify-center ${active ? 'bg-royal-600 text-white shadow-royal' : ''}">
+            <i data-lucide="${m.icon}" class="w-4 h-4"></i>
+          </div>
+          <span class="text-[10px] mt-1">${m.label}</span>
+        </button>
+      `;
+    }).join('');
+  }
+
+  // ==========================================
+  // RENDER PANEL KANAN (VIRTUAL ACCOUNT & LIVE FEED)
+  // ==========================================
+  function renderRightVAPanel() {
+    const va = state.activeTagihanVA;
+    const bankPill = document.getElementById('va-card-bank-pill');
+    const labelEl = document.getElementById('va-card-label');
+    const codeEl = document.getElementById('va-card-code');
+    const amountEl = document.getElementById('va-card-amount');
+    const numberEl = document.getElementById('va-card-number');
+    const statusBadge = document.getElementById('va-card-status-badge');
+
+    if (va) {
+      bankPill.textContent = va.va_bank || 'BCA VA';
+      labelEl.textContent = va.payment_status === 'Waiting VA' ? 'Menunggu Transfer VA' : 'Pembayaran VA Terverifikasi';
+      codeEl.textContent = `#${va.booking_code}`;
+      amountEl.textContent = formatRp(va.total_price);
+      numberEl.textContent = va.va_number;
+      statusBadge.textContent = va.payment_status.toUpperCase();
+    } else {
+      bankPill.textContent = 'VIRTUAL ACCOUNT';
+      labelEl.textContent = 'Belum Ada Tagihan Aktif';
+      codeEl.textContent = '#PB-READY';
+      amountEl.textContent = 'Rp 0';
+      numberEl.textContent = 'Buat Booking Baru';
+      statusBadge.textContent = 'IDLE';
+    }
+
+    // Daftar Notifikasi Transaksi VA Real-Time (Gaya "Recent Transaction" Cryptowall)
+    const txContainer = document.getElementById('right-recent-transactions');
+    const recentList = state.bookings.slice(0, 4);
+
+    if (recentList.length === 0) {
+      txContainer.innerHTML = `
+        <div class="text-center py-6 bg-slate-50 rounded-2xl text-xs text-slate-400">
+          Belum ada transaksi VA
+        </div>
+      `;
+      return;
+    }
+
+    txContainer.innerHTML = recentList.map(b => {
+      const field = state.fields.find(f => f.id === b.field_id);
+      const isLunas = b.payment_status === 'Lunas';
+      return `
+        <div onclick="window.selectBookingForVACard('${b.id}')" class="cursor-pointer p-3 rounded-2xl bg-slate-50/70 hover:bg-sky-50/60 border border-slate-100 flex items-center justify-between gap-2.5 transition">
+          <div class="flex items-center gap-3 min-w-0">
+            <div class="w-10 h-10 rounded-xl ${isLunas ? 'bg-royal-600 text-white' : 'bg-skycyan-400 text-white'} flex items-center justify-center font-bold text-xs shrink-0 shadow-sm">
+              ${(b.va_bank || 'VA').split(' ')[0].slice(0, 3)}
+            </div>
+            <div class="min-w-0">
+              <div class="text-xs font-bold text-slate-800 truncate">${field ? field.name : 'Lapangan'}</div>
+              <div class="text-[10px] text-slate-400 font-medium">${b.play_date} • ${b.start_time} (${b.payment_status})</div>
+            </div>
+          </div>
+          <div class="text-right shrink-0">
+            <div class="text-xs font-extrabold ${isLunas ? 'text-royal-600' : 'text-skycyan-500'}">
+              ${isLunas ? '+' : ''}${formatRp(b.total_price)}
+            </div>
+            <div class="text-[9px] font-mono text-slate-400">#${b.booking_code}</div>
+          </div>
+        </div>
+      `;
+    }).join('');
+  }
+
+  window.selectBookingForVACard = function(bookingId) {
+    const found = state.bookings.find(b => b.id === bookingId);
+    if (found) {
+      state.activeTagihanVA = found;
+      renderRightVAPanel();
+      lucide.createIcons();
+      showToast('Kartu VA Dipilih', `Menampilkan Nomor ${found.va_bank}: ${found.va_number}`, 'info');
+    }
+  };
+
+  window.copyActiveVANumber = function() {
+    if (!state.activeTagihanVA) {
+      showToast('Tidak Ada Nomor VA', 'Silakan buat jadwal booking terlebih dahulu.', 'warning');
+      return;
+    }
+    navigator.clipboard?.writeText(state.activeTagihanVA.va_number);
+    showToast(
+      'Nomor VA Disalin!',
+      `${state.activeTagihanVA.va_bank}: ${state.activeTagihanVA.va_number} siap ditempel di m-Banking.`,
+      'success'
+    );
+  };
+
+  // SIMULASI CALLBACK / WEBHOOK PEMBAYARAN VA OTOMATIS (TANPA KIRIM BUKTI TRANSFER)
+  window.simulateInstantVAPayment = async function(specificBookingId = null) {
+    const target = specificBookingId
+      ? state.bookings.find(b => b.id === specificBookingId)
+      : state.activeTagihanVA;
+
+    if (!target) {
+      showToast('Belum Ada Tagihan VA', 'Buat pesanan lapangan terlebih dahulu untuk mendapatkan Nomor VA.', 'warning');
+      return;
+    }
+    if (target.payment_status === 'Lunas') {
+      showToast('Tagihan Sudah Lunas', `Booking #${target.booking_code} sudah terverifikasi lunas.`, 'info');
+      return;
+    }
+
+    const nowIso = new Date().toISOString();
+    try {
+      if (IS_PREVIEW) {
+        const idx = previewMemory.bookings.findIndex(b => b.id === target.id);
+        if (idx !== -1) {
+          previewMemory.bookings[idx].payment_status = 'Lunas';
+          previewMemory.bookings[idx].paid_at = nowIso;
+        }
+      } else {
+        const { error } = await supabase
+          .from('bookings')
+          .update({ payment_status: 'Lunas', paid_at: nowIso })
+          .eq('id', target.id);
+        if (error) throw error;
+      }
+
+      await loadAllDatabaseData();
+      renderAllViews();
+      showToast(
+        'Callback VA Berhasil! (Auto-Verified)',
+        `Pembayaran ${target.va_bank} (${target.va_number}) sejumlah ${formatRp(target.total_price)} langsung LUNAS otomatis tanpa unggah bukti transfer!`,
+        'success'
+      );
+    } catch (err) {
+      showToast('Gagal Memproses Callback VA', err.message, 'warning');
+    }
+  };
+
+  window.triggerCheckLiveVA = async function() {
+    await loadAllDatabaseData();
+    renderAllViews();
+    const waitingCount = state.bookings.filter(b => b.payment_status === 'Waiting VA').length;
+    showToast(
+      'Status Gateway Virtual Account',
+      `Sinkronisasi real-time aktif. Terdapat ${waitingCount} tagihan VA menunggu pembayaran.`,
+      'info'
+    );
+  };
+
+  // ==========================================
+  // RENDER WORKSPACE TENGAH BERDASARKAN MENU
+  // ==========================================
+  function renderCenterWorkspace() {
+    const container = document.getElementById('center-workspace-content');
+    const menu = state.activeMenu;
+
+    if (menu === 'dashboard') {
+      container.innerHTML = buildDashboardHTML();
+    } else if (menu === 'fields') {
+      container.innerHTML = buildAdminFieldsHTML();
+    } else if (menu === 'bookings') {
+      container.innerHTML = buildAdminBookingsHTML();
+    } else if (menu === 'members') {
+      container.innerHTML = buildAdminMembersHTML();
+    } else if (menu === 'booking_new') {
+      container.innerHTML = buildMemberNewBookingHTML();
+    } else if (menu === 'my_tickets') {
+      container.innerHTML = buildMemberTicketsHTML();
+    } else if (menu === 'profile') {
+      container.innerHTML = buildMemberProfileHTML();
+    }
+    lucide.createIcons();
+  }
+
+  // 1. MENU DASHBOARD (Gaya Cryptowall: Royal Blue Banner + Horizontal Cards + Spline Area Chart)
+  function buildDashboardHTML() {
+    const isAdmin = state.currentUser.role === 'admin';
+    const paidBookings = state.bookings.filter(b => b.payment_status === 'Lunas');
+    const totalRevenue = paidBookings.reduce((acc, b) => acc + Number(b.total_price || 0), 0);
+    const waitingCount = state.bookings.filter(b => b.payment_status === 'Waiting VA').length;
+
+    const filteredFields = state.fields.filter(f =>
+      !state.searchQuery ||
+      f.name.toLowerCase().includes(state.searchQuery) ||
+      f.type.toLowerCase().includes(state.searchQuery)
+    );
+
+    return `
+      <!-- HERO BANNER ROYAL BLUE ALA CRYPTOWALL -->
+      <div class="bg-hero-royal rounded-[28px] p-6 sm:p-8 text-white shadow-royal relative overflow-hidden mb-7 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-6">
+        <div class="relative z-10 max-w-md">
+          <span class="inline-block bg-white/20 backdrop-blur-sm text-[11px] font-bold px-3 py-1 rounded-full mb-3">
+            ⚡ VIRTUAL ACCOUNT AUTO-CALLBACK
+          </span>
+          <h2 class="text-xl sm:text-2xl font-bold leading-snug mb-2">
+            Kelola Sewa Lapangan & Transaksi VA Otomatis
+          </h2>
+          <p class="text-xs text-blue-100 leading-relaxed mb-5">
+            Transfer langsung ke Nomor Virtual Account (BCA, BRI, Mandiri, BNI). Status booking otomatis LUNAS detik itu juga tanpa perlu kirim bukti transfer.
+          </p>
+          <div class="flex flex-wrap items-center gap-3">
+            <button onclick="window.switchMenu('${isAdmin ? 'bookings' : 'booking_new'}')" class="px-5 py-3 rounded-2xl bg-skycyan-400 hover:bg-skycyan-500 text-white font-bold text-xs shadow-cyan transition">
+              ${isAdmin ? 'Pantau Transaksi VA' : 'Booking Lapangan Sekarang'}
+            </button>
+            <button onclick="window.openWhatsAppModal()" class="px-4 py-3 rounded-2xl bg-white/15 hover:bg-white/25 text-white font-semibold text-xs backdrop-blur-sm transition">
+              Konsultasi WhatsApp
+            </button>
+          </div>
+        </div>
+
+        <!-- Ilustrasi 3D Smartphone & VA Card di Kanan Banner -->
+        <div class="relative z-10 bg-white/15 backdrop-blur-md border border-white/25 rounded-3xl p-4 w-full sm:w-60 shrink-0">
+          <div class="flex items-center justify-between text-[11px] text-sky-100 mb-2">
+            <span>Total Pendapatan VA</span>
+            <span class="bg-emerald-400 text-slate-900 font-extrabold px-2 py-0.5 rounded-full text-[10px]">LIVE</span>
+          </div>
+          <div class="text-xl font-extrabold mb-3">${formatRp(totalRevenue)}</div>
+          <div class="grid grid-cols-2 gap-2 text-[11px] bg-slate-900/25 rounded-2xl p-2.5">
+            <div>
+              <div class="text-blue-200 text-[10px]">Lunas Otomatis</div>
+              <div class="font-bold">${paidBookings.length} Jadwal</div>
+            </div>
+            <div>
+              <div class="text-blue-200 text-[10px]">Waiting VA</div>
+              <div class="font-bold text-amber-300">${waitingCount} Tagihan</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="w-56 h-56 rounded-full bg-skycyan-400/20 absolute -right-12 -bottom-16 blur-xl"></div>
+      </div>
+
+      <!-- KATALOG LAPANGAN HORIZONTAL (Gaya "My Portofolio" Cryptowall) -->
+      <div class="flex items-center justify-between mb-4">
+        <h3 class="text-base font-bold text-slate-800">Daftar Arena & Tarif Sewa</h3>
+        <div class="flex items-center gap-2">
+          <button onclick="window.switchMenu('${isAdmin ? 'fields' : 'booking_new'}')" class="px-3 py-1.5 rounded-xl bg-sky-100 text-skycyan-500 text-xs font-bold hover:bg-sky-200 transition">
+            ${isAdmin ? '+ Kelola Arena' : 'Pilih Jadwal →'}
+          </button>
+        </div>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-7">
+        ${
+          filteredFields.length === 0
+            ? `<div class="col-span-2 bg-white rounded-2xl p-6 text-center text-xs text-slate-400 shadow-soft-card">Belum ada data lapangan tersedia.</div>`
+            : filteredFields.map((f, idx) => `
+              <div class="bg-white rounded-2xl p-4 shadow-soft-card border border-slate-100 flex items-center justify-between gap-4 hover:border-royal-500 transition">
+                <div class="flex items-center gap-3.5 min-w-0">
+                  <div class="w-12 h-12 rounded-full ${idx % 2 === 0 ? 'bg-skycyan-400 shadow-cyan' : 'bg-royal-600 shadow-royal'} text-white flex items-center justify-center font-extrabold text-base shrink-0">
+                    ⚽
+                  </div>
+                  <div class="min-w-0">
+                    <div class="text-xs font-bold text-slate-800 truncate">${f.name}</div>
+                    <div class="text-[11px] text-slate-400 font-medium">${f.type} • ${f.grass_type}</div>
+                    <div class="text-[10px] text-slate-400 truncate mt-0.5">${f.facilities}</div>
+                  </div>
+                </div>
+                <div class="text-right shrink-0">
+                  <div class="text-xs font-extrabold text-slate-800">${formatRp(f.price_per_hour)}<span class="text-[10px] font-normal text-slate-400">/jam</span></div>
+                  <button onclick="window.quickBookField('${f.id}')" class="mt-1.5 inline-flex items-center gap-1 text-[10px] font-bold px-2.5 py-1 rounded-full ${
+                    f.status === 'Available' ? 'bg-sky-50 text-skycyan-500 hover:bg-sky-100' : 'bg-red-50 text-red-500'
+                  }">
+                    <span>• ${f.status === 'Available' ? 'Booking VA' : 'Maintenance'}</span>
+                  </button>
+                </div>
+              </div>
+            `).join('')
+        }
+      </div>
+
+      <!-- GRAFIK KURVA SPLINE AREA & ANTREAN JADWAL HARI INI (Gaya "Total Portofolio" Cryptowall) -->
+      <div class="bg-white rounded-[28px] p-6 shadow-soft-card border border-slate-100">
+        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 mb-4">
+          <div class="flex items-center gap-2.5">
+            <div class="w-8 h-8 rounded-xl bg-royal-600 text-white flex items-center justify-center">
+              <i data-lucide="activity" class="w-4 h-4"></i>
+            </div>
+            <div>
+              <h3 class="text-sm font-bold text-slate-800">Statistik Transaksi Virtual Account & Okupansi</h3>
+              <p class="text-[11px] text-slate-400">Grafik aktivitas pembayaran VA otomatis mingguan</p>
+            </div>
+          </div>
+          <span class="bg-skycyan-400 text-white text-xs font-extrabold px-3.5 py-1.5 rounded-xl shadow-cyan self-start sm:self-auto">
+            Total: ${formatRp(totalRevenue)}
+          </span>
+        </div>
+
+        <!-- Smooth SVG Spline Chart ala Cryptowall -->
+        <div class="relative pt-4 pb-2">
+          <svg viewBox="0 0 700 170" class="w-full h-40 overflow-visible">
+            <defs>
+              <linearGradient id="cryptoAreaGrad" x1="0" y1="0" x2="0" y2="1">
+                <stop offset="0%" stop-color="#38BDF8" stop-opacity="0.42" />
+                <stop offset="100%" stop-color="#38BDF8" stop-opacity="0.0" />
+              </linearGradient>
+            </defs>
+            <!-- Garis Grid Horizontal Tipis -->
+            <line x1="0" y1="35" x2="700" y2="35" stroke="#F1F5F9" stroke-width="1" />
+            <line x1="0" y1="85" x2="700" y2="85" stroke="#F1F5F9" stroke-width="1" />
+            <line x1="0" y1="135" x2="700" y2="135" stroke="#F1F5F9" stroke-width="1" />
+
+            <!-- Area Fill -->
+            <path d="M 20 110 C 90 110, 120 55, 180 65 C 240 75, 270 130, 330 105 C 390 80, 420 35, 480 42 C 540 50, 580 115, 640 85 L 680 70 L 680 155 L 20 155 Z" fill="url(#cryptoAreaGrad)" />
+            <!-- Smooth Line -->
+            <path d="M 20 110 C 90 110, 120 55, 180 65 C 240 75, 270 130, 330 105 C 390 80, 420 35, 480 42 C 540 50, 580 115, 640 85 L 680 70" fill="none" stroke="#3B5BDB" stroke-width="3" stroke-linecap="round" />
+
+            <!-- Titik Puncak Aktif + Garis Putus-putus Vertikal -->
+            <line x1="480" y1="42" x2="480" y2="155" stroke="#38BDF8" stroke-width="1.5" stroke-dasharray="4 4" />
+            <circle cx="480" cy="42" r="6" fill="#38BDF8" stroke="#FFFFFF" stroke-width="3" />
+            <rect x="435" y="4" width="90" height="26" rx="8" fill="#38BDF8" />
+            <text x="480" y="21" text-anchor="middle" fill="#FFFFFF" font-size="11" font-weight="700">VA Peak</text>
+          </svg>
+          <div class="grid grid-cols-7 text-center text-[11px] font-medium text-slate-400 mt-1">
+            <span>Sen</span><span>Sel</span><span>Rab</span><span>Kam</span><span class="text-royal-600 font-bold">Jum</span><span>Sab</span><span>Min</span>
+          </div>
+        </div>
+      </div>
+    `;
+  }
+
+  window.quickBookField = function(fieldId) {
+    state.selectedFieldId = fieldId;
+    if (state.currentUser.role === 'admin') {
+      window.switchMenu('bookings');
+    } else {
+      window.switchMenu('booking_new');
+    }
+  };
+
+  // ==========================================
+  // 2. MENU PENYEWA: BOOKING BARU & GENERATE VA OTOMATIS
+  // ==========================================
+  function buildMemberNewBookingHTML() {
+    const activeField = state.fields.find(f => f.id === state.selectedFieldId) || state.fields[0];
+    const pricePerHour = activeField ? Number(activeField.price_per_hour) : 0;
+
+    // Cek slot jam yang sudah dibooking pada tanggal & lapangan terpilih
+    const bookedSlots = state.bookings
+      .filter(b => b.field_id === (activeField?.id) && b.play_date === state.selectedDate && b.payment_status !== 'Batal')
+      .map(b => b.start_time);
+
+    const timeOptions = ['08:00', '10:00', '14:00', '16:00', '18:00', '19:00', '20:00', '21:00'];
+
+    return `
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
+        <!-- Form Booking & Pilihan Bank VA -->
+        <div class="lg:col-span-7 bg-white rounded-[28px] p-6 shadow-soft-card border border-slate-100">
+          <div class="flex items-center justify-between mb-5">
+            <div>
+              <h3 class="text-base font-bold text-slate-800">Form Sewa Lapangan & Virtual Account</h3>
+              <p class="text-xs text-slate-400">Nomor VA diterbitkan instan & otomatis lunas saat ditransfer</p>
+            </div>
+            <span class="bg-sky-50 text-skycyan-500 text-xs font-bold px-3 py-1 rounded-xl">Auto-Verify</span>
+          </div>
+
+          <form onsubmit="window.handleCreateVABooking(event)" class="space-y-4">
+            <div>
+              <label class="block text-xs font-semibold text-slate-600 mb-1.5">Pilih Lapangan Sepak Bola</label>
+              <select id="book-field-id" onchange="window.changeSelectedBookingField(this.value)" required class="w-full px-4 py-3 rounded-2xl bg-slate-50 border border-slate-200 text-xs font-semibold text-slate-800">
+                ${state.fields.map(f => `
+                  <option value="${f.id}" ${f.id === activeField?.id ? 'selected' : ''} ${f.status !== 'Available' ? 'disabled' : ''}>
+                    ${f.name} — ${formatRp(f.price_per_hour)}/Jam (${f.status})
+                  </option>
+                `).join('')}
+              </select>
+            </div>
+
+            <div class="grid grid-cols-1 sm:grid-cols-3 gap-3">
+              <div>
+                <label class="block text-xs font-semibold text-slate-600 mb-1.5">Tanggal Bermain</label>
+                <input type="date" id="book-play-date" value="${state.selectedDate}" onchange="window.changeSelectedBookingDate(this.value)" required class="w-full px-3.5 py-2.5 rounded-2xl bg-slate-50 border border-slate-200 text-xs font-semibold" />
+              </div>
+              <div>
+                <label class="block text-xs font-semibold text-slate-600 mb-1.5">Jam Mulai</label>
+                <select id="book-start-time" required class="w-full px-3.5 py-2.5 rounded-2xl bg-slate-50 border border-slate-200 text-xs font-semibold">
+                  ${timeOptions.map(t => {
+                    const isTaken = bookedSlots.includes(t);
+                    return `<option value="${t}" ${isTaken ? 'disabled' : ''}>${t} WITA ${isTaken ? '(Penuh)' : '(Tersedia)'}</option>`;
+                  }).join('')}
+                </select>
+              </div>
+              <div>
+                <label class="block text-xs font-semibold text-slate-600 mb-1.5">Durasi Bermain</label>
+                <select id="book-duration" onchange="window.updateEstimatedTotal(${pricePerHour})" required class="w-full px-3.5 py-2.5 rounded-2xl bg-slate-50 border border-slate-200 text-xs font-semibold">
+                  <option value="1">1 Jam</option>
+                  <option value="2" selected>2 Jam</option>
+                  <option value="3">3 Jam</option>
+                  <option value="4">4 Jam (Turnamen)</option>
+                </select>
+              </div>
+            </div>
+
+            <!-- Pilihan Bank Virtual Account -->
+            <div>
+              <label class="block text-xs font-semibold text-slate-600 mb-2">Pilih Bank Virtual Account (Otomatis Cek Mutasi)</label>
+              <div class="grid grid-cols-2 sm:grid-cols-4 gap-2.5">
+                ${['BCA VA', 'BRI VA', 'MANDIRI VA', 'BNI VA'].map((bank, i) => `
+                  <label class="cursor-pointer">
+                    <input type="radio" name="va_bank_choice" value="${bank}" ${i === 0 ? 'checked' : ''} class="peer hidden" />
+                    <div class="p-3 rounded-2xl border border-slate-200 peer-checked:border-royal-600 peer-checked:bg-royal-50/70 text-center transition">
+                      <div class="text-xs font-extrabold text-slate-800">${bank}</div>
+                      <div class="text-[10px] text-slate-400">Instan 24 Jam</div>
+                    </div>
+                  </label>
+                `).join('')}
+              </div>
+            </div>
+
+            <div>
+              <label class="block text-xs font-semibold text-slate-600 mb-1.5">Catatan Tim / Pertandingan</label>
+              <input type="text" id="book-notes" placeholder="Contoh: Sparring Persahabatan / Sewa Rompi" class="w-full px-4 py-2.5 rounded-2xl bg-slate-50 border border-slate-200 text-xs" />
+            </div>
+
+            <div class="bg-slate-50 rounded-2xl p-4 flex items-center justify-between border border-slate-100">
+              <div>
+                <div class="text-[11px] text-slate-400 font-medium">Total Tagihan Virtual Account</div>
+                <div id="book-estimated-total" class="text-xl font-extrabold text-royal-600">${formatRp(pricePerHour * 2)}</div>
+              </div>
+              <button type="submit" class="px-6 py-3.5 rounded-2xl bg-royal-600 hover:bg-royal-700 text-white font-bold text-xs shadow-royal transition">
+                Terbitkan Nomor VA →
+              </button>
+            </div>
+          </form>
+        </div>
+
+        <!-- Informasi Ketersediaan Slot Jam Real-Time -->
+        <div class="lg:col-span-5 bg-white rounded-[28px] p-6 shadow-soft-card border border-slate-100 flex flex-col justify-between">
+          <div>
+            <h3 class="text-base font-bold text-slate-800 mb-1">Status Slot Jam (${state.selectedDate})</h3>
+            <p class="text-xs text-slate-400 mb-4">${activeField ? activeField.name : 'Pilih Lapangan'}</p>
+
+            <div class="grid grid-cols-2 gap-2.5 mb-6">
+              ${timeOptions.map(t => {
+                const isTaken = bookedSlots.includes(t);
+                return `
+                  <div class="p-3 rounded-2xl border ${
+                    isTaken ? 'bg-red-50/60 border-red-200 text-red-500' : 'bg-emerald-50/60 border-emerald-200 text-emerald-700'
+                  } flex items-center justify-between text-xs font-bold">
+                    <span>🕒 ${t}</span>
+                    <span class="text-[10px] px-2 py-0.5 rounded-full ${isTaken ? 'bg-red-100 text-red-600' : 'bg-emerald-100 text-emerald-700'}">
+                      ${isTaken ? 'Booked' : 'Kosong'}
+                    </span>
+                  </div>
+                `;
+              }).join('')}
+            </div>
+          </div>
+
+          <div class="bg-sky-50 border border-sky-100 rounded-2xl p-4 text-xs text-slate-600 leading-relaxed">
+            <div class="font-bold text-slate-800 mb-1">💡 Cara Kerja Pembayaran VA Tanpa Bukti:</div>
+            1. Klik <b>Terbitkan Nomor VA</b>.<br/>
+            2. Salin Nomor VA yang muncul di kartu kanan.<br/>
+            3. Klik tombol <b>Bayar VA</b> (Simulasi Callback M-Banking) dan tiket langsung <b>LUNAS</b> otomatis!
+          </div>
+        </div>
+      </div>
+    `;
+  }
+
+  window.changeSelectedBookingField = function(fieldId) {
+    state.selectedFieldId = fieldId;
+    renderCenterWorkspace();
+  };
+
+  window.changeSelectedBookingDate = function(dateStr) {
+    state.selectedDate = dateStr;
+    renderCenterWorkspace();
+  };
+
+  window.updateEstimatedTotal = function(pricePerHour) {
+    const dur = Number(document.getElementById('book-duration')?.value || 1);
+    const el = document.getElementById('book-estimated-total');
+    if (el) el.textContent = formatRp(pricePerHour * dur);
+  };
+
+  window.handleCreateVABooking = async function(e) {
+    e.preventDefault();
+    const field_id = document.getElementById('book-field-id').value;
+    const play_date = document.getElementById('book-play-date').value;
+    const start_time = document.getElementById('book-start-time').value;
+    const duration_hours = Number(document.getElementById('book-duration').value || 1);
+    const va_bank = document.querySelector('input[name="va_bank_choice"]:checked')?.value || 'BCA VA';
+    const notes = document.getElementById('book-notes').value.trim();
+
+    const field = state.fields.find(f => f.id === field_id);
+    if (!field) return;
+
+    const total_price = Number(field.price_per_hour) * duration_hours;
+    const booking_code = 'PB-' + Math.floor(1000 + Math.random() * 9000);
+    const va_number = generateVANumber(va_bank, state.currentUser.phone);
+
+    try {
+      if (IS_PREVIEW) {
+        const newBkg = {
+          id: 'bkg-' + Date.now(),
+          booking_code,
+          field_id,
+          member_id: state.currentUser.id,
+          play_date,
+          start_time,
+          duration_hours,
+          va_bank,
+          va_number,
+          total_price,
+          payment_status: 'Waiting VA',
+          paid_at: null,
+          notes
+        };
+        previewMemory.bookings.unshift(newBkg);
+      } else {
+        const { error } = await supabase.from('bookings').insert([{
+          booking_code,
+          field_id,
+          member_id: state.currentUser.id,
+          play_date,
+          start_time,
+          duration_hours,
+          va_bank,
+          va_number,
+          total_price,
+          payment_status: 'Waiting VA',
+          notes
+        }]);
+        if (error) throw error;
+      }
+
+      await loadAllDatabaseData();
+      state.activeMenu = 'my_tickets';
+      renderAllViews();
+      showToast(
+        'Nomor Virtual Account Terbit!',
+        `${va_bank}: ${va_number} sebesar ${formatRp(total_price)}. Silakan lakukan pembayaran.`,
+        'success'
+      );
+    } catch (err) {
+      showToast('Gagal Membuat Booking', err.message, 'warning');
+    }
+  };
+
+  // ==========================================
+  // 3. MENU PENYEWA: TAGIHAN VA & E-TICKET SAYA
+  // ==========================================
+  function buildMemberTicketsHTML() {
+    const myBookings = state.bookings.filter(b => b.member_id === state.currentUser.id);
+
+    if (myBookings.length === 0) {
+      return `
+        <div class="bg-white rounded-[28px] p-10 text-center shadow-soft-card">
+          <div class="text-4xl mb-3">🎟️</div>
+          <h3 class="text-base font-bold text-slate-800 mb-1">Belum Ada Tagihan VA / Tiket Sewa</h3>
+          <p class="text-xs text-slate-400 mb-5">Silakan pilih jadwal lapangan terlebih dahulu untuk mendapatkan Nomor Virtual Account.</p>
+          <button onclick="window.switchMenu('booking_new')" class="px-5 py-3 rounded-2xl bg-royal-600 text-white font-bold text-xs shadow-royal">
+            Buat Booking Baru
+          </button>
+        </div>
+      `;
+    }
+
+    return `
+      <div class="space-y-4">
+        ${myBookings.map(b => {
+          const field = state.fields.find(f => f.id === b.field_id);
+          const isLunas = b.payment_status === 'Lunas';
+          return `
+            <div class="bg-white rounded-[26px] p-5 shadow-soft-card border ${isLunas ? 'border-emerald-200' : 'border-sky-200'} flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
+              <div class="space-y-1">
+                <div class="flex items-center gap-2">
+                  <span class="font-mono text-xs font-extrabold text-royal-600 bg-royal-50 px-2.5 py-1 rounded-lg">#${b.booking_code}</span>
+                  <span class="text-xs font-bold px-3 py-1 rounded-full ${
+                    isLunas ? 'bg-emerald-50 text-emerald-600' : 'bg-amber-50 text-amber-600'
+                  }">
+                    • ${isLunas ? 'LUNAS (E-TICKET AKTIF)' : 'MENUNGGU TRANSFER VA'}
+                  </span>
+                </div>
+                <h4 class="text-base font-bold text-slate-800 pt-1">${field ? field.name : 'Lapangan Sepak Bola'}</h4>
+                <p class="text-xs text-slate-500">📅 Tanggal: <b>${b.play_date}</b> | 🕒 Jam: <b>${b.start_time} WITA (${b.duration_hours} Jam)</b></p>
+                <div class="text-xs text-slate-600 pt-1">
+                  💳 <b>${b.va_bank}:</b> <span class="font-mono font-bold text-slate-800 bg-slate-100 px-2 py-0.5 rounded">${b.va_number}</span>
+                </div>
+              </div>
+
+              <div class="flex flex-col sm:flex-row md:flex-col items-start sm:items-end justify-between gap-2 w-full md:w-auto border-t md:border-t-0 pt-3 md:pt-0 border-slate-100">
+                <div class="text-left sm:text-right">
+                  <div class="text-[10px] text-slate-400">Total Nominal VA</div>
+                  <div class="text-lg font-extrabold text-slate-800">${formatRp(b.total_price)}</div>
+                </div>
+
+                <div class="flex items-center gap-2">
+                  ${
+                    !isLunas
+                      ? `<button onclick="window.simulateInstantVAPayment('${b.id}')" class="px-4 py-2.5 rounded-2xl bg-skycyan-400 hover:bg-skycyan-500 text-white font-bold text-xs shadow-cyan transition">
+                           ⚡ Simulasi Bayar VA (Auto-Lunas)
+                         </button>`
+                      : `<span class="text-[11px] font-bold text-emerald-600 bg-emerald-50 px-3 py-2 rounded-xl">
+                           ✅ Terverifikasi Otomatis
+                         </span>`
+                  }
+                </div>
+              </div>
+            </div>
+          `;
+        }).join('')}
+      </div>
+    `;
+  }
+
+  // ==========================================
+  // 4. MENU PENYEWA: PROFIL TIM SAYA
+  // ==========================================
+  function buildMemberProfileHTML() {
+    const u = state.currentUser;
+    return `
+      <div class="bg-white rounded-[28px] p-6 sm:p-8 shadow-soft-card border border-slate-100 max-w-xl">
+        <h3 class="text-base font-bold text-slate-800 mb-1">Profil Tim & Kontak Virtual Account</h3>
+        <p class="text-xs text-slate-400 mb-5">Nomor WhatsApp digunakan sebagai basis pembuatan Nomor Virtual Account tim Anda.</p>
+
+        <form onsubmit="window.handleUpdateMemberProfile(event)" class="space-y-4">
+          <div>
+            <label class="block text-xs font-semibold text-slate-600 mb-1">Nama Kapten / Penanggung Jawab</label>
+            <input type="text" id="prof-fullname" value="${u.full_name || ''}" required class="w-full px-4 py-3 rounded-2xl bg-slate-50 border border-slate-200 text-xs font-semibold" />
+          </div>
+          <div>
+            <label class="block text-xs font-semibold text-slate-600 mb-1">Nama Tim Sepak Bola</label>
+            <input type="text" id="prof-team" value="${u.team_name || ''}" required class="w-full px-4 py-3 rounded-2xl bg-slate-50 border border-slate-200 text-xs font-semibold" />
+          </div>
+          <div>
+            <label class="block text-xs font-semibold text-slate-600 mb-1">Nomor WhatsApp Aktif</label>
+            <input type="text" id="prof-phone" value="${u.phone || ''}" required class="w-full px-4 py-3 rounded-2xl bg-slate-50 border border-slate-200 text-xs font-semibold" />
+          </div>
+          <button type="submit" class="px-6 py-3.5 rounded-2xl bg-royal-600 hover:bg-royal-700 text-white font-bold text-xs shadow-royal transition">
+            Simpan Perubahan Profil
+          </button>
+        </form>
+      </div>
+    `;
+  }
+
+  window.handleUpdateMemberProfile = async function(e) {
+    e.preventDefault();
+    const full_name = document.getElementById('prof-fullname').value.trim();
+    const team_name = document.getElementById('prof-team').value.trim();
+    const phone = document.getElementById('prof-phone').value.trim();
+
+    try {
+      if (IS_PREVIEW) {
+        const idx = previewMemory.members.findIndex(m => m.id === state.currentUser.id);
+        if (idx !== -1) {
+          previewMemory.members[idx] = { ...previewMemory.members[idx], full_name, team_name, phone };
+        }
+      } else {
+        const { error } = await supabase
+          .from('members')
+          .update({ full_name, team_name, phone })
+          .eq('id', state.currentUser.id);
+        if (error) throw error;
+      }
+
+      state.currentUser = { ...state.currentUser, full_name, team_name, phone };
+      if (!IS_PREVIEW) {
+        sessionStorage.setItem('pitchbook_member_session', JSON.stringify(state.currentUser));
+      }
+      await loadAllDatabaseData();
+      renderAllViews();
+      showToast('Profil Diperbarui', 'Data tim berhasil disimpan.', 'success');
+    } catch (err) {
+      showToast('Gagal Menyimpan Profil', err.message, 'warning');
+    }
+  };
+
+  // ==========================================
+  // 5. MENU ADMIN: KELOLA LAPANGAN (CRUD)
+  // ==========================================
+  function buildAdminFieldsHTML() {
+    return `
+      <div class="flex items-center justify-between mb-5">
+        <div>
+          <h3 class="text-base font-bold text-slate-800">Master Data Lapangan Sepak Bola</h3>
+          <p class="text-xs text-slate-400">Kelola harga sewa per jam, jenis rumput, dan status lapangan</p>
+        </div>
+        <button onclick="window.openFieldModal()" class="px-4 py-2.5 rounded-2xl bg-royal-600 hover:bg-royal-700 text-white font-bold text-xs shadow-royal transition">
+          + Tambah Lapangan
+        </button>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+        ${
+          state.fields.length === 0
+            ? `<div class="col-span-2 bg-white rounded-2xl p-8 text-center text-xs text-slate-400">Belum ada data lapangan.</div>`
+            : state.fields.map(f => `
+              <div class="bg-white rounded-[24px] p-5 shadow-soft-card border border-slate-100 flex flex-col justify-between gap-4">
+                <div>
+                  <div class="flex items-center justify-between gap-2 mb-2">
+                    <span class="text-[10px] font-bold uppercase tracking-wider px-2.5 py-1 rounded-full bg-royal-50 text-royal-600">${f.type}</span>
+                    <span class="text-[10px] font-bold px-2.5 py-1 rounded-full ${f.status === 'Available' ? 'bg-emerald-50 text-emerald-600' : 'bg-red-50 text-red-500'}">
+                      • ${f.status}
+                    </span>
+                  </div>
+                  <h4 class="text-base font-bold text-slate-800">${f.name}</h4>
+                  <p class="text-xs text-slate-500 mt-0.5">🌱 Rumput: ${f.grass_type}</p>
+                  <p class="text-[11px] text-slate-400 mt-1">✨ Fasilitas: ${f.facilities}</p>
+                </div>
+
+                <div class="pt-3 border-t border-slate-100 flex items-center justify-between">
+                  <div class="text-sm font-extrabold text-royal-600">${formatRp(f.price_per_hour)} <span class="text-[10px] font-normal text-slate-400">/ jam</span></div>
+                  <div class="flex items-center gap-2">
+                    <button onclick="window.openFieldModal('${f.id}')" class="px-3 py-1.5 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-700 text-xs font-semibold">Edit</button>
+                    <button onclick="window.deleteFieldData('${f.id}')" class="px-3 py-1.5 rounded-xl bg-red-50 hover:bg-red-100 text-red-600 text-xs font-semibold">Hapus</button>
+                  </div>
+                </div>
+              </div>
+            `).join('')
+        }
+      </div>
+    `;
+  }
+
+  window.openFieldModal = function(fieldId = null) {
+    const modal = document.getElementById('field-modal');
+    const title = document.getElementById('field-modal-title');
+    if (fieldId) {
+      const f = state.fields.find(x => x.id === fieldId);
+      if (!f) return;
+      title.textContent = 'Edit Data Lapangan';
+      document.getElementById('field-id-input').value = f.id;
+      document.getElementById('field-name-input').value = f.name;
+      document.getElementById('field-type-input').value = f.type;
+      document.getElementById('field-grass-input').value = f.grass_type;
+      document.getElementById('field-price-input').value = f.price_per_hour;
+      document.getElementById('field-status-input').value = f.status;
+      document.getElementById('field-facilities-input').value = f.facilities;
+    } else {
+      title.textContent = 'Tambah Lapangan Baru';
+      document.getElementById('form-field-crud').reset();
+      document.getElementById('field-id-input').value = '';
+    }
+    modal.classList.remove('hidden');
+  };
+
+  window.closeFieldModal = function() {
+    document.getElementById('field-modal').classList.add('hidden');
+  };
+
+  window.saveFieldData = async function(e) {
+    e.preventDefault();
+    const id = document.getElementById('field-id-input').value;
+    const payload = {
+      name: document.getElementById('field-name-input').value.trim(),
+      type: document.getElementById('field-type-input').value,
+      grass_type: document.getElementById('field-grass-input').value.trim(),
+      price_per_hour: Number(document.getElementById('field-price-input').value),
+      status: document.getElementById('field-status-input').value,
+      facilities: document.getElementById('field-facilities-input').value.trim()
+    };
+
+    try {
+      if (IS_PREVIEW) {
+        if (id) {
+          const idx = previewMemory.fields.findIndex(f => f.id === id);
+          if (idx !== -1) previewMemory.fields[idx] = { ...previewMemory.fields[idx], ...payload };
+        } else {
+          previewMemory.fields.push({ id: 'fld-' + Date.now(), ...payload });
+        }
+      } else {
+        if (id) {
+          const { error } = await supabase.from('fields').update(payload).eq('id', id);
+          if (error) throw error;
+        } else {
+          const { error } = await supabase.from('fields').insert([payload]);
+          if (error) throw error;
+        }
+      }
+      window.closeFieldModal();
+      await loadAllDatabaseData();
+      renderAllViews();
+      showToast('Data Lapangan Tersimpan', `Lapangan ${payload.name} berhasil diperbarui.`, 'success');
+    } catch (err) {
+      showToast('Gagal Menyimpan Lapangan', err.message, 'warning');
+    }
+  };
+
+  window.deleteFieldData = async function(fieldId) {
+    try {
+      if (IS_PREVIEW) {
+        previewMemory.fields = previewMemory.fields.filter(f => f.id !== fieldId);
+      } else {
+        const { error } = await supabase.from('fields').delete().eq('id', fieldId);
+        if (error) throw error;
+      }
+      await loadAllDatabaseData();
+      renderAllViews();
+      showToast('Lapangan Dihapus', 'Data lapangan telah dihapus dari sistem.', 'info');
+    } catch (err) {
+      showToast('Gagal Menghapus', err.message, 'warning');
+    }
+  };
+
+  // ==========================================
+  // 6. MENU ADMIN: JADWAL & TRANSAKSI VIRTUAL ACCOUNT
+  // ==========================================
+  function buildAdminBookingsHTML() {
+    const list = state.bookings.filter(b =>
+      !state.searchQuery ||
+      b.booking_code.toLowerCase().includes(state.searchQuery) ||
+      b.va_number.toLowerCase().includes(state.searchQuery)
+    );
+
+    return `
+      <div class="bg-white rounded-[28px] p-6 shadow-soft-card border border-slate-100">
+        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 mb-5">
+          <div>
+            <h3 class="text-base font-bold text-slate-800">Daftar Transaksi Sewa & Nomor Virtual Account</h3>
+            <p class="text-xs text-slate-400">Notifikasi dan status pembayaran VA ter-update otomatis secara real-time</p>
+          </div>
+          <span class="bg-emerald-50 text-emerald-600 text-xs font-bold px-3.5 py-1.5 rounded-xl">
+            ⚡ Webhook VA Aktif
+          </span>
+        </div>
+
+        <div class="overflow-x-auto">
+          <table class="w-full text-left border-collapse">
+            <thead>
+              <tr class="border-b border-slate-100 text-[11px] font-bold text-slate-400 uppercase tracking-wider">
+                <th class="py-3 px-3">Kode & Tim</th>
+                <th class="py-3 px-3">Lapangan & Jadwal</th>
+                <th class="py-3 px-3">Nomor Virtual Account</th>
+                <th class="py-3 px-3">Total Tagihan</th>
+                <th class="py-3 px-3">Status VA</th>
+                <th class="py-3 px-3 text-right">Aksi</th>
+              </tr>
+            </thead>
+            <tbody class="divide-y divide-slate-100 text-xs">
+              ${
+                list.length === 0
+                  ? `<tr><td colspan="6" class="py-8 text-center text-slate-400">Belum ada data transaksi booking.</td></tr>`
+                  : list.map(b => {
+                      const field = state.fields.find(f => f.id === b.field_id);
+                      const member = state.members.find(m => m.id === b.member_id);
+                      const isLunas = b.payment_status === 'Lunas';
+                      return `
+                        <tr class="hover:bg-slate-50/80 transition">
+                          <td class="py-3.5 px-3">
+                            <div class="font-mono font-bold text-royal-600">#${b.booking_code}</div>
+                            <div class="font-semibold text-slate-800">${member ? member.team_name : 'Tim Penyewa'}</div>
+                          </td>
+                          <td class="py-3.5 px-3">
+                            <div class="font-bold text-slate-800">${field ? field.name : '-'}</div>
+                            <div class="text-[11px] text-slate-400">${b.play_date} • ${b.start_time} (${b.duration_hours} Jam)</div>
+                          </td>
+                          <td class="py-3.5 px-3">
+                            <span class="text-[10px] font-extrabold bg-sky-50 text-skycyan-500 px-2 py-0.5 rounded">${b.va_bank}</span>
+                            <div class="font-mono font-bold text-slate-700 mt-0.5">${b.va_number}</div>
+                          </td>
+                          <td class="py-3.5 px-3 font-extrabold text-slate-800">${formatRp(b.total_price)}</td>
+                          <td class="py-3.5 px-3">
+                            <span class="px-2.5 py-1 rounded-full text-[10px] font-bold ${
+                              isLunas ? 'bg-emerald-50 text-emerald-600' : 'bg-amber-50 text-amber-600'
+                            }">
+                              • ${b.payment_status}
+                            </span>
+                          </td>
+                          <td class="py-3.5 px-3 text-right space-x-1">
+                            ${
+                              !isLunas
+                                ? `<button onclick="window.simulateInstantVAPayment('${b.id}')" class="px-2.5 py-1.5 rounded-xl bg-skycyan-400 text-white font-bold text-[10px] shadow-sm">
+                                     Trigger Callback VA
+                                   </button>`
+                                : ''
+                            }
+                            <button onclick="window.deleteBookingData('${b.id}')" class="px-2.5 py-1.5 rounded-xl bg-red-50 text-red-600 font-semibold text-[10px]">
+                              Hapus
+                            </button>
+                          </td>
+                        </tr>
+                      `;
+                    }).join('')
+              }
+            </tbody>
+          </table>
+        </div>
+      </div>
+    `;
+  }
+
+  window.deleteBookingData = async function(bookingId) {
+    try {
+      if (IS_PREVIEW) {
+        previewMemory.bookings = previewMemory.bookings.filter(b => b.id !== bookingId);
+      } else {
+        const { error } = await supabase.from('bookings').delete().eq('id', bookingId);
+        if (error) throw error;
+      }
+      await loadAllDatabaseData();
+      renderAllViews();
+      showToast('Data Jadwal Dihapus', 'Transaksi booking berhasil dihapus.', 'info');
+    } catch (err) {
+      showToast('Gagal Menghapus', err.message, 'warning');
+    }
+  };
+
+  // ==========================================
+  // 7. MENU ADMIN: DATA MEMBER / TIM PENYEWA
+  // ==========================================
+  function buildAdminMembersHTML() {
+    return `
+      <div class="bg-white rounded-[28px] p-6 shadow-soft-card border border-slate-100">
+        <div class="flex items-center justify-between mb-5">
+          <div>
+            <h3 class="text-base font-bold text-slate-800">Data Akun Tim & Penyewa Terdaftar</h3>
+            <p class="text-xs text-slate-400">Daftar member yang login menggunakan sistem Hybrid Tabel Supabase</p>
+          </div>
+          <span class="bg-royal-50 text-royal-600 text-xs font-bold px-3 py-1.5 rounded-xl">${state.members.length} Tim</span>
+        </div>
+
+        <div class="overflow-x-auto">
+          <table class="w-full text-left border-collapse">
+            <thead>
+              <tr class="border-b border-slate-100 text-[11px] font-bold text-slate-400 uppercase tracking-wider">
+                <th class="py-3 px-3">Nama Tim / Klub</th>
+                <th class="py-3 px-3">Kapten / Penyewa</th>
+                <th class="py-3 px-3">Username Login</th>
+                <th class="py-3 px-3">No. WhatsApp</th>
+                <th class="py-3 px-3 text-right">Aksi</th>
+              </tr>
+            </thead>
+            <tbody class="divide-y divide-slate-100 text-xs">
+              ${
+                state.members.length === 0
+                  ? `<tr><td colspan="5" class="py-8 text-center text-slate-400">Belum ada member terdaftar.</td></tr>`
+                  : state.members.map(m => `
+                      <tr class="hover:bg-slate-50/80">
+                        <td class="py-3.5 px-3 font-bold text-slate-800">⚽ ${m.team_name}</td>
+                        <td class="py-3.5 px-3 text-slate-600">${m.full_name}</td>
+                        <td class="py-3.5 px-3 font-mono text-royal-600 font-bold">${m.username}</td>
+                        <td class="py-3.5 px-3 font-mono text-slate-600">${m.phone}</td>
+                        <td class="py-3.5 px-3 text-right">
+                          <button onclick="window.deleteMemberData('${m.id}')" class="px-3 py-1.5 rounded-xl bg-red-50 hover:bg-red-100 text-red-600 font-semibold text-[11px]">
+                            Hapus
+                          </button>
+                        </td>
+                      </tr>
+                    `).join('')
+              }
+            </tbody>
+          </table>
+        </div>
+      </div>
+    `;
+  }
+
+  window.deleteMemberData = async function(memberId) {
+    try {
+      if (IS_PREVIEW) {
+        previewMemory.members = previewMemory.members.filter(m => m.id !== memberId);
+      } else {
+        const { error } = await supabase.from('members').delete().eq('id', memberId);
+        if (error) throw error;
+      }
+      await loadAllDatabaseData();
+      renderAllViews();
+      showToast('Member Dihapus', 'Akun tim telah dihapus.', 'info');
+    } catch (err) {
+      showToast('Gagal Menghapus Member', err.message, 'warning');
+    }
+  };
+
+  // ==========================================
+  // MODAL KONSULTASI WHATSAPP MELAYANG
+  // ==========================================
+  window.openWhatsAppModal = function() {
+    document.getElementById('wa-consult-modal').classList.remove('hidden');
+  };
+
+  window.closeWhatsAppModal = function() {
+    document.getElementById('wa-consult-modal').classList.add('hidden');
+  };
+
+  window.sendWhatsAppConsult = function(e) {
+    e.preventDefault();
+    const adminPhone = document.getElementById('wa-admin-number').value.replace(/\D/g, '');
+    const topic = document.getElementById('wa-consult-topic').value;
+    const msg = document.getElementById('wa-consult-message').value.trim();
+    const sender = state.currentUser ? `${state.currentUser.full_name} (${state.currentUser.team_name})` : 'Calon Penyewa Lapangan';
+
+    const text = `Halo Admin *PitchBook Arena* ⚽,%0A%0ASaya *${sender}* ingin berkonsultasi:%0A📌 *Topik:* ${topic}%0A💬 *Pesan:* ${msg || 'Mohon info jadwal lapangan yang tersedia.'}`;
+    window.open(`https://wa.me/${adminPhone}?text=${text}`, '_blank');
+    window.closeWhatsAppModal();
+  };
+
+  // Jalankan Aplikasi saat DOM siap
+  initApplication();
+</script>
+</body>
+</html>
