@@ -45,7 +45,6 @@
   <script src="https://unpkg.com/lucide@latest"></script>
 
   <style>
-    /* Fullscreen Wrapper untuk menutup seluruh halaman bawaan Blogger/Host */
     #pitchbook-app-root {
       position: fixed;
       inset: 0;
@@ -63,7 +62,6 @@
     ::-webkit-scrollbar-thumb { background: #CBD5E1; border-radius: 9999px; }
     ::-webkit-scrollbar-thumb:hover { background: #94A3B8; }
 
-    /* Cryptowall Signature Shadows & Gradients */
     .shadow-royal {
       box-shadow: 0 12px 24px -6px rgba(59, 91, 219, 0.35);
     }
@@ -124,7 +122,6 @@
       animation: pulse-ring 2s infinite;
     }
 
-    /* Tata Letak Responsif Desktop vs Mobile */
     @media (max-width: 767px) {
       .desktop-sidebar { display: none !important; }
       .mobile-bottom-nav { display: flex !important; }
@@ -181,27 +178,26 @@
               ⚽
             </div>
             <div>
-              <h1 class="font-bold text-xl tracking-tight leading-none">PitchBook</h1>
-              <span class="text-[11px] text-sky-200 font-medium">Smart Arena & Virtual Account</span>
+              <h1 class="font-bold text-xl tracking-tight leading-none">PitchWall</h1>
+              <span class="text-[11px] text-sky-200 font-medium">Smart Arena & Rekening Panitia</span>
             </div>
           </div>
 
           <h2 class="text-2xl font-bold leading-snug mb-3">
-            Sewa Lapangan Sepak Bola & Pembayaran VA Instan
+            Sewa Lapangan Sepak Bola & Verifikasi Ganda
           </h2>
           <p class="text-xs text-blue-100 leading-relaxed">
-            Pilih jadwal lapangan secara real-time, transfer langsung ke Rekening / Virtual Account Resmi Panitia, dan E-Ticket aktif otomatis detik itu juga tanpa perlu kirim bukti transfer.
+            Pilih jadwal lapangan secara real-time, transfer ke Nomor Rekening Panitia dengan 3 Digit Kode Unik (Konfirmasi Instan) atau gunakan fitur Upload Bukti Transfer jika terkendala.
           </p>
         </div>
 
-        <!-- Ilustrasi Kartu Rekening / VA Panitia -->
         <div class="relative z-10 mt-8 bg-card-cyan rounded-2xl p-4 shadow-cyan border border-white/20">
           <div class="flex items-center justify-between text-xs text-white/90 mb-1">
-            <span>Rekening & VA Resmi Panitia</span>
-            <span class="bg-white/25 px-2 py-0.5 rounded-full text-[10px] font-bold">REAL-TIME</span>
+            <span>Rekening Resmi Panitia</span>
+            <span class="bg-white/25 px-2 py-0.5 rounded-full text-[10px] font-bold">2 OPSI VERIFIKASI</span>
           </div>
-          <div class="text-lg font-extrabold tracking-wider text-white">8801 •••• •••• 2026</div>
-          <div class="text-[11px] text-sky-50 mt-1">Dana masuk langsung ke Rekening Panitia</div>
+          <div class="text-base font-extrabold tracking-wider text-white">7131-01-009260-53-0</div>
+          <div class="text-[11px] text-sky-50 mt-1">Kode Unik Instan + Opsi Upload Bukti</div>
         </div>
 
         <div class="w-48 h-48 rounded-full bg-sky-400/20 absolute -bottom-16 -right-16 blur-xl"></div>
@@ -211,13 +207,12 @@
       <div class="md:col-span-7 p-7 sm:p-9 flex flex-col justify-center bg-white">
         <div class="flex items-center justify-between mb-6">
           <div>
-            <p class="text-xs text-slate-400 font-medium">Selamat Datang di PitchBook</p>
+            <p class="text-xs text-slate-400 font-medium">Selamat Datang di PitchWall</p>
             <h3 class="text-2xl font-bold text-slate-800">Masuk ke Akun Anda</h3>
           </div>
           <span class="bg-royal-50 text-royal-600 text-xs font-bold px-3 py-1.5 rounded-xl">Hybrid Auth</span>
         </div>
 
-        <!-- Tab Pilihan Role -->
         <div class="grid grid-cols-3 gap-2 bg-slate-100 p-1.5 rounded-2xl mb-6 text-xs font-semibold">
           <button type="button" id="tab-role-member" onclick="window.switchAuthTab('member')" class="py-2.5 rounded-xl bg-royal-600 text-white shadow-royal transition">
             Penyewa / Tim
@@ -234,14 +229,14 @@
         <form id="form-login-member" onsubmit="window.handleMemberLogin(event)" class="space-y-4">
           <div>
             <label class="block text-xs font-semibold text-slate-600 mb-1.5">Username Login</label>
-            <input type="text" id="member-username" required placeholder="Contoh: rahman" class="w-full px-4 py-3 rounded-2xl bg-slate-50 border border-slate-200 text-sm focus:outline-none focus:border-royal-600 focus:bg-white transition" />
+            <input type="text" id="member-username" required placeholder="Contoh: mul / rahman" class="w-full px-4 py-3 rounded-2xl bg-slate-50 border border-slate-200 text-sm focus:outline-none focus:border-royal-600 focus:bg-white transition" />
           </div>
           <div>
             <label class="block text-xs font-semibold text-slate-600 mb-1.5">Password</label>
             <input type="password" id="member-password" required placeholder="Masukkan password tim" class="w-full px-4 py-3 rounded-2xl bg-slate-50 border border-slate-200 text-sm focus:outline-none focus:border-royal-600 focus:bg-white transition" />
           </div>
-          <button type="submit" id="btn-submit-member" class="w-full py-3.5 rounded-2xl bg-royal-600 hover:bg-royal-700 text-white font-bold text-sm shadow-royal transition flex items-center justify-center gap-2">
-            <span>Masuk Sebagai Penyewa</span>
+          <button type="submit" class="w-full py-3.5 rounded-2xl bg-royal-600 hover:bg-royal-700 text-white font-bold text-sm shadow-royal transition">
+            Masuk Sebagai Penyewa
           </button>
         </form>
 
@@ -271,12 +266,12 @@
             <label class="block text-xs font-semibold text-slate-600 mb-1">Password</label>
             <input type="password" id="reg-password" required placeholder="Minimal 4 karakter" class="w-full px-3.5 py-2.5 rounded-2xl bg-slate-50 border border-slate-200 text-sm focus:outline-none focus:border-royal-600" />
           </div>
-          <button type="submit" id="btn-submit-register" class="w-full py-3.5 rounded-2xl bg-skycyan-400 hover:bg-skycyan-500 text-white font-bold text-sm shadow-cyan transition">
+          <button type="submit" class="w-full py-3.5 rounded-2xl bg-skycyan-400 hover:bg-skycyan-500 text-white font-bold text-sm shadow-cyan transition">
             Daftar & Masuk Sekarang
           </button>
         </form>
 
-        <!-- FORM 3: LOGIN ADMIN (Supabase Auth Email & Password) -->
+        <!-- FORM 3: LOGIN ADMIN -->
         <form id="form-login-admin" onsubmit="window.handleAdminLogin(event)" class="space-y-4 hidden">
           <div>
             <label class="block text-xs font-semibold text-slate-600 mb-1.5">Email Admin Panitia (Supabase Auth)</label>
@@ -286,7 +281,7 @@
             <label class="block text-xs font-semibold text-slate-600 mb-1.5">Password Admin</label>
             <input type="password" id="admin-password" required placeholder="••••••••" class="w-full px-4 py-3 rounded-2xl bg-slate-50 border border-slate-200 text-sm focus:outline-none focus:border-royal-600 focus:bg-white transition" />
           </div>
-          <button type="submit" id="btn-submit-admin" class="w-full py-3.5 rounded-2xl bg-royal-600 hover:bg-royal-700 text-white font-bold text-sm shadow-royal transition">
+          <button type="submit" class="w-full py-3.5 rounded-2xl bg-royal-600 hover:bg-royal-700 text-white font-bold text-sm shadow-royal transition">
             Masuk Panel Admin Panitia
           </button>
         </form>
@@ -317,7 +312,6 @@
       <!-- 1. KOLOM KIRI: FIXED SIDEBAR (Desktop) -->
       <aside class="desktop-sidebar w-[240px] bg-white border-r border-slate-100 flex-col justify-between py-7 px-5 shrink-0 select-none">
         <div>
-          <!-- Brand Logo ala Cryptowall -->
           <div class="flex items-center gap-3 px-2 mb-8">
             <div class="w-10 h-10 rounded-2xl bg-royal-600 text-white flex items-center justify-center font-extrabold text-lg shadow-royal">
               ⚽
@@ -328,19 +322,17 @@
             </div>
           </div>
 
-          <!-- Daftar Menu Navigasi Dinamis -->
           <nav id="desktop-nav-list" class="space-y-1.5"></nav>
         </div>
 
-        <!-- Bottom Promo Card ala "Discover Pro" di Cryptowall -->
         <div class="bg-hero-royal rounded-3xl p-5 text-white shadow-royal relative overflow-hidden mt-6">
           <div class="relative z-10">
             <div class="w-10 h-10 rounded-2xl bg-white/20 backdrop-blur-sm flex items-center justify-center mb-3 text-lg">
               🏦
             </div>
-            <div class="text-xs font-bold leading-snug mb-1">Rekening & VA Panitia</div>
+            <div class="text-xs font-bold leading-snug mb-1">Transfer & Bukti Cadangan</div>
             <p class="text-[10px] text-blue-100 leading-relaxed mb-3.5">
-              Dana transfer penyewa langsung masuk ke rekening bank resmi panitia.
+              Bisa konfirmasi instan via Kode Unik atau unggah foto bukti transfer.
             </p>
             <button onclick="window.openQuickActionFromPromo()" class="w-full py-2.5 rounded-2xl bg-skycyan-400 hover:bg-skycyan-500 text-white font-bold text-xs shadow-cyan transition">
               Kelola / Booking
@@ -352,18 +344,16 @@
 
       <!-- 2. KOLOM TENGAH: MAIN WORKSPACE (#FAFCFF) -->
       <main class="flex-1 bg-[#FAFCFF] overflow-y-auto workspace-scroll p-5 sm:p-7">
-        
-        <!-- Top Header: Sapaan User + Judul Halaman & Search Input -->
         <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-6">
           <div>
-            <p id="header-greeting-name" class="text-xs font-semibold text-slate-400 mb-0.5">Arif Ramansyah</p>
+            <p id="header-greeting-name" class="text-xs font-semibold text-slate-400 mb-0.5">mul • lalombi</p>
             <h1 id="header-page-title" class="text-2xl font-bold text-slate-800 tracking-tight">Dashboard</h1>
           </div>
 
           <div class="flex items-center gap-3">
             <div class="relative flex-1 sm:w-64">
               <i data-lucide="search" class="w-4 h-4 text-slate-400 absolute left-4 top-1/2 -translate-y-1/2"></i>
-              <input id="global-search-input" oninput="window.handleGlobalSearch(this.value)" type="text" placeholder="Cari lapangan / kode VA..." class="w-full pl-10 pr-4 py-2.5 rounded-2xl bg-white shadow-soft-card border border-slate-100 text-xs font-medium text-slate-700 focus:outline-none focus:border-royal-500" />
+              <input id="global-search-input" oninput="window.handleGlobalSearch(this.value)" type="text" placeholder="Cari lapangan / kode booking..." class="w-full pl-10 pr-4 py-2.5 rounded-2xl bg-white shadow-soft-card border border-slate-100 text-xs font-medium text-slate-700 focus:outline-none focus:border-royal-500" />
             </div>
             <button onclick="window.handleLogout()" class="xl:hidden p-2.5 rounded-2xl bg-white text-red-500 shadow-soft-card border border-slate-100" title="Keluar">
               <i data-lucide="log-out" class="w-4 h-4"></i>
@@ -371,28 +361,25 @@
           </div>
         </div>
 
-        <!-- Kontainer Dinamis untuk setiap Menu -->
         <div id="center-workspace-content"></div>
-
       </main>
 
-      <!-- 3. KOLOM KANAN: KARTU REKENING / VA PANITIA & LIVE TRANSACTION PANEL -->
-      <aside class="hidden xl:flex w-[345px] bg-white border-l border-slate-100 flex-col justify-between p-6 overflow-y-auto shrink-0">
+      <!-- 3. KOLOM KANAN: KARTU REKENING PANITIA & 2 OPSI KONFIRMASI -->
+      <aside class="hidden xl:flex w-[350px] bg-white border-l border-slate-100 flex-col justify-between p-6 overflow-y-auto shrink-0">
         <div>
-          <!-- Top Profile & Notification Bar -->
           <div class="flex items-center justify-between mb-6">
-            <button onclick="window.triggerCheckLiveVA()" class="relative w-10 h-10 rounded-2xl bg-slate-50 hover:bg-slate-100 flex items-center justify-center text-slate-500 transition" title="Cek Mutasi Pembayaran">
+            <button onclick="window.triggerCheckLiveVA()" class="relative w-10 h-10 rounded-2xl bg-slate-50 hover:bg-slate-100 flex items-center justify-center text-slate-500 transition" title="Sinkronisasi Status Pembayaran">
               <i data-lucide="bell" class="w-5 h-5"></i>
               <span class="w-2.5 h-2.5 rounded-full bg-skycyan-400 border-2 border-white absolute top-2 right-2"></span>
             </button>
 
             <div class="flex items-center gap-2.5">
               <div id="right-profile-avatar" class="w-9 h-9 rounded-full bg-royal-100 text-royal-600 font-bold text-xs flex items-center justify-center">
-                AR
+                ML
               </div>
               <div class="text-left">
-                <div id="right-profile-name" class="text-xs font-bold text-slate-800 leading-none">Arif Ramansyah</div>
-                <div id="right-profile-team" class="text-[10px] text-slate-400 font-medium mt-0.5">Ular Sakti Lalombi</div>
+                <div id="right-profile-name" class="text-xs font-bold text-slate-800 leading-none">mul</div>
+                <div id="right-profile-team" class="text-[10px] text-slate-400 font-medium mt-0.5">lalombi</div>
               </div>
               <button onclick="window.handleLogout()" class="ml-1 p-1.5 rounded-xl text-slate-400 hover:text-red-500 hover:bg-red-50 transition" title="Keluar Akun">
                 <i data-lucide="log-out" class="w-4 h-4"></i>
@@ -400,30 +387,28 @@
             </div>
           </div>
 
-          <!-- MY CARDS: KARTU REKENING PANITIA & VIRTUAL ACCOUNT AKTIF -->
+          <!-- KARTU REKENING PANITIA AKTIF -->
           <div class="flex items-center justify-between mb-2.5">
             <h3 class="text-sm font-bold text-slate-800">Tujuan Transfer Panitia</h3>
-            <span id="va-card-bank-pill" class="text-[10px] font-extrabold uppercase tracking-wider px-2.5 py-0.5 rounded-full bg-sky-50 text-skycyan-500">BRI VA</span>
+            <span id="va-card-bank-pill" class="text-[10px] font-extrabold uppercase tracking-wider px-2.5 py-0.5 rounded-full bg-sky-50 text-skycyan-500">TRANSFER BRI</span>
           </div>
 
           <div id="active-va-card-box" class="bg-card-cyan rounded-[24px] p-5 text-white shadow-cyan relative overflow-hidden mb-3">
             <div class="relative z-10">
               <div class="flex items-center justify-between text-[11px] text-sky-100 mb-0.5">
-                <span id="va-card-label">Nominal Transfer (+Kode Unik)</span>
+                <span id="va-card-label">Transfer Tepat Nominal Berikut:</span>
                 <span id="va-card-code" class="font-mono text-[11px] font-bold">#PB-001</span>
               </div>
               <div id="va-card-amount" class="text-2xl font-extrabold tracking-tight mb-3">Rp 0</div>
 
-              <!-- Info Rekening Panitia Penerima Dana -->
               <div class="bg-slate-900/20 backdrop-blur-sm rounded-xl p-2.5 mb-2.5 border border-white/15">
-                <div class="text-[10px] text-sky-100">Dana Masuk ke Rekening Panitia:</div>
-                <div id="va-card-holder" class="text-xs font-bold text-white truncate">Panitia Pengelola Arena</div>
-                <div id="va-card-real-acc" class="text-[11px] font-mono text-sky-100">No. Rek: -</div>
+                <div class="text-[10px] text-sky-100">Menu Transfer Bank (Bukan BRIVA):</div>
+                <div id="va-card-holder" class="text-xs font-bold text-white truncate">ADIMULYAWARMAN</div>
+                <div id="va-card-real-acc" class="text-xs font-mono font-extrabold text-amber-200 mt-0.5">No. Rek: 713101009260530</div>
               </div>
 
-              <div class="text-[10px] text-sky-100 mb-0.5">Nomor Virtual Account / Kode Bayar</div>
-              <div class="flex items-center justify-between gap-2">
-                <div id="va-card-number" class="font-mono text-xs font-bold tracking-wider truncate">Belum Ada Tagihan</div>
+              <div class="flex items-center justify-between gap-2 pt-1">
+                <div id="va-card-number" class="text-[10px] text-sky-100 truncate">Gunakan Menu Transfer Bank Biasa</div>
                 <span id="va-card-status-badge" class="bg-white/25 backdrop-blur-sm px-2.5 py-0.5 rounded-full text-[10px] font-bold shrink-0">
                   READY
                 </span>
@@ -432,28 +417,34 @@
             <div class="w-36 h-36 rounded-full bg-white/15 absolute -right-10 -bottom-12"></div>
           </div>
 
-          <!-- DUAL SPLIT ACTION BUTTONS -->
-          <div class="grid grid-cols-2 gap-3 mb-6">
-            <button onclick="window.copyActiveVANumber()" class="bg-royal-600 hover:bg-royal-700 text-white rounded-2xl p-2.5 flex items-center gap-2.5 shadow-royal transition">
-              <div class="w-8 h-8 rounded-full bg-white text-royal-600 flex items-center justify-center shrink-0">
-                <i data-lucide="copy" class="w-4 h-4"></i>
+          <!-- DUAL ACTION BUTTONS + TOMBOL UPLOAD BUKTI CADANGAN -->
+          <div class="grid grid-cols-2 gap-2.5 mb-2.5">
+            <button onclick="window.copyActiveVANumber()" class="bg-royal-600 hover:bg-royal-700 text-white rounded-2xl p-2.5 flex items-center gap-2 shadow-royal transition">
+              <div class="w-7 h-7 rounded-full bg-white text-royal-600 flex items-center justify-center shrink-0">
+                <i data-lucide="copy" class="w-3.5 h-3.5"></i>
               </div>
-              <span class="text-xs font-bold">Salin Rek/VA</span>
+              <span class="text-[11px] font-bold">Salin No. Rek</span>
             </button>
 
-            <button onclick="window.simulateInstantVAPayment()" class="bg-skycyan-400 hover:bg-skycyan-500 text-white rounded-2xl p-2.5 flex items-center gap-2.5 shadow-cyan transition">
-              <div class="w-8 h-8 rounded-full bg-white text-skycyan-500 flex items-center justify-center shrink-0">
-                <i data-lucide="zap" class="w-4 h-4"></i>
+            <button onclick="window.simulateInstantVAPayment()" class="bg-skycyan-400 hover:bg-skycyan-500 text-white rounded-2xl p-2.5 flex items-center gap-2 shadow-cyan transition">
+              <div class="w-7 h-7 rounded-full bg-white text-skycyan-500 flex items-center justify-center shrink-0">
+                <i data-lucide="zap" class="w-3.5 h-3.5"></i>
               </div>
-              <span class="text-xs font-bold">Konfirmasi VA</span>
+              <span class="text-[11px] font-bold">Konfirmasi Instan</span>
             </button>
           </div>
 
+          <!-- Tombol Opsi Ke-2: Kirim Bukti Transfer Apabila Otomatis Terkendala -->
+          <button onclick="window.openUploadProofModal()" class="w-full mb-6 py-2.5 px-3 rounded-2xl bg-slate-100 hover:bg-slate-200 text-slate-700 font-bold text-xs flex items-center justify-center gap-2 border border-slate-200 transition">
+            <i data-lucide="paperclip" class="w-3.5 h-3.5 text-royal-600"></i>
+            <span>Terkendala? Kirim Bukti Transfer</span>
+          </button>
+
           <!-- RECENT TRANSACTION -->
           <div class="flex items-center justify-between mb-3">
-            <h3 class="text-sm font-bold text-slate-800">Mutasi Dana Masuk</h3>
+            <h3 class="text-sm font-bold text-slate-800">Mutasi & Konfirmasi</h3>
             <span class="inline-flex items-center gap-1 text-[10px] font-bold text-emerald-600 bg-emerald-50 px-2 py-0.5 rounded-full">
-              <span class="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-ping"></span> Auto-Verify
+              <span class="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-ping"></span> Dual Mode
             </span>
           </div>
 
@@ -462,7 +453,7 @@
 
         <div class="pt-4 border-t border-slate-100 text-[11px] text-slate-400 flex items-center justify-between">
           <span>Rekening Panitia Aktif</span>
-          <span class="font-bold text-royal-600">Tanpa Upload Bukti</span>
+          <span class="font-bold text-royal-600">Otomatis + Bukti Manual</span>
         </div>
       </aside>
 
@@ -473,8 +464,83 @@
   <nav id="mobile-bottom-nav" class="mobile-bottom-nav hidden fixed bottom-0 inset-x-0 bg-white/95 backdrop-blur-md border-t border-slate-200 px-2 py-2 justify-around items-center z-[1000000] shadow-lg"></nav>
 
   <!-- ==========================================
-       MODAL KONSULTASI WHATSAPP CEPAT
+       MODAL OPSI 2: UPLOAD BUKTI / KONFIRMASI MANUAL (JIKA OTOMATIS TERKENDALA)
        ========================================== -->
+  <div id="upload-proof-modal" class="hidden fixed inset-0 z-[1000009] bg-slate-900/55 backdrop-blur-sm flex items-center justify-center p-4">
+    <div class="bg-white rounded-[28px] max-w-md w-full p-6 shadow-2xl border border-slate-100 max-h-[90vh] overflow-y-auto">
+      <div class="flex items-center justify-between mb-4">
+        <div class="flex items-center gap-3">
+          <div class="w-10 h-10 rounded-2xl bg-royal-50 text-royal-600 flex items-center justify-center font-bold text-lg">
+            📎
+          </div>
+          <div>
+            <h3 class="font-bold text-base text-slate-800">Konfirmasi & Kirim Bukti Transfer</h3>
+            <p class="text-[11px] text-slate-400">Gunakan opsi ini jika konfirmasi otomatis terkendala</p>
+          </div>
+        </div>
+        <button onclick="window.closeUploadProofModal()" class="w-8 h-8 rounded-full bg-slate-100 text-slate-500 flex items-center justify-center hover:bg-slate-200">✕</button>
+      </div>
+
+      <form onsubmit="window.handleSubmitManualProof(event)" class="space-y-4">
+        <input type="hidden" id="proof-booking-id" />
+
+        <div class="bg-slate-50 p-3.5 rounded-2xl border border-slate-100 text-xs space-y-1">
+          <div class="flex items-center justify-between">
+            <span class="text-slate-400">Kode Booking:</span>
+            <span id="proof-booking-code" class="font-mono font-bold text-royal-600">#PB-0000</span>
+          </div>
+          <div class="flex items-center justify-between">
+            <span class="text-slate-400">Nominal Tagihan:</span>
+            <span id="proof-booking-amount" class="font-extrabold text-slate-800">Rp 0</span>
+          </div>
+          <div class="flex items-center justify-between">
+            <span class="text-slate-400">Rekening Panitia:</span>
+            <span id="proof-booking-acc" class="font-mono font-semibold text-slate-700">-</span>
+          </div>
+        </div>
+
+        <div>
+          <label class="block text-xs font-semibold text-slate-600 mb-1.5">Pilih Foto Struk / Screenshot Transfer (Opsional tapi Disarankan)</label>
+          <input type="file" id="proof-file-input" accept="image/*" onchange="window.handlePreviewProofImage(event)" class="w-full text-xs text-slate-500 file:mr-3 file:py-2 file:px-4 file:rounded-xl file:border-0 file:text-xs file:font-bold file:bg-royal-50 file:text-royal-600 hover:file:bg-royal-100 cursor-pointer border border-slate-200 rounded-2xl p-1.5 bg-slate-50" />
+          <div id="proof-image-preview-wrap" class="hidden mt-3 relative">
+            <img id="proof-image-preview" src="" alt="Preview Bukti" class="w-full max-h-48 object-contain rounded-2xl border border-slate-200 bg-slate-900/5 p-1" />
+          </div>
+        </div>
+
+        <div>
+          <label class="block text-xs font-semibold text-slate-600 mb-1">Nama Pengirim di Rekening / Catatan Kendala</label>
+          <input type="text" id="proof-sender-note" required placeholder="Contoh: Transfer dari BRI a.n Mul / Lupa pakai kode unik" class="w-full px-3.5 py-2.5 rounded-2xl bg-slate-50 border border-slate-200 text-xs" />
+        </div>
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-2.5 pt-1">
+          <button type="submit" class="py-3 px-4 rounded-2xl bg-royal-600 hover:bg-royal-700 text-white font-bold text-xs shadow-royal transition">
+            Simpan Bukti di Aplikasi
+          </button>
+          <button type="button" onclick="window.sendProofViaWhatsApp()" class="py-3 px-4 rounded-2xl bg-emerald-500 hover:bg-emerald-600 text-white font-bold text-xs shadow-md transition">
+            💬 Kirim Juga via WA Panitia
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- MODAL LIHAT BUKTI TRANSFER (UNTUK ADMIN PANITIA & PENYEWA) -->
+  <div id="view-proof-modal" class="hidden fixed inset-0 z-[1000009] bg-slate-900/70 backdrop-blur-sm flex items-center justify-center p-4">
+    <div class="bg-white rounded-[28px] max-w-md w-full p-5 shadow-2xl border border-slate-100">
+      <div class="flex items-center justify-between mb-3">
+        <div>
+          <h3 class="font-bold text-sm text-slate-800">Lampiran Bukti Transfer</h3>
+          <p id="view-proof-caption" class="text-[11px] text-slate-400"></p>
+        </div>
+        <button onclick="document.getElementById('view-proof-modal').classList.add('hidden')" class="w-8 h-8 rounded-full bg-slate-100 text-slate-600 flex items-center justify-center">✕</button>
+      </div>
+      <div class="bg-slate-100 rounded-2xl p-2 flex items-center justify-center max-h-[65vh] overflow-auto">
+        <img id="view-proof-img" src="" alt="Bukti Transfer" class="max-w-full rounded-xl" />
+      </div>
+    </div>
+  </div>
+
+  <!-- MODAL KONSULTASI WHATSAPP CEPAT -->
   <div id="wa-consult-modal" class="hidden fixed inset-0 z-[1000008] bg-slate-900/50 backdrop-blur-sm flex items-center justify-center p-4">
     <div class="bg-white rounded-[28px] max-w-md w-full p-6 shadow-2xl border border-slate-100">
       <div class="flex items-center justify-between mb-4">
@@ -498,15 +564,15 @@
         <div>
           <label class="block text-xs font-semibold text-slate-600 mb-1">Topik Konsultasi</label>
           <select id="wa-consult-topic" class="w-full px-3.5 py-2.5 rounded-2xl bg-slate-50 border border-slate-200 text-xs font-medium text-slate-700">
+            <option value="Konfirmasi Transfer Rekening Panitia">Konfirmasi Transfer Rekening Panitia</option>
             <option value="Tanya Ketersediaan Jadwal & Turnamen">Tanya Ketersediaan Jadwal & Turnamen</option>
             <option value="Konsultasi Sewa Rutin Member Bulanan">Konsultasi Sewa Rutin Member Bulanan</option>
-            <option value="Konfirmasi Transfer Rekening / VA Panitia">Konfirmasi Transfer Rekening / VA Panitia</option>
             <option value="Request Wasit / Peralatan Pertandingan">Request Wasit / Peralatan Pertandingan</option>
           </select>
         </div>
         <div>
           <label class="block text-xs font-semibold text-slate-600 mb-1">Pesan Tambahan</label>
-          <textarea id="wa-consult-message" rows="3" placeholder="Halo Panitia, tim kami ingin berkonsultasi mengenai jadwal sewa lapangan..." class="w-full px-3.5 py-2.5 rounded-2xl bg-slate-50 border border-slate-200 text-xs text-slate-700"></textarea>
+          <textarea id="wa-consult-message" rows="3" placeholder="Halo Panitia, saya ingin konfirmasi jadwal / pembayaran sewa lapangan..." class="w-full px-3.5 py-2.5 rounded-2xl bg-slate-50 border border-slate-200 text-xs text-slate-700"></textarea>
         </div>
         <button type="submit" class="w-full py-3.5 rounded-2xl bg-emerald-500 hover:bg-emerald-600 text-white font-bold text-xs shadow-lg transition">
           Kirim Chat ke WhatsApp Sekarang
@@ -526,7 +592,7 @@
         <input type="hidden" id="field-id-input" />
         <div>
           <label class="block text-xs font-semibold text-slate-600 mb-1">Nama Lapangan</label>
-          <input type="text" id="field-name-input" required placeholder="Contoh: Arena Utama A (Full Pitch)" class="w-full px-3.5 py-2.5 rounded-2xl bg-slate-50 border border-slate-200 text-xs" />
+          <input type="text" id="field-name-input" required placeholder="Contoh: Lapangan PERSWAT Watatu" class="w-full px-3.5 py-2.5 rounded-2xl bg-slate-50 border border-slate-200 text-xs" />
         </div>
         <div class="grid grid-cols-2 gap-3">
           <div>
@@ -539,13 +605,13 @@
           </div>
           <div>
             <label class="block text-xs font-semibold text-slate-600 mb-1">Jenis Rumput</label>
-            <input type="text" id="field-grass-input" required placeholder="FIFA Pro Synthetic" class="w-full px-3.5 py-2.5 rounded-2xl bg-slate-50 border border-slate-200 text-xs" />
+            <input type="text" id="field-grass-input" required placeholder="Rumput Alami / Sintetis" class="w-full px-3.5 py-2.5 rounded-2xl bg-slate-50 border border-slate-200 text-xs" />
           </div>
         </div>
         <div class="grid grid-cols-2 gap-3">
           <div>
             <label class="block text-xs font-semibold text-slate-600 mb-1">Tarif Sewa / Jam (Rp)</label>
-            <input type="number" id="field-price-input" required placeholder="350000" class="w-full px-3.5 py-2.5 rounded-2xl bg-slate-50 border border-slate-200 text-xs" />
+            <input type="number" id="field-price-input" required placeholder="20000" class="w-full px-3.5 py-2.5 rounded-2xl bg-slate-50 border border-slate-200 text-xs" />
           </div>
           <div>
             <label class="block text-xs font-semibold text-slate-600 mb-1">Status Lapangan</label>
@@ -557,7 +623,7 @@
         </div>
         <div>
           <label class="block text-xs font-semibold text-slate-600 mb-1">Fasilitas Utama</label>
-          <input type="text" id="field-facilities-input" required placeholder="Lampu LED Stadion, Ruang Ganti AC, Bench Pemain" class="w-full px-3.5 py-2.5 rounded-2xl bg-slate-50 border border-slate-200 text-xs" />
+          <input type="text" id="field-facilities-input" required placeholder="Bench Pemain, Jaring Gawang, Ruang Ganti" class="w-full px-3.5 py-2.5 rounded-2xl bg-slate-50 border border-slate-200 text-xs" />
         </div>
         <button type="submit" class="w-full py-3 rounded-2xl bg-royal-600 hover:bg-royal-700 text-white font-bold text-xs shadow-royal transition">
           Simpan Data Lapangan
@@ -577,21 +643,21 @@
         <input type="hidden" id="bank-id-input" />
         <div class="grid grid-cols-2 gap-3">
           <div>
-            <label class="block text-xs font-semibold text-slate-600 mb-1">Nama Bank / Channel</label>
-            <input type="text" id="bank-name-input" required placeholder="Contoh: BRI / BCA / Bank Sulteng" class="w-full px-3.5 py-2.5 rounded-2xl bg-slate-50 border border-slate-200 text-xs" />
+            <label class="block text-xs font-semibold text-slate-600 mb-1">Nama BankPanitia</label>
+            <input type="text" id="bank-name-input" required placeholder="Contoh: Transfer Bank BRI" class="w-full px-3.5 py-2.5 rounded-2xl bg-slate-50 border border-slate-200 text-xs" />
           </div>
           <div>
-            <label class="block text-xs font-semibold text-slate-600 mb-1">Kode Prefix VA</label>
-            <input type="text" id="bank-prefix-input" required placeholder="Contoh: 8801" class="w-full px-3.5 py-2.5 rounded-2xl bg-slate-50 border border-slate-200 text-xs font-mono" />
+            <label class="block text-xs font-semibold text-slate-600 mb-1">Kode Identifikasi</label>
+            <input type="text" id="bank-prefix-input" required placeholder="Contoh: 7702" class="w-full px-3.5 py-2.5 rounded-2xl bg-slate-50 border border-slate-200 text-xs font-mono" />
           </div>
         </div>
         <div>
-          <label class="block text-xs font-semibold text-slate-600 mb-1">Nomor Rekening Resmi Panitia (Tujuan Dana Masuk)</label>
-          <input type="text" id="bank-accnum-input" required placeholder="Contoh: 108201004599502" class="w-full px-3.5 py-2.5 rounded-2xl bg-slate-50 border border-slate-200 text-xs font-mono" />
+          <label class="block text-xs font-semibold text-slate-600 mb-1">Nomor Rekening Resmi Panitia (Tujuan Transfer Biasa)</label>
+          <input type="text" id="bank-accnum-input" required placeholder="Contoh: 713101009260530" class="w-full px-3.5 py-2.5 rounded-2xl bg-slate-50 border border-slate-200 text-xs font-mono" />
         </div>
         <div>
-          <label class="block text-xs font-semibold text-slate-600 mb-1">Atas Nama Pemilik Rekening (Panitia / Bendahara)</label>
-          <input type="text" id="bank-holder-input" required placeholder="Contoh: PANITIA STADION LALOMBI / ARIF" class="w-full px-3.5 py-2.5 rounded-2xl bg-slate-50 border border-slate-200 text-xs" />
+          <label class="block text-xs font-semibold text-slate-600 mb-1">Atas Nama Pemilik Rekening (Bendahara / Panitia)</label>
+          <input type="text" id="bank-holder-input" required placeholder="Contoh: ADIMULYAWARMAN" class="w-full px-3.5 py-2.5 rounded-2xl bg-slate-50 border border-slate-200 text-xs" />
         </div>
         <div>
           <label class="block text-xs font-semibold text-slate-600 mb-1">Status Rekening</label>
@@ -609,24 +675,24 @@
 </div>
 
 <!-- ==========================================
-     SCRIPT UTAMA (SUPABASE MODULE + LOGIKA VA & REKENING PANITIA)
+     SCRIPT UTAMA (SUPABASE MODULE + DUAL VERIFICATION)
      ========================================== -->
 <script type="module">
   import { createClient } from 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js/+esm';
 
   // KONFIGURASI APLIKASI
-  const IS_PREVIEW = false; // Ubah menjadi false SAAT DEPLOY agar mode preview & data dummy hilang dan terhubung 100% ke Supabase
-  const SUPABASE_URL = "https://wmrjwscrdsllydmiqcep.supabase.co";
-  const SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Indtcmp3c2NyZHNsbHlkbWlxY2VwIiwicm9sZSI6ImFub24iLCJpYXQiOjE3OTMwMzgxNTQsImV4cCI6MjEwODYxNDE1NH0.xyrXXcM272fTkzFRQ2qHBPPSOOKO1PaakIqAuiw-ekw";
+  const IS_PREVIEW = true; // Ubah menjadi false SAAT DEPLOY agar terhubung 100% ke Supabase Anda
+  const SUPABASE_URL = "URL_SUPABASE_ANDA";
+  const SUPABASE_ANON_KEY = "ANON_KEY_ANDA";
 
   let supabase = null;
-  let realtimeChannel = null; // Mencegah error "cannot add postgres_changes callbacks after subscribe()"
+  let realtimeChannel = null;
+  let compressedProofDataUrl = null; // Menyimpan hasil kompresi foto bukti transfer
 
   if (!IS_PREVIEW) {
     supabase = createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
   }
 
-  // Registrasi Service Worker PWA 1-File menggunakan Blob
   if ('serviceWorker' in navigator) {
     const swCode = `
       self.addEventListener('install', (e) => self.skipWaiting());
@@ -637,7 +703,6 @@
     navigator.serviceWorker.register(URL.createObjectURL(blob)).catch(() => {});
   }
 
-  // State Aplikasi
   const state = {
     currentUser: null,
     activeMenu: 'dashboard',
@@ -645,80 +710,65 @@
     selectedFieldId: '',
     selectedDate: new Date().toISOString().split('T')[0],
     fields: [],
-    paymentAccounts: [], // Daftar Rekening Bank Panitia
+    paymentAccounts: [],
     members: [],
     bookings: [],
     activeTagihanVA: null
   };
 
-  // Data Dummy Minimalis (Hanya aktif saat IS_PREVIEW = true, maksimal 2 baris per tabel)
+  // Data Dummy Minimalis (Hanya aktif saat IS_PREVIEW = true)
   const previewMemory = {
     fields: [
       {
         id: 'fld-1',
-        name: 'Stadion Utama Lalombi (Full Pitch)',
+        name: 'Lapangan PERSWAT Watatu',
         type: 'Full Pitch 11v11',
-        grass_type: 'FIFA Quality Pro Synthetic',
-        price_per_hour: 450000,
-        facilities: 'Lampu Stadion 1200 Lux, Ruang Ganti AC, Bench Pemain',
-        status: 'Available'
-      },
-      {
-        id: 'fld-2',
-        name: 'Sky Blue Arena (Mini Soccer)',
-        type: 'Mini Soccer 7v7',
-        grass_type: 'Monofilament Turf',
-        price_per_hour: 300000,
-        facilities: 'Lampu LED, Tribun Penonton, Shower Air Hangat',
+        grass_type: 'Rumput Hijau Standar',
+        price_per_hour: 20000,
+        facilities: 'Bench Pemain, Jaring Gawang, Area Parkir Luas',
         status: 'Available'
       }
     ],
     paymentAccounts: [
       {
         id: 'acc-1',
-        bank_name: 'BRI VA / Transfer',
+        bank_name: 'Transfer Bank BRI',
         va_prefix: '7702',
-        account_number: '1082-01-004599-50-2',
-        account_holder: 'PANITIA SEWA LAPANGAN (BENDAHARA)',
-        status: 'Active'
-      },
-      {
-        id: 'acc-2',
-        bank_name: 'BCA VA / Transfer',
-        va_prefix: '8801',
-        account_number: '7890-456-123',
-        account_holder: 'PANITIA SEWA LAPANGAN (BENDAHARA)',
+        account_number: '713101009260530',
+        account_holder: 'ADIMULYAWARMAN',
         status: 'Active'
       }
     ],
     members: [
       {
         id: 'mem-1',
-        username: 'rahman',
+        username: 'mul',
         password: '123',
-        full_name: 'Arif Ramansyah',
-        team_name: 'Ular Sakti Lalombi',
+        full_name: 'mul',
+        team_name: 'lalombi',
         phone: '082293445661'
       }
     ],
     bookings: [
       {
         id: 'bkg-1',
-        booking_code: 'PB-8821',
+        booking_code: 'PB-5592',
         field_id: 'fld-1',
         member_id: 'mem-1',
         play_date: new Date().toISOString().split('T')[0],
-        start_time: '16:00',
-        duration_hours: 2,
-        va_bank: 'BRI VA / Transfer',
-        va_number: '7702082293445661',
-        committee_account_number: '1082-01-004599-50-2',
-        committee_account_holder: 'PANITIA SEWA LAPANGAN (BENDAHARA)',
-        unique_code: 142,
-        total_price: 900142,
+        start_time: '08:00',
+        duration_hours: 1,
+        va_bank: 'Transfer Bank BRI',
+        va_number: '77022293445661',
+        committee_account_number: '713101009260530',
+        committee_account_holder: 'ADIMULYAWARMAN',
+        unique_code: 251,
+        total_price: 20251,
         payment_status: 'Waiting VA',
+        payment_proof: null,
+        confirmation_method: 'Kode Unik Otomatis',
         paid_at: null,
-        notes: 'Sparring Sore Ular Sakti Lalombi'
+        notes: 'Sewa Pagi'
       }
     ]
   };
@@ -763,8 +813,43 @@
     }, 4500);
   }
 
+  // Kompresi Gambar Bukti Transfer secara Otomatis di Browser (Agar ringan disimpan ke Supabase)
+  window.handlePreviewProofImage = function(event) {
+    const file = event.target.files?.[0];
+    if (!file) return;
+
+    const reader = new FileReader();
+    reader.onload = function(e) {
+      const img = new Image();
+      img.onload = function() {
+        const canvas = document.createElement('canvas');
+        const maxW = 720;
+        let w = img.width;
+        let h = img.height;
+        if (w > maxW) {
+          h = Math.round((h * maxW) / w);
+          w = maxW;
+        }
+        canvas.width = w;
+        canvas.height = h;
+        const ctx = canvas.getContext('2d');
+        ctx.drawImage(img, 0, 0, w, h);
+        compressedProofDataUrl = canvas.toDataURL('image/jpeg', 0.72);
+
+        const previewEl = document.getElementById('proof-image-preview');
+        const wrapEl = document.getElementById('proof-image-preview-wrap');
+        if (previewEl && wrapEl) {
+          previewEl.src = compressedProofDataUrl;
+          wrapEl.classList.remove('hidden');
+        }
+      };
+      img.src = e.target.result;
+    };
+    reader.readAsDataURL(file);
+  };
+
   // ==========================================
-  // INISIALISASI & KONEKSI DATA (PREVIEW vs PROD)
+  // INISIALISASI & KONEKSI DATA
   // ==========================================
   async function initApplication() {
     if (IS_PREVIEW) {
@@ -786,7 +871,7 @@
             phone: '082293445661'
           };
           await loadAllDatabaseData();
-          subscribeRealtimeVAChannel();
+          await subscribeRealtimeVAChannel();
           enterDashboardView();
           return;
         }
@@ -798,7 +883,7 @@
       if (savedMember) {
         state.currentUser = JSON.parse(savedMember);
         await loadAllDatabaseData();
-        subscribeRealtimeVAChannel();
+        await subscribeRealtimeVAChannel();
         enterDashboardView();
       }
     }
@@ -835,7 +920,6 @@
     refreshActiveVACardState();
   }
 
-  // PERBAIKAN BUG REALTIME CHANNEL: Hapus channel lama sebelum membuat channel baru agar tidak bentrok
   async function subscribeRealtimeVAChannel() {
     if (IS_PREVIEW || !supabase) return;
     try {
@@ -849,28 +933,30 @@
         .on('postgres_changes', { event: '*', schema: 'public', table: 'bookings' }, async (payload) => {
           await loadAllDatabaseData();
           renderAllViews();
-          if (payload.eventType === 'UPDATE' && payload.new?.payment_status === 'Lunas') {
-            showToast(
-              'Dana Masuk ke Rekening Panitia!',
-              `Booking #${payload.new.booking_code} (${payload.new.va_bank}) sebesar ${formatRp(payload.new.total_price)} telah LUNAS otomatis.`,
-              'success'
-            );
-          } else if (payload.eventType === 'INSERT') {
-            showToast(
-              'Tagihan Booking Baru Terbit',
-              `Pesanan baru #${payload.new.booking_code} menunggu transfer ke Rekening Panitia (${payload.new.va_bank}).`,
-              'info'
-            );
+          if (payload.eventType === 'UPDATE') {
+            if (payload.new?.payment_status === 'Lunas') {
+              showToast(
+                'Pembayaran Terverifikasi LUNAS!',
+                `Booking #${payload.new.booking_code} sebesar ${formatRp(payload.new.total_price)} telah LUNAS.`,
+                'success'
+              );
+            } else if (payload.new?.payment_status === 'Dicek Panitia') {
+              showToast(
+                'Bukti Transfer Baru Masuk!',
+                `Booking #${payload.new.booking_code} mengunggah konfirmasi/bukti transfer untuk diperiksa.`,
+                'info'
+              );
+            }
           }
         })
         .subscribe();
     } catch (err) {
-      console.warn('Realtime subscription warning:', err);
+      console.warn('Realtime warning:', err);
     }
   }
 
   // ==========================================
-  // SISTEM LOGIN & REGISTRASI HYBRID (BEBAS ERROR)
+  // SISTEM LOGIN & REGISTRASI HYBRID
   // ==========================================
   window.switchAuthTab = function(tab) {
     const btnMember = document.getElementById('tab-role-member');
@@ -905,8 +991,8 @@
       state.currentUser = {
         id: 'admin-preview',
         role: 'admin',
-        full_name: 'Bendahara Panitia',
-        team_name: 'Panitia Pengelola Arena',
+        full_name: 'Adimulyawarman',
+        team_name: 'Panitia PERSWAT Watatu',
         username: 'admin@pitchbook.id',
         phone: '082293445661'
       };
@@ -927,7 +1013,7 @@
     try {
       if (IS_PREVIEW) {
         const found = previewMemory.members.find(m => m.username.toLowerCase() === uname && m.password === pass);
-        if (!found) throw new Error('Username atau password penyewa tidak cocok (Coba: rahman / 123).');
+        if (!found) throw new Error('Username atau password penyewa tidak cocok (Coba: mul / 123).');
         state.currentUser = { ...found, role: 'member' };
       } else {
         const { data, error } = await supabase
@@ -963,20 +1049,10 @@
 
     try {
       if (IS_PREVIEW) {
-        const exists = previewMemory.members.some(m => m.username.toLowerCase() === username);
-        if (exists) throw new Error('Username sudah terdaftar, silakan gunakan username lain.');
-        const newMember = {
-          id: 'mem-' + Date.now(),
-          username,
-          password,
-          full_name,
-          team_name,
-          phone
-        };
+        const newMember = { id: 'mem-' + Date.now(), username, password, full_name, team_name, phone };
         previewMemory.members.unshift(newMember);
         state.currentUser = { ...newMember, role: 'member' };
       } else {
-        // Cek apakah username sudah ada
         const { data: existingUser } = await supabase
           .from('members')
           .select('id')
@@ -984,7 +1060,7 @@
           .maybeSingle();
 
         if (existingUser) {
-          throw new Error(`Username "${username}" sudah terdaftar. Silakan langsung login di tab Penyewa / Tim atau gunakan username lain.`);
+          throw new Error(`Username "${username}" sudah terdaftar. Silakan langsung login.`);
         }
 
         const { data, error } = await supabase
@@ -1039,7 +1115,7 @@
       await subscribeRealtimeVAChannel();
       state.activeMenu = 'dashboard';
       enterDashboardView();
-      showToast('Login Admin Panitia Berhasil', 'Anda dapat mengelola jadwal dan Nomor Rekening Panitia.', 'success');
+      showToast('Login Admin Panitia Berhasil', 'Panel verifikasi otomatis & bukti transfer aktif.', 'success');
     } catch (err) {
       showToast('Gagal Login Admin', err.message, 'warning');
     }
@@ -1064,7 +1140,7 @@
   };
 
   // ==========================================
-  // NAVIGASI & RENDER LAYOUT CRYPTOWALL UI
+  // NAVIGASI & RENDER LAYOUT
   // ==========================================
   function getMenusByRole() {
     if (state.currentUser?.role === 'admin') {
@@ -1072,13 +1148,13 @@
         { id: 'dashboard', label: 'Dashboard', icon: 'home' },
         { id: 'fields', label: 'Kelola Lapangan', icon: 'map-pin' },
         { id: 'bank_accounts', label: 'Rekening Panitia', icon: 'landmark' },
-        { id: 'bookings', label: 'Jadwal & Mutasi', icon: 'credit-card' },
+        { id: 'bookings', label: 'Jadwal & Bukti', icon: 'credit-card' },
         { id: 'members', label: 'Data Member', icon: 'users' }
       ];
     }
     return [
       { id: 'dashboard', label: 'Dashboard', icon: 'home' },
-      { id: 'booking_new', label: 'Booking & VA', icon: 'calendar-plus' },
+      { id: 'booking_new', label: 'Booking Lapangan', icon: 'calendar-plus' },
       { id: 'my_tickets', label: 'Tagihan & Tiket', icon: 'wallet' },
       { id: 'profile', label: 'Profil Tim', icon: 'user' }
     ];
@@ -1098,7 +1174,7 @@
 
   window.openQuickActionFromPromo = function() {
     if (state.currentUser?.role === 'admin') {
-      window.switchMenu('bank_accounts');
+      window.switchMenu('bookings');
     } else {
       window.switchMenu('booking_new');
     }
@@ -1115,8 +1191,8 @@
       ? state.bookings
       : state.bookings.filter(b => b.member_id === state.currentUser.id);
 
-    const waitingVA = relevantBookings.find(b => b.payment_status === 'Waiting VA');
-    state.activeTagihanVA = waitingVA || relevantBookings[0] || null;
+    const unpaid = relevantBookings.find(b => b.payment_status !== 'Lunas');
+    state.activeTagihanVA = unpaid || relevantBookings[0] || null;
   }
 
   function renderAllViews() {
@@ -1179,7 +1255,7 @@
   }
 
   // ==========================================
-  // RENDER PANEL KANAN (REKENING PANITIA & MUTASI LIVE)
+  // RENDER PANEL KANAN
   // ==========================================
   function renderRightVAPanel() {
     const va = state.activeTagihanVA;
@@ -1195,22 +1271,22 @@
     const statusBadge = document.getElementById('va-card-status-badge');
 
     if (va) {
-      bankPill.textContent = va.va_bank || 'BANK PANITIA';
-      labelEl.textContent = va.payment_status === 'Waiting VA' ? 'Transfer Tepat Nominal Berikut:' : 'Dana Masuk ke Rekening Panitia';
+      bankPill.textContent = va.va_bank || 'TRANSFER BRI';
+      labelEl.textContent = va.payment_status === 'Lunas' ? 'Pembayaran Telah Lunas:' : 'Transfer Tepat Nominal (+Kode Unik):';
       codeEl.textContent = `#${va.booking_code}`;
       amountEl.textContent = formatRp(va.total_price);
-      holderEl.textContent = va.committee_account_holder || (defaultAcc ? defaultAcc.account_holder : 'BENDAHARA PANITIA');
-      realAccEl.textContent = `No. Rek Panitia: ${va.committee_account_number || (defaultAcc ? defaultAcc.account_number : '-')}`;
-      numberEl.textContent = va.va_number;
+      holderEl.textContent = `a.n ${va.committee_account_holder || (defaultAcc ? defaultAcc.account_holder : 'ADIMULYAWARMAN')}`;
+      realAccEl.textContent = `No. Rek: ${va.committee_account_number || (defaultAcc ? defaultAcc.account_number : '713101009260530')}`;
+      numberEl.textContent = `Kode Unik: #${va.unique_code || 0} (Menu Transfer Bank)`;
       statusBadge.textContent = va.payment_status.toUpperCase();
     } else {
       bankPill.textContent = defaultAcc ? defaultAcc.bank_name : 'REKENING PANITIA';
       labelEl.textContent = 'Rekening Resmi Penerima Dana';
       codeEl.textContent = '#READY';
       amountEl.textContent = 'Rp 0';
-      holderEl.textContent = defaultAcc ? defaultAcc.account_holder : 'Atur di Menu Rekening Panitia';
-      realAccEl.textContent = `No. Rek: ${defaultAcc ? defaultAcc.account_number : 'Belum diatur'}`;
-      numberEl.textContent = 'Buat Booking Baru';
+      holderEl.textContent = defaultAcc ? `a.n ${defaultAcc.account_holder}` : 'Atur di Menu Rekening Panitia';
+      realAccEl.textContent = `No. Rek: ${defaultAcc ? defaultAcc.account_number : '-'}`;
+      numberEl.textContent = 'Pilih Menu Booking Lapangan';
       statusBadge.textContent = 'ACTIVE';
     }
 
@@ -1232,17 +1308,17 @@
       return `
         <div onclick="window.selectBookingForVACard('${b.id}')" class="cursor-pointer p-3 rounded-2xl bg-slate-50/70 hover:bg-sky-50/60 border border-slate-100 flex items-center justify-between gap-2.5 transition">
           <div class="flex items-center gap-3 min-w-0">
-            <div class="w-9 h-9 rounded-xl ${isLunas ? 'bg-royal-600 text-white' : 'bg-skycyan-400 text-white'} flex items-center justify-center font-bold text-[10px] shrink-0 shadow-sm">
-              ${(b.va_bank || 'VA').split(' ')[0].slice(0, 3)}
+            <div class="w-9 h-9 rounded-xl ${isLunas ? 'bg-emerald-500 text-white' : 'bg-royal-600 text-white'} flex items-center justify-center font-bold text-[10px] shrink-0 shadow-sm">
+              ${isLunas ? '✓' : 'BRI'}
             </div>
             <div class="min-w-0">
               <div class="text-xs font-bold text-slate-800 truncate">${field ? field.name : 'Lapangan'}</div>
-              <div class="text-[10px] text-slate-400 font-medium">${b.play_date} • ${b.start_time} (${b.payment_status})</div>
+              <div class="text-[10px] text-slate-400 font-medium">${b.play_date} • ${b.payment_status}</div>
             </div>
           </div>
           <div class="text-right shrink-0">
-            <div class="text-xs font-extrabold ${isLunas ? 'text-royal-600' : 'text-skycyan-500'}">
-              ${isLunas ? '+' : ''}${formatRp(b.total_price)}
+            <div class="text-xs font-extrabold ${isLunas ? 'text-emerald-600' : 'text-royal-600'}">
+              ${formatRp(b.total_price)}
             </div>
             <div class="text-[9px] font-mono text-slate-400">#${b.booking_code}</div>
           </div>
@@ -1257,31 +1333,24 @@
       state.activeTagihanVA = found;
       renderRightVAPanel();
       lucide.createIcons();
-      showToast('Tagihan Dipilih', `Rekening Panitia (${found.va_bank}): ${found.committee_account_number || found.va_number}`, 'info');
     }
   };
 
-  window.copyActiveVANumber = function() {
-    if (!state.activeTagihanVA) {
-      const defaultAcc = state.paymentAccounts[0];
-      if (defaultAcc) {
-        navigator.clipboard?.writeText(defaultAcc.account_number.replace(/\D/g, ''));
-        showToast('No. Rekening Panitia Disalin!', `${defaultAcc.bank_name}: ${defaultAcc.account_number} (a.n ${defaultAcc.account_holder})`, 'success');
-        return;
-      }
-      showToast('Belum Ada Nomor Rekening', 'Silakan buat jadwal booking terlebih dahulu.', 'warning');
-      return;
-    }
-    const copyText = (state.activeTagihanVA.committee_account_number || state.activeTagihanVA.va_number).replace(/\s+/g, '');
-    navigator.clipboard?.writeText(copyText);
+  // Menyalin Nomor Rekening Asli Panitia (Agar penyewa langsung tempel di menu Transfer Sesama BRI, bukan BRIVA)
+  window.copyActiveVANumber = function(customAccNum = null) {
+    const targetAcc = customAccNum || state.activeTagihanVA?.committee_account_number || state.paymentAccounts[0]?.account_number || '713101009260530';
+    const cleanNum = targetAcc.replace(/\D/g, '');
+    navigator.clipboard?.writeText(cleanNum);
     showToast(
-      'Nomor Rekening / VA Panitia Disalin!',
-      `Silakan transfer tepat ${formatRp(state.activeTagihanVA.total_price)} ke ${state.activeTagihanVA.va_bank} (${copyText}) a.n ${state.activeTagihanVA.committee_account_holder || 'Panitia'}.`,
+      'Nomor Rekening BRI Panitia Disalin!',
+      `No. Rek: ${cleanNum} disalin. Buka BRImo -> Pilih menu "Transfer" (Sesama BRI), BUKAN menu BRIVA.`,
       'success'
     );
   };
 
-  // KONFIRMASI OTOMATIS / CALLBACK DANA MASUK KE REKENING PANITIA
+  // ==========================================
+  // OPSI 1: KONFIRMASI INSTAN KODE UNIK (TANPA UPLOAD BUKTI)
+  // ==========================================
   window.simulateInstantVAPayment = async function(specificBookingId = null) {
     const target = specificBookingId
       ? state.bookings.find(b => b.id === specificBookingId)
@@ -1292,22 +1361,27 @@
       return;
     }
     if (target.payment_status === 'Lunas') {
-      showToast('Sudah Lunas', `Booking #${target.booking_code} sudah tercatat lunas di Rekening Panitia.`, 'info');
+      showToast('Sudah Lunas', `Booking #${target.booking_code} sudah tercatat LUNAS.`, 'info');
       return;
     }
 
     const nowIso = new Date().toISOString();
+    const updatePayload = {
+      payment_status: 'Lunas',
+      paid_at: nowIso,
+      confirmation_method: `Kode Unik Instan (#${target.unique_code || 0})`
+    };
+
     try {
       if (IS_PREVIEW) {
         const idx = previewMemory.bookings.findIndex(b => b.id === target.id);
         if (idx !== -1) {
-          previewMemory.bookings[idx].payment_status = 'Lunas';
-          previewMemory.bookings[idx].paid_at = nowIso;
+          previewMemory.bookings[idx] = { ...previewMemory.bookings[idx], ...updatePayload };
         }
       } else {
         const { error } = await supabase
           .from('bookings')
-          .update({ payment_status: 'Lunas', paid_at: nowIso })
+          .update(updatePayload)
           .eq('id', target.id);
         if (error) throw error;
       }
@@ -1315,28 +1389,129 @@
       await loadAllDatabaseData();
       renderAllViews();
       showToast(
-        'Dana Masuk ke Rekening Panitia!',
-        `Transfer ${formatRp(target.total_price)} ke ${target.va_bank} (${target.committee_account_number || target.va_number}) a.n ${target.committee_account_holder || 'Panitia'} telah LUNAS otomatis!`,
+        'Terverifikasi Lunas (Kode Unik)!',
+        `Pembayaran ${formatRp(target.total_price)} ke Rekening Panitia (${target.committee_account_number}) berhasil dikonfirmasi.`,
         'success'
       );
     } catch (err) {
-      showToast('Gagal Memproses Pembayaran', err.message, 'warning');
+      showToast('Terkendala Otomatis? Gunakan Upload Bukti', err.message, 'warning');
     }
+  };
+
+  // ==========================================
+  // OPSI 2: UPLOAD BUKTI TRANSFER / KONFIRMASI MANUAL (JIKA TERKENDALA)
+  // ==========================================
+  window.openUploadProofModal = function(specificBookingId = null) {
+    const target = specificBookingId
+      ? state.bookings.find(b => b.id === specificBookingId)
+      : state.activeTagihanVA;
+
+    if (!target) {
+      showToast('Pilih Tagihan Dahulu', 'Belum ada jadwal booking yang dipilih untuk dikonfirmasi.', 'warning');
+      return;
+    }
+
+    compressedProofDataUrl = target.payment_proof || null;
+    document.getElementById('proof-booking-id').value = target.id;
+    document.getElementById('proof-booking-code').textContent = `#${target.booking_code}`;
+    document.getElementById('proof-booking-amount').textContent = formatRp(target.total_price);
+    document.getElementById('proof-booking-acc').textContent = `${target.va_bank} - ${target.committee_account_number || '713101009260530'}`;
+    document.getElementById('proof-sender-note').value = target.notes || '';
+    document.getElementById('proof-file-input').value = '';
+
+    const wrapEl = document.getElementById('proof-image-preview-wrap');
+    const previewEl = document.getElementById('proof-image-preview');
+    if (compressedProofDataUrl) {
+      previewEl.src = compressedProofDataUrl;
+      wrapEl.classList.remove('hidden');
+    } else {
+      wrapEl.classList.add('hidden');
+    }
+
+    document.getElementById('upload-proof-modal').classList.remove('hidden');
+  };
+
+  window.closeUploadProofModal = function() {
+    document.getElementById('upload-proof-modal').classList.add('hidden');
+  };
+
+  window.handleSubmitManualProof = async function(e) {
+    e.preventDefault();
+    const bookingId = document.getElementById('proof-booking-id').value;
+    const senderNote = document.getElementById('proof-sender-note').value.trim();
+    const target = state.bookings.find(b => b.id === bookingId);
+    if (!target) return;
+
+    const payload = {
+      payment_status: 'Dicek Panitia',
+      payment_proof: compressedProofDataUrl || null,
+      confirmation_method: compressedProofDataUrl ? 'Upload Bukti Struk' : 'Konfirmasi Manual',
+      notes: senderNote
+    };
+
+    try {
+      if (IS_PREVIEW) {
+        const idx = previewMemory.bookings.findIndex(b => b.id === bookingId);
+        if (idx !== -1) {
+          previewMemory.bookings[idx] = { ...previewMemory.bookings[idx], ...payload };
+        }
+      } else {
+        const { error } = await supabase
+          .from('bookings')
+          .update(payload)
+          .eq('id', bookingId);
+        if (error) throw error;
+      }
+
+      window.closeUploadProofModal();
+      await loadAllDatabaseData();
+      renderAllViews();
+      showToast(
+        'Bukti & Konfirmasi Terkirim!',
+        `Bukti transfer untuk #${target.booking_code} berhasil disimpan dan langsung tampil di layar Admin Panitia.`,
+        'success'
+      );
+    } catch (err) {
+      showToast('Gagal Mengunggah Bukti', err.message, 'warning');
+    }
+  };
+
+  window.sendProofViaWhatsApp = function() {
+    const bookingId = document.getElementById('proof-booking-id').value;
+    const senderNote = document.getElementById('proof-sender-note').value.trim();
+    const target = state.bookings.find(b => b.id === bookingId) || state.activeTagihanVA;
+    if (!target) return;
+
+    const adminPhone = (document.getElementById('wa-admin-number')?.value || '6282293445661').replace(/\D/g, '');
+    const field = state.fields.find(f => f.id === target.field_id);
+    const text = `Halo Bendahara Panitia *${target.committee_account_holder || 'ADIMULYAWARMAN'}* ⚽,%0A%0ASaya ingin konfirmasi manual pembayaran sewa lapangan:%0A📌 *Kode Booking:* #${target.booking_code}%0A🏟️ *Lapangan:* ${field ? field.name : '-'}%0A📅 *Jadwal:* ${target.play_date} (${target.start_time} WITA)%0A💰 *Nominal Transfer:* ${formatRp(target.total_price)}%0A🏦 *Ke Rekening:* ${target.va_bank} (${target.committee_account_number})%0A📝 *Catatan Pengirim:* ${senderNote || '-'}%0A%0AMohon dibantu verifikasi lunas. Terima kasih!`;
+    window.open(`https://wa.me/${adminPhone}?text=${text}`, '_blank');
+  };
+
+  window.viewUploadedProof = function(bookingId) {
+    const b = state.bookings.find(x => x.id === bookingId);
+    if (!b || !b.payment_proof) {
+      showToast('Tidak Ada Foto Struk', 'Penyewa mengonfirmasi tanpa melampirkan gambar struk.', 'info');
+      return;
+    }
+    document.getElementById('view-proof-img').src = b.payment_proof;
+    document.getElementById('view-proof-caption').textContent = `Kode #${b.booking_code} • ${formatRp(b.total_price)} • Catatan: ${b.notes || '-'}`;
+    document.getElementById('view-proof-modal').classList.remove('hidden');
   };
 
   window.triggerCheckLiveVA = async function() {
     await loadAllDatabaseData();
     renderAllViews();
-    const waitingCount = state.bookings.filter(b => b.payment_status === 'Waiting VA').length;
+    const pendingCount = state.bookings.filter(b => b.payment_status !== 'Lunas').length;
     showToast(
-      'Cek Mutasi Rekening Panitia',
-      `Sinkronisasi real-time aktif. Terdapat ${waitingCount} booking menunggu dana masuk.`,
+      'Status Pembayaran Diperbarui',
+      `Sinkronisasi selesai. Terdapat ${pendingCount} transaksi menunggu/dicek panitia.`,
       'info'
     );
   };
 
   // ==========================================
-  // RENDER WORKSPACE TENGAH BERDASARKAN MENU
+  // RENDER WORKSPACE TENGAH
   // ==========================================
   function renderCenterWorkspace() {
     const container = document.getElementById('center-workspace-content');
@@ -1367,7 +1542,6 @@
     const isAdmin = state.currentUser.role === 'admin';
     const paidBookings = state.bookings.filter(b => b.payment_status === 'Lunas');
     const totalRevenue = paidBookings.reduce((acc, b) => acc + Number(b.total_price || 0), 0);
-    const waitingCount = state.bookings.filter(b => b.payment_status === 'Waiting VA').length;
     const activeAccounts = state.paymentAccounts.filter(a => a.status === 'Active');
 
     const filteredFields = state.fields.filter(f =>
@@ -1377,21 +1551,21 @@
     );
 
     return `
-      <!-- HERO BANNER ROYAL BLUE ALA CRYPTOWALL -->
+      <!-- HERO BANNER -->
       <div class="bg-hero-royal rounded-[28px] p-6 sm:p-8 text-white shadow-royal relative overflow-hidden mb-7 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-6">
         <div class="relative z-10 max-w-md">
           <span class="inline-block bg-white/20 backdrop-blur-sm text-[11px] font-bold px-3 py-1 rounded-full mb-3">
-            🏦 TERHUBUNG KE REKENING RESMI PANITIA
+            ⚡ 2 OPSI PEMBAYARAN: OTOMATIS & UPLOAD BUKTI
           </span>
           <h2 class="text-xl sm:text-2xl font-bold leading-snug mb-2">
-            Sewa Lapangan & Transfer Langsung ke Rekening Panitia
+            Transfer ke Rekening Panitia Jadi Lebih Mudah & Pasti
           </h2>
           <p class="text-xs text-blue-100 leading-relaxed mb-5">
-            Setiap pesanan menghasilkan Nominal Kode Unik & Nomor VA yang langsung mengarah ke Nomor Rekening Bank Panitia. Otomatis terverifikasi tanpa kirim bukti struk.
+            Gunakan menu <b>Transfer Bank Biasa (Sesama BRI/Bank Lain)</b> ke Nomor Rekening Panitia dengan 3 digit kode unik untuk konfirmasi instan, atau unggah foto struk transfer jika ada kendala.
           </p>
           <div class="flex flex-wrap items-center gap-3">
-            <button onclick="window.switchMenu('${isAdmin ? 'bank_accounts' : 'booking_new'}')" class="px-5 py-3 rounded-2xl bg-skycyan-400 hover:bg-skycyan-500 text-white font-bold text-xs shadow-cyan transition">
-              ${isAdmin ? 'Atur Rekening Panitia' : 'Booking Lapangan Sekarang'}
+            <button onclick="window.switchMenu('${isAdmin ? 'bookings' : 'booking_new'}')" class="px-5 py-3 rounded-2xl bg-skycyan-400 hover:bg-skycyan-500 text-white font-bold text-xs shadow-cyan transition">
+              ${isAdmin ? 'Periksa Jadwal & Bukti' : 'Booking Lapangan Sekarang'}
             </button>
             <button onclick="window.openWhatsAppModal()" class="px-4 py-3 rounded-2xl bg-white/15 hover:bg-white/25 text-white font-semibold text-xs backdrop-blur-sm transition">
               Hubungi Panitia
@@ -1399,21 +1573,20 @@
           </div>
         </div>
 
-        <!-- Ringkasan Dana Masuk Panitia -->
         <div class="relative z-10 bg-white/15 backdrop-blur-md border border-white/25 rounded-3xl p-4 w-full sm:w-64 shrink-0">
           <div class="flex items-center justify-between text-[11px] text-sky-100 mb-1">
-            <span>Total Kas Masuk Panitia</span>
-            <span class="bg-emerald-400 text-slate-900 font-extrabold px-2 py-0.5 rounded-full text-[10px]">REAL-TIME</span>
+            <span>Total Kas Lunas Panitia</span>
+            <span class="bg-emerald-400 text-slate-900 font-extrabold px-2 py-0.5 rounded-full text-[10px]">AKTIF</span>
           </div>
           <div class="text-xl font-extrabold mb-3">${formatRp(totalRevenue)}</div>
           <div class="grid grid-cols-2 gap-2 text-[11px] bg-slate-900/25 rounded-2xl p-2.5">
             <div>
-              <div class="text-blue-200 text-[10px]">Lunas Masuk</div>
-              <div class="font-bold">${paidBookings.length} Transaksi</div>
+              <div class="text-blue-200 text-[10px]">Jadwal Lunas</div>
+              <div class="font-bold">${paidBookings.length} Sesi</div>
             </div>
             <div>
               <div class="text-blue-200 text-[10px]">Rekening Aktif</div>
-              <div class="font-bold text-sky-200">${activeAccounts.length} Bank</div>
+              <div class="font-bold text-sky-200">${activeAccounts.length} Rekening</div>
             </div>
           </div>
         </div>
@@ -1421,12 +1594,12 @@
         <div class="w-56 h-56 rounded-full bg-skycyan-400/20 absolute -right-12 -bottom-16 blur-xl"></div>
       </div>
 
-      <!-- DAFTAR REKENING RESMI PANITIA (Agar Penyewa & Admin Tahu Persis Uang Masuk Kemana) -->
+      <!-- DAFTAR REKENING RESMI PANITIA -->
       <div class="bg-white rounded-[24px] p-5 shadow-soft-card border border-slate-100 mb-7">
         <div class="flex items-center justify-between mb-3.5">
           <div>
-            <h3 class="text-sm font-bold text-slate-800">🏦 Daftar Rekening Resmi Panitia (Tujuan Dana Masuk)</h3>
-            <p class="text-[11px] text-slate-400">Seluruh pembayaran penyewa disalurkan langsung ke rekening bendahara panitia di bawah ini</p>
+            <h3 class="text-sm font-bold text-slate-800">🏦 Rekening Resmi Panitia (Gunakan Menu Transfer Bank Biasa, Bukan BRIVA)</h3>
+            <p class="text-[11px] text-slate-400">Klik tombol salin untuk menempelkan nomor rekening di aplikasi BRImo / M-Banking Anda</p>
           </div>
           ${isAdmin ? `<button onclick="window.switchMenu('bank_accounts')" class="text-xs font-bold text-royal-600 hover:underline">+ Edit Rekening</button>` : ''}
         </div>
@@ -1438,21 +1611,23 @@
                 <div class="p-3.5 rounded-2xl bg-slate-50 border border-slate-100 flex items-center justify-between gap-3">
                   <div class="flex items-center gap-3 min-w-0">
                     <div class="w-10 h-10 rounded-xl bg-royal-600 text-white font-extrabold text-xs flex items-center justify-center shrink-0">
-                      ${acc.bank_name.split(' ')[0].slice(0, 4)}
+                      BRI
                     </div>
                     <div class="min-w-0">
                       <div class="text-xs font-bold text-slate-800 truncate">${acc.bank_name} — <span class="font-mono text-royal-600">${acc.account_number}</span></div>
                       <div class="text-[10px] text-slate-500 font-semibold truncate">a.n ${acc.account_holder}</div>
                     </div>
                   </div>
-                  <span class="text-[10px] font-mono font-bold bg-sky-100 text-skycyan-500 px-2.5 py-1 rounded-lg shrink-0">Prefix: ${acc.va_prefix}</span>
+                  <button onclick="window.copyActiveVANumber('${acc.account_number}')" class="text-[11px] font-bold bg-royal-50 hover:bg-royal-100 text-royal-600 px-3 py-1.5 rounded-xl shrink-0 transition">
+                    Salin No. Rek
+                  </button>
                 </div>
               `).join('')
           }
         </div>
       </div>
 
-      <!-- KATALOG LAPANGAN HORIZONTAL -->
+      <!-- KATALOG LAPANGAN -->
       <div class="flex items-center justify-between mb-4">
         <h3 class="text-base font-bold text-slate-800">Daftar Arena & Tarif Sewa</h3>
         <button onclick="window.switchMenu('${isAdmin ? 'fields' : 'booking_new'}')" class="px-3 py-1.5 rounded-xl bg-sky-100 text-skycyan-500 text-xs font-bold hover:bg-sky-200 transition">
@@ -1460,7 +1635,7 @@
         </button>
       </div>
 
-      <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-7">
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
         ${
           filteredFields.length === 0
             ? `<div class="col-span-2 bg-white rounded-2xl p-6 text-center text-xs text-slate-400 shadow-soft-card">Belum ada data lapangan tersedia.</div>`
@@ -1501,15 +1676,15 @@
   };
 
   // ==========================================
-  // 2. MENU BARU ADMIN: KELOLA REKENING BANK PANITIA
+  // 2. MENU ADMIN: KELOLA REKENING PANITIA
   // ==========================================
   function buildAdminBankAccountsHTML() {
     return `
       <div class="bg-royal-50 border border-royal-100 rounded-[24px] p-5 mb-6 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
         <div>
-          <h3 class="text-sm font-bold text-royal-700">💡 Bagaimana Uang Transfer Penyewa Masuk ke Panitia?</h3>
+          <h3 class="text-sm font-bold text-royal-700">🏦 Pengaturan Rekening Bank Panitia</h3>
           <p class="text-xs text-slate-600 mt-1 leading-relaxed">
-            Tambahkan <b>Nomor Rekening Asli Panitia / Bendahara</b> di bawah ini. Saat penyewa melakukan booking, sistem akan menampilkan Nomor Rekening Panitia tersebut beserta <b>3 Digit Kode Unik Otomatis</b> & Nomor VA agar uang langsung masuk ke rekening bank panitia dan teridentifikasi otomatis tanpa perlu kirim foto bukti transfer.
+            Masukkan Nomor Rekening BRI / Bank Panitia. Penyewa akan diarahkan mentransfer ke nomor rekening ini melalui <b>Menu Transfer Bank Biasa</b> (dengan 3 digit kode unik atau unggah bukti transfer).
           </p>
         </div>
         <button onclick="window.openBankModal()" class="px-4 py-3 rounded-2xl bg-royal-600 hover:bg-royal-700 text-white font-bold text-xs shadow-royal shrink-0 transition">
@@ -1520,7 +1695,7 @@
       <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
         ${
           state.paymentAccounts.length === 0
-            ? `<div class="col-span-2 bg-white rounded-2xl p-8 text-center text-xs text-slate-400">Belum ada nomor rekening panitia. Klik "+ Tambah Rekening Panitia" di atas.</div>`
+            ? `<div class="col-span-2 bg-white rounded-2xl p-8 text-center text-xs text-slate-400">Belum ada nomor rekening panitia.</div>`
             : state.paymentAccounts.map(acc => `
               <div class="bg-white rounded-[24px] p-5 shadow-soft-card border border-slate-100 flex flex-col justify-between gap-4">
                 <div>
@@ -1533,7 +1708,6 @@
                   <div class="text-[11px] text-slate-400 mt-2">Nomor Rekening Resmi Panitia:</div>
                   <div class="text-lg font-mono font-extrabold text-slate-800 tracking-wide">${acc.account_number}</div>
                   <div class="text-xs font-semibold text-slate-600 mt-0.5">a.n ${acc.account_holder}</div>
-                  <div class="text-[11px] text-skycyan-500 font-mono mt-1">Kode Prefix VA: ${acc.va_prefix}</div>
                 </div>
 
                 <div class="pt-3 border-t border-slate-100 flex items-center justify-end gap-2">
@@ -1626,7 +1800,7 @@
   };
 
   // ==========================================
-  // 3. MENU PENYEWA: BOOKING BARU & PILIH REKENING PANITIA
+  // 3. MENU PENYEWA: BOOKING BARU
   // ==========================================
   function buildMemberNewBookingHTML() {
     const activeField = state.fields.find(f => f.id === state.selectedFieldId) || state.fields[0];
@@ -1644,10 +1818,10 @@
         <div class="lg:col-span-7 bg-white rounded-[28px] p-6 shadow-soft-card border border-slate-100">
           <div class="flex items-center justify-between mb-5">
             <div>
-              <h3 class="text-base font-bold text-slate-800">Form Sewa Lapangan & Rekening Panitia</h3>
-              <p class="text-xs text-slate-400">Pilih jadwal dan rekening bank panitia tujuan transfer</p>
+              <h3 class="text-base font-bold text-slate-800">Form Sewa Lapangan Sepak Bola</h3>
+              <p class="text-xs text-slate-400">Pilih jadwal main dan rekening panitia tujuan transfer</p>
             </div>
-            <span class="bg-sky-50 text-skycyan-500 text-xs font-bold px-3 py-1 rounded-xl">Auto-Verify</span>
+            <span class="bg-sky-50 text-skycyan-500 text-xs font-bold px-3 py-1 rounded-xl">Kode Unik + Bukti</span>
           </div>
 
           <form onsubmit="window.handleCreateVABooking(event)" class="space-y-4">
@@ -1679,27 +1853,26 @@
               <div>
                 <label class="block text-xs font-semibold text-slate-600 mb-1.5">Durasi Bermain</label>
                 <select id="book-duration" onchange="window.updateEstimatedTotal(${pricePerHour})" required class="w-full px-3.5 py-2.5 rounded-2xl bg-slate-50 border border-slate-200 text-xs font-semibold">
-                  <option value="1">1 Jam</option>
-                  <option value="2" selected>2 Jam</option>
+                  <option value="1" selected>1 Jam</option>
+                  <option value="2">2 Jam</option>
                   <option value="3">3 Jam</option>
                   <option value="4">4 Jam (Turnamen)</option>
                 </select>
               </div>
             </div>
 
-            <!-- Pilihan Bank Rekening Panitia -->
             <div>
-              <label class="block text-xs font-semibold text-slate-600 mb-2">Pilih Rekening Bank / Virtual Account Panitia</label>
+              <label class="block text-xs font-semibold text-slate-600 mb-2">Pilih Rekening Bank Panitia (Transfer Bank Biasa, Bukan BRIVA)</label>
               <div class="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
                 ${
                   activeBanks.length === 0
-                    ? `<div class="col-span-2 text-xs text-amber-600 bg-amber-50 p-3 rounded-xl">Admin belum mengatur rekening panitia. Menggunakan VA Default.</div>`
+                    ? `<div class="col-span-2 text-xs text-amber-600 bg-amber-50 p-3 rounded-xl">Menggunakan Rekening BRI Panitia Default (713101009260530 a.n ADIMULYAWARMAN).</div>`
                     : activeBanks.map((acc, i) => `
                       <label class="cursor-pointer">
                         <input type="radio" name="va_bank_account_id" value="${acc.id}" ${i === 0 ? 'checked' : ''} class="peer hidden" />
                         <div class="p-3.5 rounded-2xl border border-slate-200 peer-checked:border-royal-600 peer-checked:bg-royal-50/70 transition">
                           <div class="text-xs font-extrabold text-slate-800">${acc.bank_name}</div>
-                          <div class="text-[11px] font-mono text-royal-600 font-bold mt-0.5">Rek: ${acc.account_number}</div>
+                          <div class="text-[11px] font-mono text-royal-600 font-bold mt-0.5">No. Rek: ${acc.account_number}</div>
                           <div class="text-[10px] text-slate-500 truncate">a.n ${acc.account_holder}</div>
                         </div>
                       </label>
@@ -1710,16 +1883,16 @@
 
             <div>
               <label class="block text-xs font-semibold text-slate-600 mb-1.5">Catatan Tim / Pertandingan</label>
-              <input type="text" id="book-notes" placeholder="Contoh: Sparring Sore Ular Sakti Lalombi" class="w-full px-4 py-2.5 rounded-2xl bg-slate-50 border border-slate-200 text-xs" />
+              <input type="text" id="book-notes" placeholder="Contoh: Sparring Persahabatan" class="w-full px-4 py-2.5 rounded-2xl bg-slate-50 border border-slate-200 text-xs" />
             </div>
 
             <div class="bg-slate-50 rounded-2xl p-4 flex items-center justify-between border border-slate-100">
               <div>
-                <div class="text-[11px] text-slate-400 font-medium">Estimasi Sewa (+Kode Unik 3 Digit saat Checkout)</div>
-                <div id="book-estimated-total" class="text-xl font-extrabold text-royal-600">${formatRp(pricePerHour * 2)}</div>
+                <div class="text-[11px] text-slate-400 font-medium">Estimasi Sewa (+Kode Unik 3 Digit)</div>
+                <div id="book-estimated-total" class="text-xl font-extrabold text-royal-600">${formatRp(pricePerHour * 1)}</div>
               </div>
               <button type="submit" class="px-6 py-3.5 rounded-2xl bg-royal-600 hover:bg-royal-700 text-white font-bold text-xs shadow-royal transition">
-                Buat Tagihan & VA →
+                Buat Tagihan Sekarang →
               </button>
             </div>
           </form>
@@ -1748,8 +1921,10 @@
           </div>
 
           <div class="bg-sky-50 border border-sky-100 rounded-2xl p-4 text-xs text-slate-600 leading-relaxed">
-            <div class="font-bold text-slate-800 mb-1">🏦 Ke Mana Uang Transfer Masuk?</div>
-            Dana yang Anda transfer langsung masuk ke <b>Nomor Rekening Bank Panitia</b> yang tertera. Sistem menambahkan 3 digit kode unik (misal <b>Rp 900.142</b>) agar mutasi rekening panitia mengenali pembayaran tim Anda secara otomatis tanpa perlu kirim foto struk!
+            <div class="font-bold text-slate-800 mb-1">💡 Panduan Pembayaran (2 Opsi Mudah):</div>
+            1. Buka BRImo $\rightarrow$ Pilih menu <b>Transfer Sesama BRI</b> (Bukan BRIVA) ke No. Rekening Panitia.<br/>
+            2. <b>Opsi 1 (Otomatis):</b> Transfer tepat sesuai nominal + kode unik lalu klik <b>Konfirmasi Instan</b>.<br/>
+            3. <b>Opsi 2 (Manual):</b> Jika ada kendala kode unik, klik tombol <b>Upload Bukti Transfer</b>.
           </div>
         </div>
       </div>
@@ -1785,20 +1960,19 @@
     if (!field) return;
 
     const chosenAcc = state.paymentAccounts.find(a => a.id === selectedAccId) || state.paymentAccounts[0] || {
-      bank_name: 'BRI VA / Transfer',
+      bank_name: 'Transfer Bank BRI',
       va_prefix: '7702',
-      account_number: '1082-01-004599-50-2',
-      account_holder: 'BENDAHARA PANITIA'
+      account_number: '713101009260530',
+      account_holder: 'ADIMULYAWARMAN'
     };
 
-    // Tambahkan 3 digit kode unik (101 - 899) agar transfer ke Rekening Panitia mudah dikenali otomatis
     const unique_code = Math.floor(101 + Math.random() * 798);
     const base_price = Number(field.price_per_hour) * duration_hours;
     const total_price = base_price + unique_code;
     const booking_code = 'PB-' + Math.floor(1000 + Math.random() * 9000);
 
     const cleanPhone = (state.currentUser.phone || '082293445661').replace(/\D/g, '').slice(-10).padStart(10, '0');
-    const va_number = `${chosenAcc.va_prefix || '8801'}${cleanPhone}`;
+    const va_number = `${chosenAcc.va_prefix || '7702'}${cleanPhone}`;
 
     const newBookingPayload = {
       booking_code,
@@ -1819,7 +1993,7 @@
 
     try {
       if (IS_PREVIEW) {
-        previewMemory.bookings.unshift({ id: 'bkg-' + Date.now(), paid_at: null, ...newBookingPayload });
+        previewMemory.bookings.unshift({ id: 'bkg-' + Date.now(), paid_at: null, payment_proof: null, confirmation_method: 'Kode Unik Otomatis', ...newBookingPayload });
       } else {
         const { error } = await supabase.from('bookings').insert([newBookingPayload]);
         if (error) throw error;
@@ -1829,8 +2003,8 @@
       state.activeMenu = 'my_tickets';
       renderAllViews();
       showToast(
-        'Tagihan Rekening Panitia Terbit!',
-        `Silakan transfer tepat ${formatRp(total_price)} ke ${chosenAcc.bank_name} (${chosenAcc.account_number}) a.n ${chosenAcc.account_holder}.`,
+        'Tagihan Berhasil Dibuat!',
+        `Transfer tepat ${formatRp(total_price)} ke No. Rek ${chosenAcc.account_number} (a.n ${chosenAcc.account_holder}) lewat menu Transfer Bank biasa.`,
         'success'
       );
     } catch (err) {
@@ -1839,7 +2013,7 @@
   };
 
   // ==========================================
-  // 4. MENU PENYEWA: TAGIHAN & E-TICKET SAYA
+  // 4. MENU PENYEWA: TAGIHAN & E-TICKET SAYA (DENGAN 2 TOMBOL OPSI)
   // ==========================================
   function buildMemberTicketsHTML() {
     const myBookings = state.bookings.filter(b => b.member_id === state.currentUser.id);
@@ -1849,7 +2023,7 @@
         <div class="bg-white rounded-[28px] p-10 text-center shadow-soft-card">
           <div class="text-4xl mb-3">🎟️</div>
           <h3 class="text-base font-bold text-slate-800 mb-1">Belum Ada Tagihan / Tiket Sewa</h3>
-          <p class="text-xs text-slate-400 mb-5">Silakan pilih jadwal lapangan terlebih dahulu untuk mendapatkan Nomor Rekening / VA Panitia.</p>
+          <p class="text-xs text-slate-400 mb-5">Silakan pilih jadwal lapangan terlebih dahulu.</p>
           <button onclick="window.switchMenu('booking_new')" class="px-5 py-3 rounded-2xl bg-royal-600 text-white font-bold text-xs shadow-royal">
             Buat Booking Baru
           </button>
@@ -1862,47 +2036,81 @@
         ${myBookings.map(b => {
           const field = state.fields.find(f => f.id === b.field_id);
           const isLunas = b.payment_status === 'Lunas';
+          const isDicek = b.payment_status === 'Dicek Panitia';
+          const accNum = b.committee_account_number || '713101009260530';
           return `
-            <div class="bg-white rounded-[26px] p-5 shadow-soft-card border ${isLunas ? 'border-emerald-200' : 'border-sky-200'} flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
-              <div class="space-y-1.5">
-                <div class="flex items-center gap-2">
+            <div class="bg-white rounded-[26px] p-5 shadow-soft-card border ${
+              isLunas ? 'border-emerald-200' : isDicek ? 'border-indigo-200' : 'border-sky-200'
+            } flex flex-col lg:flex-row items-start lg:items-center justify-between gap-5">
+              <div class="space-y-1.5 flex-1">
+                <div class="flex flex-wrap items-center gap-2">
                   <span class="font-mono text-xs font-extrabold text-royal-600 bg-royal-50 px-2.5 py-1 rounded-lg">#${b.booking_code}</span>
                   <span class="text-xs font-bold px-3 py-1 rounded-full ${
-                    isLunas ? 'bg-emerald-50 text-emerald-600' : 'bg-amber-50 text-amber-600'
+                    isLunas
+                      ? 'bg-emerald-50 text-emerald-600'
+                      : isDicek
+                      ? 'bg-indigo-50 text-royal-600'
+                      : 'bg-amber-50 text-amber-600'
                   }">
-                    • ${isLunas ? 'LUNAS (E-TICKET AKTIF)' : 'MENUNGGU TRANSFER KE PANITIA'}
+                    • ${
+                      isLunas
+                        ? 'LUNAS (E-TICKET AKTIF)'
+                        : isDicek
+                        ? 'BUKTI TERKIRIM (DICEK PANITIA)'
+                        : 'MENUNGGU TRANSFER KE PANITIA'
+                    }
                   </span>
+                  ${
+                    b.payment_proof
+                      ? `<button onclick="window.viewUploadedProof('${b.id}')" class="text-[11px] font-bold text-royal-600 bg-royal-50 hover:bg-royal-100 px-2.5 py-1 rounded-lg">🖼️ Lihat Bukti Saya</button>`
+                      : ''
+                  }
                 </div>
+
                 <h4 class="text-base font-bold text-slate-800 pt-1">${field ? field.name : 'Lapangan Sepak Bola'}</h4>
                 <p class="text-xs text-slate-500">📅 Tanggal: <b>${b.play_date}</b> | 🕒 Jam: <b>${b.start_time} WITA (${b.duration_hours} Jam)</b></p>
                 
-                <!-- Detail Rekening Panitia Penerima -->
-                <div class="bg-slate-50 p-3 rounded-2xl border border-slate-100 text-xs space-y-1 mt-2">
-                  <div class="font-bold text-slate-700">🏦 Tujuan Transfer Rekening Panitia:</div>
-                  <div>Bank: <b>${b.va_bank}</b></div>
-                  <div>No. Rekening Panitia: <span class="font-mono font-extrabold text-royal-600 bg-royal-50 px-2 py-0.5 rounded">${b.committee_account_number || b.va_number}</span></div>
-                  <div>Atas Nama: <b>${b.committee_account_holder || 'BENDAHARA PANITIA'}</b></div>
-                  <div class="text-[11px] text-slate-400">No. VA / Referensi: <span class="font-mono">${b.va_number}</span></div>
+                <div class="bg-slate-50 p-3.5 rounded-2xl border border-slate-100 text-xs space-y-1.5 mt-2">
+                  <div class="font-bold text-slate-800 flex items-center justify-between">
+                    <span>🏦 Tujuan Transfer Rekening Panitia (Menu Transfer Biasa, Bukan BRIVA):</span>
+                  </div>
+                  <div class="flex flex-wrap items-center gap-2">
+                    <span>Bank: <b>${b.va_bank}</b></span>
+                    <span>•</span>
+                    <span>No. Rekening: <b class="font-mono text-royal-600 bg-royal-50 px-2 py-0.5 rounded">${accNum}</b></span>
+                    <button onclick="window.copyActiveVANumber('${accNum}')" class="text-[10px] font-bold bg-royal-600 text-white px-2.5 py-0.5 rounded-lg hover:bg-royal-700">Salin No. Rek</button>
+                  </div>
+                  <div>Atas Nama: <b>${b.committee_account_holder || 'ADIMULYAWARMAN'}</b></div>
+                  ${b.notes ? `<div class="text-[11px] text-slate-500">📝 Catatan: ${b.notes}</div>` : ''}
                 </div>
               </div>
 
-              <div class="flex flex-col sm:flex-row md:flex-col items-start sm:items-end justify-between gap-3 w-full md:w-auto border-t md:border-t-0 pt-3 md:pt-0 border-slate-100">
-                <div class="text-left sm:text-right">
+              <div class="flex flex-col items-start lg:items-end justify-between gap-3 w-full lg:w-auto border-t lg:border-t-0 pt-3 lg:pt-0 border-slate-100">
+                <div class="text-left lg:text-right">
                   <div class="text-[10px] text-slate-400">Nominal Transfer (+Kode Unik ${b.unique_code || 0})</div>
                   <div class="text-xl font-extrabold text-royal-600">${formatRp(b.total_price)}</div>
                 </div>
 
-                <div class="flex items-center gap-2">
-                  ${
-                    !isLunas
-                      ? `<button onclick="window.simulateInstantVAPayment('${b.id}')" class="px-4 py-2.5 rounded-2xl bg-skycyan-400 hover:bg-skycyan-500 text-white font-bold text-xs shadow-cyan transition">
-                           ⚡ KonfirmasiSudah Transfer (Auto-Verify)
-                         </button>`
-                      : `<span class="text-[11px] font-bold text-emerald-600 bg-emerald-50 px-3 py-2 rounded-xl">
-                           ✅ Dana Diterima Panitia
-                         </span>`
-                  }
-                </div>
+                ${
+                  !isLunas
+                    ? `
+                      <div class="flex flex-wrap items-center gap-2 w-full sm:w-auto">
+                        <!-- Opsi 1: Konfirmasi Instan Kode Unik -->
+                        <button onclick="window.simulateInstantVAPayment('${b.id}')" class="flex-1 sm:flex-initial px-4 py-2.5 rounded-2xl bg-skycyan-400 hover:bg-skycyan-500 text-white font-bold text-xs shadow-cyan transition">
+                          ⚡ Konfirmasi Instan (Kode Unik)
+                        </button>
+                        <!-- Opsi 2: Upload Bukti Transfer Jika Terkendala -->
+                        <button onclick="window.openUploadProofModal('${b.id}')" class="flex-1 sm:flex-initial px-4 py-2.5 rounded-2xl bg-slate-100 hover:bg-slate-200 text-slate-700 font-bold text-xs border border-slate-200 transition">
+                          📎 Upload Bukti / Manual
+                        </button>
+                      </div>
+                    `
+                    : `
+                      <span class="text-xs font-bold text-emerald-600 bg-emerald-50 px-3.5 py-2 rounded-xl border border-emerald-200">
+                        ✅ Lunas (${b.confirmation_method || 'Terverifikasi'})
+                      </span>
+                    `
+                }
               </div>
             </div>
           `;
@@ -1912,7 +2120,7 @@
   }
 
   // ==========================================
-  // 5. MENU PENYEWA: PROFIL TIM SAYA
+  // 5. MENU PENYEWA: PROFIL TIM
   // ==========================================
   function buildMemberProfileHTML() {
     const u = state.currentUser;
@@ -2102,24 +2310,24 @@
   };
 
   // ==========================================
-  // 7. MENU ADMIN: JADWAL & MUTASI REKENING PANITIA
+  // 7. MENU ADMIN: JADWAL, MUTASI & BUKTI TRANSFER
   // ==========================================
   function buildAdminBookingsHTML() {
     const list = state.bookings.filter(b =>
       !state.searchQuery ||
       b.booking_code.toLowerCase().includes(state.searchQuery) ||
-      (b.va_number || '').toLowerCase().includes(state.searchQuery)
+      (b.notes || '').toLowerCase().includes(state.searchQuery)
     );
 
     return `
       <div class="bg-white rounded-[28px] p-6 shadow-soft-card border border-slate-100">
         <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 mb-5">
           <div>
-            <h3 class="text-base font-bold text-slate-800">Daftar Transaksi Sewa & Mutasi Rekening Panitia</h3>
-            <p class="text-xs text-slate-400">Pantau dana masuk ke rekening panitia berdasarkan kode unik & VA</p>
+            <h3 class="text-base font-bold text-slate-800">Daftar Transaksi Sewa, Kode Unik & Bukti Transfer</h3>
+            <p class="text-xs text-slate-400">Admin dapat memverifikasi lewat kecocokan Kode Unik atau melihat lampiran foto bukti struk</p>
           </div>
           <span class="bg-emerald-50 text-emerald-600 text-xs font-bold px-3.5 py-1.5 rounded-xl">
-            ⚡ Live Mutasi Aktif
+            ⚡ Otomatis + Bukti Manual
           </span>
         </div>
 
@@ -2129,10 +2337,10 @@
               <tr class="border-b border-slate-100 text-[11px] font-bold text-slate-400 uppercase tracking-wider">
                 <th class="py-3 px-3">Kode & Tim</th>
                 <th class="py-3 px-3">Lapangan & Jadwal</th>
-                <th class="py-3 px-3">Rekening Panitia Tujuan</th>
                 <th class="py-3 px-3">Nominal (+Kode Unik)</th>
+                <th class="py-3 px-3">Metode / Bukti</th>
                 <th class="py-3 px-3">Status</th>
-                <th class="py-3 px-3 text-right">Aksi</th>
+                <th class="py-3 px-3 text-right">Aksi Panitia</th>
               </tr>
             </thead>
             <tbody class="divide-y divide-slate-100 text-xs">
@@ -2143,25 +2351,39 @@
                       const field = state.fields.find(f => f.id === b.field_id);
                       const member = state.members.find(m => m.id === b.member_id);
                       const isLunas = b.payment_status === 'Lunas';
+                      const isDicek = b.payment_status === 'Dicek Panitia';
                       return `
                         <tr class="hover:bg-slate-50/80 transition">
                           <td class="py-3.5 px-3">
                             <div class="font-mono font-bold text-royal-600">#${b.booking_code}</div>
                             <div class="font-semibold text-slate-800">${member ? member.team_name : 'Tim Penyewa'}</div>
+                            ${b.notes ? `<div class="text-[10px] text-slate-400 truncate max-w-[160px]">📝 ${b.notes}</div>` : ''}
                           </td>
                           <td class="py-3.5 px-3">
                             <div class="font-bold text-slate-800">${field ? field.name : '-'}</div>
                             <div class="text-[11px] text-slate-400">${b.play_date} • ${b.start_time} (${b.duration_hours} Jam)</div>
                           </td>
                           <td class="py-3.5 px-3">
-                            <span class="text-[10px] font-extrabold bg-sky-50 text-skycyan-500 px-2 py-0.5 rounded">${b.va_bank}</span>
-                            <div class="font-mono font-bold text-slate-700 mt-0.5">${b.committee_account_number || b.va_number}</div>
-                            <div class="text-[10px] text-slate-400">a.n ${b.committee_account_holder || 'Panitia'}</div>
+                            <div class="font-extrabold text-royal-600">${formatRp(b.total_price)}</div>
+                            <div class="text-[10px] font-mono text-slate-400">Kode Unik: #${b.unique_code || 0}</div>
                           </td>
-                          <td class="py-3.5 px-3 font-extrabold text-royal-600">${formatRp(b.total_price)}</td>
+                          <td class="py-3.5 px-3">
+                            <div class="text-[11px] font-semibold text-slate-700">${b.confirmation_method || 'Kode Unik'}</div>
+                            ${
+                              b.payment_proof
+                                ? `<button onclick="window.viewUploadedProof('${b.id}')" class="mt-1 inline-flex items-center gap-1 px-2.5 py-1 rounded-lg bg-royal-50 text-royal-600 font-bold text-[10px] hover:bg-royal-100">
+                                     🖼️ Lihat Foto Struk
+                                   </button>`
+                                : `<span class="text-[10px] text-slate-400">Tanpa Lampiran Foto</span>`
+                            }
+                          </td>
                           <td class="py-3.5 px-3">
                             <span class="px-2.5 py-1 rounded-full text-[10px] font-bold ${
-                              isLunas ? 'bg-emerald-50 text-emerald-600' : 'bg-amber-50 text-amber-600'
+                              isLunas
+                                ? 'bg-emerald-50 text-emerald-600'
+                                : isDicek
+                                ? 'bg-indigo-50 text-royal-600'
+                                : 'bg-amber-50 text-amber-600'
                             }">
                               • ${b.payment_status}
                             </span>
@@ -2169,8 +2391,8 @@
                           <td class="py-3.5 px-3 text-right space-x-1">
                             ${
                               !isLunas
-                                ? `<button onclick="window.simulateInstantVAPayment('${b.id}')" class="px-2.5 py-1.5 rounded-xl bg-skycyan-400 text-white font-bold text-[10px] shadow-sm">
-                                     Tandai Dana Masuk
+                                ? `<button onclick="window.simulateInstantVAPayment('${b.id}')" class="px-2.5 py-1.5 rounded-xl bg-emerald-500 hover:bg-emerald-600 text-white font-bold text-[10px] shadow-sm">
+                                     ✓ Setujui Lunas
                                    </button>`
                                 : ''
                             }
@@ -2206,7 +2428,7 @@
   };
 
   // ==========================================
-  // 8. MENU ADMIN: DATA MEMBER / TIM PENYEWA
+  // 8. MENU ADMIN: DATA MEMBER
   // ==========================================
   function buildAdminMembersHTML() {
     return `
@@ -2214,7 +2436,7 @@
         <div class="flex items-center justify-between mb-5">
           <div>
             <h3 class="text-base font-bold text-slate-800">Data Akun Tim & Penyewa Terdaftar</h3>
-            <p class="text-xs text-slate-400">Daftar member yang mendaftar pada sistem</p>
+            <p class="text-xs text-slate-400">Daftar member yang terdaftar pada sistem</p>
           </div>
           <span class="bg-royal-50 text-royal-600 text-xs font-bold px-3 py-1.5 rounded-xl">${state.members.length} Tim</span>
         </div>
@@ -2286,7 +2508,7 @@
     const msg = document.getElementById('wa-consult-message').value.trim();
     const sender = state.currentUser ? `${state.currentUser.full_name} (${state.currentUser.team_name})` : 'Calon Penyewa Lapangan';
 
-    const text = `Halo Panitia *PitchBook Arena* ⚽,%0A%0ASaya *${sender}* ingin berkonsultasi:%0A📌 *Topik:* ${topic}%0A💬 *Pesan:* ${msg || 'Mohon info jadwal lapangan yang tersedia.'}`;
+    const text = `Halo Panitia *PitchWall Arena* ⚽,%0A%0ASaya *${sender}* ingin berkonsultasi:%0A📌 *Topik:* ${topic}%0A💬 *Pesan:* ${msg || 'Mohon info jadwal lapangan yang tersedia.'}`;
     window.open(`https://wa.me/${adminPhone}?text=${text}`, '_blank');
     window.closeWhatsAppModal();
   };
